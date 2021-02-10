@@ -1,0 +1,48 @@
+= Softwareentwicklung im Team: Praktikum
+:icons: font
+:icon-set: fa
+:source-highlighter: rouge
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:stem: latexmath
+endif::[]
+
+
+== Begrüßung
+
+Hallo und herzlich willkommen zum Praktikumsteil der Veranstaltung.
+
+Sie haben sich hier als Team zusammengefunden und werden demnächst ein Softwareprojekt entwickeln.
+Hierbei werden Sie das über Verlauf des Semesters angeeignete Wissen und die dazugehörigen Fähigkeiten anwenden.
+
+Es kann also nicht schaden, sich noch einmal den behandelten Stoff ins Gedächtnis zu rufen.
+
+== Organisatorisches
+
+=== Wann?
+
+Das Praktikum findet im März statt.
+
+Der Start des Praktikums ist:
+
+* 01.03.2021 (Montag, erster März, 2021)
+
+Der letzte Tag des Praktikums ist:
+
+* 19.03.2021 (Freitag, neunzehnter März, 2021)
+
+=== Mehr Details
+
+Leider können wir Sie zu diesem Zeitpunkt noch nicht über alle Details aufklären.
+
+Sie werden jedoch vor Praktikumsbeginn noch von uns informiert.
+Überprüfen Sie dazu ab und zu das Propra-Repository und ihre E-Mails.
+
+=== Bis dann
+
+Wir wünschen viel Erfolg beim Praktikum.
