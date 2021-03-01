@@ -17,10 +17,10 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./uav/gradlew
       - name: Gradle Tests
-        run: ./uav/gradlew test
+        run: anmeldung-zum-praktikum-teamstrgclick/uav/gradlew test
       - name: Gradle Check
         if: success()
-        run: ./uav/gradlew check
+        run: anmeldung-zum-praktikum-teamstrgclick/uav/gradlew check
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         if: always()
