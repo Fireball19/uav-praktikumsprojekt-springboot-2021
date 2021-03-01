@@ -28,4 +28,4 @@ jobs:
         if: always()
         with:
           name: reports
-          path: /uav/infrastructure/build/reports
+          path: uav/infrastructure/build/reports
