@@ -14,13 +14,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: change directory
+        run: cd uav
       - name: Change wrapper permissions
-        run: chmod +x ./uav/gradlew
+        run: chmod +x ./gradlew
       - name: Gradle Tests
-        run: anmeldung-zum-praktikum-teamstrgclick/uav/gradlew test
+        run: ./gradlew test
       - name: Gradle Check
         if: success()
-        run: anmeldung-zum-praktikum-teamstrgclick/uav/gradlew check
+        run: ./gradlew check
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         if: always()
