@@ -23,11 +23,9 @@ jobs:
         if: success()
         working-directory: ./uav
         run: ./gradlew check
-      - name: OrdnerStruktur
-        run: tree
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         if: always()
         with:
           name: reports
-          path: /uav/build/reports
+          path: /uav/infrastructure/build/reports
