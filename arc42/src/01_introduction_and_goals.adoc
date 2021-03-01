@@ -5,19 +5,22 @@
 
 === Aufgabenstellung
 
-
+Tool zur Gruppen- und Individualanmeldung, nutzt Github Organisationen.
 
 === Qualitätsziele
 
+* Wartbarkeit
 
+* Nutzerfreundlichkeit
 
 === Stakeholder
 
 
 
-[cols="1,1,2" options="header"]
+[cols="1,2" options="header"]
 |===
-|Rolle |Kontakt |Erwartungshaltung
-| _<Rolle-1>_ | _<Kontakt-1>_ | _<Erwartung-1>_
-| _<Rolle-2>_ | _<Kontakt-2>_ | _<Erwartung-2>_ 
+|Rolle |Erwartungshaltung
+| _Studenten_ | _Einfache und übersichtliche Anmeldung zu den praktischen Übungsgruppen._
+| _Tutoren_ | _Übersicht über die Einteilung._
+| _Organisator_ | _Verwaltbarkeit, einfache Bedienung, leichte Konfiguration_ 
 |===

@@ -2,3 +2,8 @@
 == Randbedingungen
 
 
+* Verwenden von Spring
+* Github für die Authentifizierung
+* Docker zum starten der Anwendung
+* automatisierte Tests mit Github Action und Gradle
+* Persistenz in Datenbank
