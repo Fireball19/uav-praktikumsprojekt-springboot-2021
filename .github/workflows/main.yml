@@ -19,7 +19,7 @@ jobs:
         run: ./gradlew test
       - name: Gradle Check
         if: success()
-        working-direcory: ./uav
+        working-directory: ./uav
         run: ./gradlew check
       - name: Upload Reports
         uses: actions/upload-artifact@v1
