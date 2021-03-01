@@ -14,16 +14,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: change directory
-        run: cd uav
-      - name: Gradle Tests
+      - name: Gradle Test
+        working-directory: ./uav
         run: ./gradlew test
       - name: Gradle Check
         if: success()
+        working-direcory: ./uav
         run: ./gradlew check
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         if: always()
         with:
           name: reports
-          path: build/reports
+          path: ./uav/build/reports
