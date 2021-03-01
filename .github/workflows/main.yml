@@ -16,8 +16,6 @@ jobs:
           java-version: 11
       - name: change directory
         run: cd uav
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
       - name: Gradle Tests
         run: ./gradlew test
       - name: Gradle Check
