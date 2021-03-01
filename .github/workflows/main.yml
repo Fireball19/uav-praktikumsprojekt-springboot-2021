@@ -1,0 +1,28 @@
+
+name: Test and Check
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+      - name: Ci-Skip-Check
+        uses: mstachniuk/ci-skip@v1
+        with:
+          fail-fast: true
+      - name: Java installieren
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Gradle Tests
+        run: ./gradlew test
+      - name: Gradle Check
+        if: success()
+        run: ./gradlew check
+      - name: Upload Reports
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: reports
+          path: build/reports
