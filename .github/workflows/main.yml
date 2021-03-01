@@ -1,4 +1,3 @@
-
 name: Test and Check
 on: [push]
 jobs:
@@ -16,10 +15,10 @@ jobs:
         with:
           java-version: 11
       - name: Gradle Tests
-        run: ./gradlew test
+        run: ./uav/gradlew test
       - name: Gradle Check
         if: success()
-        run: ./gradlew check
+        run: ./uav/gradlew check
       - name: Upload Reports
         uses: actions/upload-artifact@v1
         if: always()
