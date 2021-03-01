@@ -24,8 +24,9 @@ jobs:
         working-directory: ./uav
         run: ./gradlew check
       - name: Upload Reports
+        working-directory: ./uav
         uses: actions/upload-artifact@v1
         if: always()
         with:
           name: reports
-          path: /uav/build/reports
+          path: build/reports
