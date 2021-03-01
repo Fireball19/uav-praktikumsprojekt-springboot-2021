@@ -28,4 +28,4 @@ jobs:
         if: always()
         with:
           name: reports
-          path: anmeldung-zum-praktikum-teamstrgclick/uav/build/reports
+          path: /uav/build/reports
