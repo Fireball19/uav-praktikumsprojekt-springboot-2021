@@ -9,6 +9,7 @@ jobs:
       - name: Ci-Skip-Check
         uses: mstachniuk/ci-skip@v1
         with:
+          commit-filter: '[ci-skip]'
           fail-fast: true
       - name: Java installieren
         uses: actions/setup-java@v1
