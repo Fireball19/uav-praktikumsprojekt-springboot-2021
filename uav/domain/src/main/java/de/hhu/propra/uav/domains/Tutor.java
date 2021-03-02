@@ -1,7 +1,10 @@
 package de.hhu.propra.uav.domains;
 
+import lombok.Data;
+
+@Data
 public class Tutor {
-    private Long id;
-    private String Vorname;
-    private String Nachname;
+    private String github;
+    private String vorname;
+    private String nachname;
 }
