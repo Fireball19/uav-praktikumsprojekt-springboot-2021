@@ -7,7 +7,10 @@ group = 'de.hhu.propra'
 sourceCompatibility = "11"
 
 dependencies {
-    implementation 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
     testImplementation 'org.assertj:assertj-core:3.11.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.6.0'
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.1.4'
