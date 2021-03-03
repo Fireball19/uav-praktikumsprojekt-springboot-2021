@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class Tutor {
-    private final String github;
+  private final String github;
 }

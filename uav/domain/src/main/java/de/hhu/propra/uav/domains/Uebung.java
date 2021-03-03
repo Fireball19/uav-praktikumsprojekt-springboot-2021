@@ -49,11 +49,11 @@ public class Uebung {
 
   public void moveStudent(final Student student, final LocalDateTime zeitpunkt, final String tutor,
                           final LocalDateTime zeitpunkt2, final String tutor2) {
-    final Termin termin1 = findTermin(zeitpunkt,tutor);
-    final Termin termin2 = findTermin(zeitpunkt2,tutor2);
-    if(termin1 != null && termin2 != null) {
-      addStudent(student,termin2);
-      deleteStudent(student,termin1);
+    final Termin termin1 = findTermin(zeitpunkt, tutor);
+    final Termin termin2 = findTermin(zeitpunkt2, tutor2);
+    if (termin1 != null && termin2 != null) {
+      addStudent(student, termin2);
+      deleteStudent(student, termin1);
     }
   }
 
