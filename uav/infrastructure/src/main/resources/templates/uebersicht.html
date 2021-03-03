@@ -45,8 +45,9 @@
 
         <ul th:each="uebung : ${uebungen}">
           <h4 th:text="|${uebung.name}|"></h4>
-          <li th:text="|${uebung.minGroesse}, ${uebung.maxGroesse}
-          , ${uebung.anmeldebeginn}, ${uebung.anmeldeschluss}|"></li>
+          <li th:text="|${uebung.minGroesse}, ${uebung.maxGroesse},
+          ${uebung.modus}, ${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}
+          , ${#temporals.format(uebung.anmeldeschluss, 'dd-MM-yyyy HH:mm')}|"></li>
           <br>
           <h5>Termine</h5>
           <ul th:each="termin : ${uebung.termine}">

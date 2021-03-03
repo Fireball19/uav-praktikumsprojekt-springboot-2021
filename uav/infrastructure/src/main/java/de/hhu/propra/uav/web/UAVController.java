@@ -1,7 +1,6 @@
 package de.hhu.propra.uav.web;
 
 import de.hhu.propra.uav.domains.Modus;
-import de.hhu.propra.uav.domains.Student;
 import de.hhu.propra.uav.domains.Uebung;
 import de.hhu.propra.uav.persistence.UebungRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,19 @@ public class UAVController {
 
   @GetMapping("/verwaltung")
   public String verwaltung(Model model, Uebung uebung) {
-    model.addAttribute("uebung", new Uebung("DEFAULT", Modus.GRUPPENANMELDUNG,
-        1, 4, LocalDateTime.MIN, LocalDateTime.MIN));
+    model.addAttribute("uebung", new Uebung("DEFAULT", Modus.DEFAULT, 0, 0, LocalDateTime.of(1, 1, 1, 1, 1),
+        LocalDateTime.of(1, 1, 1, 1, 1)));
     return "verwaltung";
   }
 
   @PostMapping("/verwaltung")
-  public String uebungHinzufuegen(Model model, Uebung uebung) {
+  public String uebungHinzufuegen(Model model, Uebung uebung, Modus modus) {
 
     model.addAttribute("uebung", uebung);
     uebungRepository.addUebung(uebung);
 
     return "redirect:/uebersicht";
   }
-
-      /*
-    Uebung uebung = new Uebung("PÜ 1", Modus.GRUPPENANMELDUNG,
-        1, 4, LocalDateTime.MIN, LocalDateTime.MIN);
-    uebung.terminHinzufuegen("Alex", LocalDateTime.of(2000,5,5,2,30));
-    uebung.terminHinzufuegen("Justus", LocalDateTime.of(2012,10,5,3,35));
-    uebung.addStudent(new Student("Student1"), LocalDateTime.of(2000,5,5,2,30), "Alex");
-
-     */
 
   @GetMapping("/uebersicht")
   public String uebersicht(Model model) {
