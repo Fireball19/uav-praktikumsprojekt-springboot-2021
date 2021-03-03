@@ -1,6 +1,8 @@
 package de.hhu.propra.uav.domains;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,9 @@ public class Uebung {
   private final Modus modus;
   private final Integer minGroesse;
   private final Integer maxGroesse;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldebeginn;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldeschluss;
   private final List<Termin> termine = new ArrayList<>();
 
