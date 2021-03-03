@@ -20,7 +20,7 @@ public class UAVController {
 
   @GetMapping("/verwaltung")
   public String verwaltung(Model model, Uebung uebung) {
-    model.addAttribute("uebung", new Uebung("PÜ 0", Modus.GRUPPENANMELDUNG,
+    model.addAttribute("uebung", new Uebung("DEFAULT", Modus.GRUPPENANMELDUNG,
         1, 4, LocalDateTime.MIN, LocalDateTime.MIN));
     return "verwaltung";
   }
@@ -29,7 +29,12 @@ public class UAVController {
   public String uebungHinzufuegen(Model model, Uebung uebung) {
 
     model.addAttribute("uebung", uebung);
-    /*
+    uebungRepository.addUebung(uebung);
+
+    return "redirect:/uebersicht";
+  }
+
+      /*
     Uebung uebung = new Uebung("PÜ 1", Modus.GRUPPENANMELDUNG,
         1, 4, LocalDateTime.MIN, LocalDateTime.MIN);
     uebung.terminHinzufuegen("Alex", LocalDateTime.of(2000,5,5,2,30));
@@ -37,10 +42,6 @@ public class UAVController {
     uebung.addStudent(new Student("Student1"), LocalDateTime.of(2000,5,5,2,30), "Alex");
 
      */
-    uebungRepository.addUebung(uebung);
-
-    return "redirect:/uebersicht";
-  }
 
   @GetMapping("/uebersicht")
   public String uebersicht(Model model) {
