@@ -33,4 +33,9 @@ public class Termin {
     public void deleteStudent(Student student) {
         studenten.remove(student);
     }
+
+    @Override
+    public String toString() {
+        return tutor + " | " + zeitpunkt + " | " + reserviert + " | " + studenten;
+    }
 }

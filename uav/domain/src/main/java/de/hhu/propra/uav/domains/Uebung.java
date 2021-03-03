@@ -1,6 +1,8 @@
 package de.hhu.propra.uav.domains;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class Uebung {
     private final int maxGroesse;
     private final LocalDateTime anmeldebeginn;
     private final LocalDateTime anmeldeschluss;
-
+    @Getter
     private List<Termin> termine = new ArrayList<>();
 
     public void terminHinzufuegen(String tutor, LocalDateTime zeitpunkt) {

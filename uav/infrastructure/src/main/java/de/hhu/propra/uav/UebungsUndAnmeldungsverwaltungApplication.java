@@ -28,7 +28,7 @@ public class UebungsUndAnmeldungsverwaltungApplication {
 
     uebung1.moveStudent(student, LocalDateTime.MIN, "Alex", LocalDateTime.MAX, "Dieter");
 
-    uebung1.getTermine().forEach(x -> System.out.println(x.getTutor() + x.getZeitpunkt() + x.getStudenten().get(0).getGithub()));
+    //uebung1.getTermine().forEach(x -> System.out.println(x.getTutor() + x.getZeitpunkt() + x.getStudenten().get(0).getGithub()));
   }
 
 }

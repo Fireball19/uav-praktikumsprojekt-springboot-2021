@@ -1,0 +1,93 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Praktische Übung</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="starter-template.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Praktische Übung</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="verwaltung">Verwalten <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="uebersicht">Übersicht</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div>
+	  
+        <h1>Verwalten</h1>
+		
+		<h2>Praktische Übung konfigurieren</h2>
+		
+       <form method="post" th:object="${uebung}">
+	   
+       <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" th:value="*{name}"  autocomplete="off" class="form-control" placeholder="PÜ1" required>
+       </div>
+	   
+       <div class="form-group">
+        <label>Anmeldungsmodus</label>
+		<select class="form-control" name="anmeldungsmodus" required>
+			<option value="">Anmeldungsmodus auswählen</option>
+			<option th:value="*{modus}" value="gruppenanmeldung">Gruppenanmeldung</option>
+			<option th:value="*{modus}" value="individualanmeldung">Individualanmeldung</option>
+		</select>
+       </div>
+	   
+       <div class="form-group">
+        <label>Anmeldebeginn</label>
+		<input class="form-control" name="anmeldebeginnDate" type="date" autocomplete="off" required>
+        <input class="form-control" name="anmeldebeginnTime" type="time" autocomplete="off" required>
+       </div>
+	   
+	   <div class="form-group">
+	   <label>Anmeldeschluss</label>
+	   <input class="form-control" name="anmeldebeginnDate" autocomplete="off" required>
+	   <input class="form-control" name="anmeldebeginnTime" autocomplete="off" required>
+       </div>
+	   
+	   <div class="form-group">
+	   <label>mindest Gruppengröße</label>
+        <input type="number" th:value="*{mingroesse}" class="form-control" name="mingroesse" autocomplete="off" placeholder="1" required>
+       </div>
+	   
+	   <div class="form-group">
+	   <label>maximale Gruppengröße</label>
+        <input type="number" th:value="*{maxgroesse}" class="form-control" name="maxgroesse" autocomplete="off" placeholder="1" required>
+       </div>
+	   
+       <button type="submit" class="btn btn-primary">Praktische Übung hinzufügen</button>
+      
+	  </form>
+	  
+      </div>
+
+    </div>
+	
+  </body>
+</html>
