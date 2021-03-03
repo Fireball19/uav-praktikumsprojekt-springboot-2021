@@ -10,10 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UebungTests {
 
     private Uebung getUebung() {
-        Uebung uebung = new Uebung("Bill",Modus.GRUPPENANMELDUNG,1,5,
-                LocalDateTime.of(2021,1,2,12,30),
-                LocalDateTime.of(2021,1,5,12,30));
-        return uebung;
+      return new Uebung("Bill",Modus.GRUPPENANMELDUNG,1,5,
+              LocalDateTime.of(2021,1,2,12,30),
+              LocalDateTime.of(2021,1,5,12,30));
     }
 
 
