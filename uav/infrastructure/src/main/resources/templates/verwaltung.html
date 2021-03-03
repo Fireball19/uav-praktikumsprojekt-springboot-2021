@@ -78,12 +78,14 @@
                 <label>mindest Gruppengröße</label>
                 <input type="text" class="form-control" th:value="*{minGroesse}" name="minGroesse" value="0"
                        placeholder="1" required>
+                <small class ="text-danger" th:errors="*{minGroesse}">Muss größer als 0 sein!</small>
             </div>
 
             <div class="form-group">
                 <label>maximale Gruppengröße</label>
                 <input type="text" class="form-control" th:value="*{maxGroesse}" name="maxGroesse" value="0"
                        placeholder="1" required>
+                <small class ="text-danger" th:errors="*{maxGroesse}">Muss größer als 0 sein!</small>
             </div>
 
             <button type="submit" class="btn btn-primary">Praktische Übung hinzufügen</button>

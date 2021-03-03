@@ -6,12 +6,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+
 
 @Data
 public class Uebung {
   private final String name;
   private final Modus modus;
+  @Positive(message = "Die Gruppengröße muss positiv sein!")
   private final Integer minGroesse;
+  @Positive(message = "Die Gruppengröße muss positiv sein!")
   private final Integer maxGroesse;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldebeginn;
