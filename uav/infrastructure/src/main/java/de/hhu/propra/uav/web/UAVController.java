@@ -3,7 +3,7 @@ package de.hhu.propra.uav.web;
 import de.hhu.propra.uav.domains.Modus;
 import de.hhu.propra.uav.domains.Student;
 import de.hhu.propra.uav.domains.Uebung;
-import de.hhu.propra.uav.persistence.UebungRepositoryImpl;
+import de.hhu.propra.uav.persistence.Repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class UAVController {
 
   @Autowired
-  UebungRepositoryImpl uebungRepository;
+  Repo repo;
 
   @GetMapping("/verwaltung")
   public String verwaltung(Model model, Uebung uebung, Errors errors) {
@@ -31,7 +31,7 @@ public class UAVController {
   
   @GetMapping("/uebersicht/{name}")
   public String uebung(@PathVariable("name") String name, Model model) {
-    model.addAttribute("uebung", uebungRepository.findByName(name));
+    model.addAttribute("uebung", repo.findByName(name));
     
     return "uebung";
   }
@@ -42,9 +42,11 @@ public class UAVController {
     
     model.addAttribute("tutor", tutor);
     model.addAttribute("zeitpunkt", zeitpunkt);
-    
-    uebungRepository.findByName(name).addTermin(tutor, zeitpunkt);
-    
+
+    Uebung uebung = repo.findByName(name);
+    uebung.addTermin(tutor, zeitpunkt);
+    repo.save(uebung);
+
     return "redirect:/uebersicht";
   }
   
@@ -61,8 +63,11 @@ public class UAVController {
       Model model, String student) {
     
     model.addAttribute(student);
-    uebungRepository.findByName(name).addStudent(new Student(student), zeitpunkt, tutor);
-    
+
+    Uebung uebung = repo.findByName(name);
+    uebung.addStudent(new Student(student), zeitpunkt, tutor);
+    repo.save(uebung);
+
     return "redirect:/uebersicht";
   }
   
@@ -74,8 +79,10 @@ public class UAVController {
     model.addAttribute("tutor", tutor2);
     model.addAttribute("zeitpunkt", zeitpunkt2);
     model.addAttribute(student);
-    uebungRepository.findByName(name).moveStudent(new Student(student), zeitpunkt, tutor, zeitpunkt2, tutor2);
-    
+    Uebung uebung = repo.findByName(name);
+    uebung.moveStudent(new Student(student), zeitpunkt, tutor, zeitpunkt2, tutor2);
+    repo.save(uebung);
+
     return "redirect:/uebersicht";
   }
 
@@ -87,14 +94,14 @@ public class UAVController {
     }
 
     model.addAttribute("uebung", uebung);
-    uebungRepository.addUebung(uebung);
+    repo.save(uebung);
 
     return "redirect:/uebersicht";
   }
 
   @GetMapping("/uebersicht")
   public String uebersicht(Model model) {
-    model.addAttribute("uebungen", uebungRepository.findAll());
+    model.addAttribute("uebungen", repo.findAll());
     return "uebersicht";
   }
 

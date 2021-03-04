@@ -15,7 +15,6 @@ public class UebungsUndAnmeldungsverwaltungApplication {
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(UebungsUndAnmeldungsverwaltungApplication.class, args);
-    Authorization.test();
   }
 
 }

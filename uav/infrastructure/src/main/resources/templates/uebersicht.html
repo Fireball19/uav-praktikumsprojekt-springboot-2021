@@ -56,6 +56,7 @@
 			<table class="table table-bordered">
   				<thead class="thead-dark">
     			<tr>
+                    <th scope="col">Modus</th>
      		 		<th scope="col">min. Größe</th>
      		 		<th scope="col">max. Größe</th>
       				<th scope="col">Anmeldebeginn</th>
@@ -65,6 +66,7 @@
   				</thead>
   				<tbody>
     			<tr>
+                    <td th:text="${uebung.modus}">0</td>
       				<td th:text="${uebung.minGroesse}">0</td>
       				<td th:text="${uebung.maxGroesse}">0</td>
       				<td th:text="${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>

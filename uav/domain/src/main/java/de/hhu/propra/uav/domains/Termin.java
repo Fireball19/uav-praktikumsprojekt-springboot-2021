@@ -1,30 +1,29 @@
 package de.hhu.propra.uav.domains;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class Termin {
-  @Getter
+  @Id
+  private Long id = null;
+  private Long uebung_key;
   private final LocalDateTime zeitpunkt;
-  @Getter
   private boolean reserviert;
+  @NonNull
   private int minGroesse;
+  @NonNull
   private int maxGroesse;
-  @Getter
   private final String tutor;
-  @Getter
   private List<Student> studenten = new ArrayList<>();
 
-  public Termin(final String tutor, final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse) {
-    this.tutor = tutor;
-    this.zeitpunkt = zeitpunkt;
-    this.minGroesse = minGroesse;
-    this.maxGroesse = maxGroesse;
-    this.reserviert = false;
-  }
 
   public void addStudent(final Student student) {
     studenten.add(student);

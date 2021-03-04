@@ -1,6 +1,7 @@
 package de.hhu.propra.uav.domains;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -12,20 +13,23 @@ import javax.validation.constraints.Positive;
 @SuppressWarnings("LossyEncoding")
 @Data
 public class Uebung {
+
+  @Id
+  private Long id = null;
   private final String name;
   private final Modus modus;
-  @Positive(message = "Die Gruppengr��e muss positiv sein!")
+  @Positive()
   private final Integer minGroesse;
-  @Positive(message = "Die Gruppengr��e muss positiv sein!")
+  @Positive()
   private final Integer maxGroesse;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldebeginn;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldeschluss;
-  private final List<Termin> termine = new ArrayList<>();
+  private List<Termin> termine = new ArrayList<>();
 
   public void addTermin(final String tutor, final LocalDateTime zeitpunkt) {
-    termine.add(new Termin(tutor, zeitpunkt, this.minGroesse, this.maxGroesse));
+    termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
   }
 
   public void addStudent(final Student student, final LocalDateTime zeitpunkt, final String tutor) {
