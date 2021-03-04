@@ -1,0 +1,99 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Praktische Übung</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap.min.css}"
+          href="../static/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/starter-template.css}"
+          href="../static/starter-template.css"
+          rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Praktische Übung</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/verwaltung}" href="verwaltung">Verwalten</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/uebersicht}" href="uebersicht">Übersicht<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/logout}" href="logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div>
+	  
+        <h1>Termin</h1>
+		
+		<h2>Studenten konfigurieren</h2>
+		
+		<form method="post">
+
+        	<div class="form-group">
+                <label>Student</label>
+                <input type="text" name="student" th:value="*{student}" autocomplete="off" class="form-control"
+                       placeholder="Student" required>
+            </div>
+
+           	<button type="submit" class="btn btn-primary">Student hinzufügen</button>
+
+       	</form>
+       	
+       	<br>
+       	
+       	<form method="post">
+
+        	<div class="form-group">
+                <label>Student</label>
+                <input type="text" name="student" th:value="*{student}" autocomplete="off" class="form-control"
+                       placeholder="Student" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Neuer Tutor</label>
+                <input type="text" name="tutor2" th:value="*{tutor2}" autocomplete="off" class="form-control"
+                       placeholder="Tutor" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Neuer Zeitpunkt</label>
+                <input type="datetime-local" name="zeitpunkt2" th:value="*{zeitpunkt2}" autocomplete="off" class="form-control"
+                       placeholder="2000-01-01T01:01" required>
+            </div>
+
+           	<button type="submit" class="btn btn-primary" th:formaction="@{|${#httpServletRequest.requestURI}/studentverschieben|}">Student verschieben</button>
+
+       	</form>
+	  
+      </div>
+
+    </div>
+	
+  </body>
+</html>

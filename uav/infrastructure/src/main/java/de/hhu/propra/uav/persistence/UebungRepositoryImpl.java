@@ -15,6 +15,16 @@ public class UebungRepositoryImpl {
   public List<Uebung> findAll() {
     return uebungen;
   }
+  
+  public Uebung findByName(String name) {
+    for (Uebung uebung : uebungen) {
+      if (uebung.getName().equals(name)) {
+        return uebung;
+      }
+    }
+    
+    return null;
+  }
 
   public void addUebung(Uebung uebung) {
     uebungen.add(uebung);

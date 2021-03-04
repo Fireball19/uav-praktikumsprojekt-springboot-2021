@@ -9,6 +9,7 @@ import java.util.List;
 public class Termin {
   @Getter
   private final LocalDateTime zeitpunkt;
+  @Getter
   private boolean reserviert;
   private int minGroesse;
   private int maxGroesse;
