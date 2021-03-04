@@ -17,6 +17,14 @@ configurations {
 }
 
 dependencies {
+
+	implementation group: 'org.kohsuke', name: 'github-api', version: '1.123'
+	implementation 'io.jsonwebtoken:jjwt-api:0.10.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.10.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.10.5'
+
+	implementation 'com.google.guava:guava:30.1-jre'
+
 	implementation project(':domain')
 	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     compileOnly 'org.projectlombok:lombok:1.18.18'

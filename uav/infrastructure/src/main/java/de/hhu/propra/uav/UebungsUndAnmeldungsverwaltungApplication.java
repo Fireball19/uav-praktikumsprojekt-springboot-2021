@@ -1,5 +1,6 @@
 package de.hhu.propra.uav;
 
+import de.hhu.propra.uav.authorization.Authorization;
 import de.hhu.propra.uav.domains.Modus;
 import de.hhu.propra.uav.domains.Student;
 import de.hhu.propra.uav.domains.Uebung;
@@ -12,8 +13,9 @@ import java.time.LocalDateTime;
 @SpringBootApplication
 public class UebungsUndAnmeldungsverwaltungApplication {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     SpringApplication.run(UebungsUndAnmeldungsverwaltungApplication.class, args);
+    Authorization.test();
   }
 
 }
