@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.services;
+package de.hhu.propra.uav.repositories;
 
 import de.hhu.propra.uav.domains.uebung.Uebung;
 import org.springframework.data.repository.CrudRepository;
