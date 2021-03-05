@@ -108,8 +108,8 @@
     							</tr>
   							</thead>
   							<tbody>
-    							<tr th:each="student : ${termin.studenten}">
-      								<td th:text="${student.github}">Student</td>
+    							<tr th:each="studentRef : ${termin.studenten}">
+      								<td th:text="${studentRef.id}">Student</td>
    		 						</tr>
   							</tbody>
 						</table>

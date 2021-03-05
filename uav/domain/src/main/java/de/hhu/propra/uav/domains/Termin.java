@@ -22,15 +22,15 @@ public class Termin {
   @NonNull
   private int maxGroesse;
   private final String tutor;
-  private List<Student> studenten = new ArrayList<>();
+  private List<StudentRef> studenten = new ArrayList<>();
 
 
   public void addStudent(final Student student) {
-    studenten.add(student);
+    studenten.add(new StudentRef(student.getId()));
   }
 
   public void deleteStudent(final Student student) {
-    studenten.remove(student);
+    studenten.remove(new StudentRef(student.getId()));
   }
 
   @Override

@@ -33,12 +33,18 @@ CREATE TABLE IF NOT EXISTS termin
 
 CREATE TABLE IF NOT EXISTS student
 (
-    github VARCHAR(50) PRIMARY KEY
+    id BIGINT AUTO_INCREMENT,
+    github VARCHAR(50),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS termin_student
 (
-    termin_id      BIGINT,
-    student_github VARCHAR(50),
-    PRIMARY KEY (termin_id, student_github)
+    termin_key BIGINT,
+    student_key BIGINT,
+    termin      BIGINT ,
+    id          BIGINT,
+    PRIMARY KEY (termin, id),
+    CONSTRAINT fk_termin_student FOREIGN KEY (id) REFERENCES student (id),
+    CONSTRAINT fk_student_termin FOREIGN KEY (termin) REFERENCES termin(id)
 );
