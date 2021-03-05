@@ -1,5 +1,6 @@
 package de.hhu.propra.uav.web.uebersicht;
 
+import de.hhu.propra.uav.domains.services.UebungService;
 import de.hhu.propra.uav.domains.student.Student;
 import de.hhu.propra.uav.domains.uebung.Uebung;
 import de.hhu.propra.uav.repositories.StudentenRepository;
@@ -19,13 +20,13 @@ import java.util.Optional;
 public class UebersichtController {
 
     @Autowired
-    UebungRepository uebungRepository;
+    UebungService uebungService;
     @Autowired
     StudentenRepository studentenRepository;
 
     @GetMapping("/uebersicht/{name}")
     public String uebung(@PathVariable("name") String name, Model model) {
-        model.addAttribute("uebung", uebungRepository.findByName(name));
+        model.addAttribute("uebung", uebungService.findByName(name));
 
         return "uebung";
     }
@@ -37,9 +38,9 @@ public class UebersichtController {
         model.addAttribute("tutor", tutor);
         model.addAttribute("zeitpunkt", zeitpunkt);
 
-        Uebung uebung = uebungRepository.findByName(name);
+        Uebung uebung = uebungService.findByName(name);
         uebung.addTermin(tutor, zeitpunkt);
-        uebungRepository.save(uebung);
+        uebungService.save(uebung);
 
         return "redirect:/uebersicht";
     }
@@ -57,10 +58,10 @@ public class UebersichtController {
                           Model model, String student) {
 
         model.addAttribute(student);
-        Uebung uebung = uebungRepository.findByName(name);
+        Uebung uebung = uebungService.findByName(name);
         Optional<Student> student1 = studentenRepository.findByGithub(student);
         uebung.addStudent(student1.get(),zeitpunkt,tutor);
-        uebungRepository.save(uebung);
+        uebungService.save(uebung);
 
         return "redirect:/uebersicht";
     }
@@ -73,17 +74,17 @@ public class UebersichtController {
         model.addAttribute("tutor", tutor2);
         model.addAttribute("zeitpunkt", zeitpunkt2);
         model.addAttribute(student);
-        Uebung uebung = uebungRepository.findByName(name);
+        Uebung uebung = uebungService.findByName(name);
         Optional<Student> student1 = studentenRepository.findByGithub(student);
         uebung.moveStudent(student1.get(), zeitpunkt, tutor, zeitpunkt2, tutor2);
-        uebungRepository.save(uebung);
+        uebungService.save(uebung);
 
         return "redirect:/uebersicht";
     }
 
     @GetMapping("/uebersicht")
     public String uebersicht(Model model) {
-        model.addAttribute("uebungen", uebungRepository.findAll());
+        model.addAttribute("uebungen", uebungService.findAll());
         return "uebersicht";
     }
 }

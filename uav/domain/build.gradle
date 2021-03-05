@@ -25,6 +25,7 @@ dependencies {
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.2.1'
     implementation group: 'org.springframework', name: 'spring-context'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 bootJar {
