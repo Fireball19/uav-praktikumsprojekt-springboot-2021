@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.services;
+package de.hhu.propra.uav.domains.services;
 
 import de.hhu.propra.uav.domains.student.Student;
 import org.springframework.data.repository.CrudRepository;

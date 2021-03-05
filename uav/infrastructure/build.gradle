@@ -6,6 +6,10 @@ plugins {
 	id 'pmd'
 }
 
+repositories {
+	mavenCentral()
+}
+
 group = 'de.hhu.propra'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

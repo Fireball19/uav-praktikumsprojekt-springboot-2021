@@ -5,8 +5,20 @@ plugins {
     id 'org.springframework.boot' version '2.4.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
+
+repositories {
+    mavenCentral()
+}
+
 group = 'de.hhu.propra'
-sourceCompatibility = "11"
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
@@ -19,9 +31,21 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 }
 
+bootJar {
+    enabled = false
+}
+
+bootRun {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
 
 pmd {
     toolVersion = "6.32.0"
+    ignoreFailures = true
 
 // Alle eingebauten Regeln einschalten.
 // Per Default ist nur errorprone an.
