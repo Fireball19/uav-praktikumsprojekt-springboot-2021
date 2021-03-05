@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains;
+package de.hhu.propra.uav.domains.uebung;
 
 import lombok.Data;
 

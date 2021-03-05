@@ -1,6 +1,6 @@
-package de.hhu.propra.uav.persistence;
+package de.hhu.propra.uav.services;
 
-import de.hhu.propra.uav.domains.Student;
+import de.hhu.propra.uav.domains.student.Student;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

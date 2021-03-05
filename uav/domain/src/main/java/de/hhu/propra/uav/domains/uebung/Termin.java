@@ -1,9 +1,8 @@
-package de.hhu.propra.uav.domains;
+package de.hhu.propra.uav.domains.uebung;
 
+import de.hhu.propra.uav.domains.student.Student;
+import de.hhu.propra.uav.domains.student.StudentRef;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -17,12 +16,17 @@ public class Termin {
   private Long uebung_key;
   private final LocalDateTime zeitpunkt;
   private boolean reserviert;
-  @NonNull
   private int minGroesse;
-  @NonNull
   private int maxGroesse;
   private final String tutor;
   private List<StudentRef> studenten = new ArrayList<>();
+
+  public Termin(LocalDateTime zeitpunkt, int minGroesse, int maxGroesse, String tutor){
+    this.zeitpunkt = zeitpunkt;
+    this.minGroesse = minGroesse;
+    this.maxGroesse = maxGroesse;
+    this.tutor = tutor;
+  }
 
 
   public void addStudent(final Student student) {

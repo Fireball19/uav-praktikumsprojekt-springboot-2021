@@ -1,10 +1,6 @@
 package de.hhu.propra.uav.web;
 
-import de.hhu.propra.uav.domains.Modus;
-import de.hhu.propra.uav.domains.Student;
-import de.hhu.propra.uav.domains.Uebung;
-import de.hhu.propra.uav.persistence.StudentenRepository;
-import de.hhu.propra.uav.persistence.UebungRepository;
+import de.hhu.propra.uav.domains.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;

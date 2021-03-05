@@ -1,5 +1,6 @@
-package de.hhu.propra.uav.domains;
+package de.hhu.propra.uav.domains.uebung;
 
+import de.hhu.propra.uav.domains.student.Student;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +28,8 @@ public class Uebung {
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldeschluss;
   private List<Termin> termine = new ArrayList<>();
+
+
 
   public void addTermin(final String tutor, final LocalDateTime zeitpunkt) {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));

@@ -1,5 +1,8 @@
 package de.hhu.propra.uav.domains;
 
+import de.hhu.propra.uav.domains.student.Student;
+import de.hhu.propra.uav.domains.uebung.Modus;
+import de.hhu.propra.uav.domains.uebung.Uebung;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -10,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UebungTests {
 
     private Uebung getUebung() {
-      return new Uebung("Bill",Modus.GRUPPENANMELDUNG,1,5,
+      return new Uebung("Bill", Modus.GRUPPENANMELDUNG,1,5,
               LocalDateTime.of(2021,1,2,12,30),
               LocalDateTime.of(2021,1,5,12,30));
     }
