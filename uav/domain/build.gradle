@@ -6,10 +6,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-repositories {
-    mavenCentral()
-}
-
 group = 'de.hhu.propra'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -45,7 +41,6 @@ jar {
 
 pmd {
     toolVersion = "6.32.0"
-    ignoreFailures = true
 
 // Alle eingebauten Regeln einschalten.
 // Per Default ist nur errorprone an.
