@@ -4,15 +4,13 @@ import de.hhu.propra.uav.domains.uebung.Modus;
 import de.hhu.propra.uav.domains.uebung.Uebung;
 import de.hhu.propra.uav.repositories.UebungRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.BAD_GATEWAY;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class UebungService {
@@ -31,7 +29,7 @@ public class UebungService {
 
   public Uebung findByName(String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
-        new ResponseStatusException(NOT_FOUND, "Keine Übung mit " + name + " vorhanden."));
+        new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + name + " vorhanden!"));
 
 
   }
