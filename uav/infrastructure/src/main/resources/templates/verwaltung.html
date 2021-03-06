@@ -157,12 +157,14 @@
                 <label>Anmeldebeginn</label>
                 <input class="form-control" name="anmeldebeginn" type="datetime-local"
                        th:field="*{anmeldebeginn}" autocomplete="off" required>
+                <small class ="text-danger" th:errors="*{anmeldebeginn}"> Muss größer als 0 sein! </small>
             </div>
 
             <div class="form-group">
                 <label>Anmeldeschluss</label>
                 <input  class="form-control" name="anmeldeschluss" type="datetime-local"
                         th:field="*{anmeldeschluss}" autocomplete="off" required>
+                <small class ="text-danger" th:errors="*{anmeldeschluss}"> Muss größer als 0 sein! </small>
             </div>
 
             <div class="form-group">

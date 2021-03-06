@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
 
 
@@ -21,12 +22,14 @@ public class Uebung {
   private Long id = null;
   private final String name;
   private final Modus modus;
-  @Positive()
+  @Positive(message = "Die Anzahl muss mindestens 1 sein")
   private final Integer minGroesse;
-  @Positive()
+  @Positive(message = "Die Anzahl muss mindestens 1 sein")
   private final Integer maxGroesse;
+  @FutureOrPresent(message = "Das Datum muss in der Zukunft oder Gegenwart liegen")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldebeginn;
+  @FutureOrPresent(message = "Das Datum muss in der Zukunft oder Gegenwart liegen")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldeschluss;
   private List<Termin> termine = new ArrayList<>();
