@@ -2,6 +2,7 @@ package de.hhu.propra.uav.domains.uebung;
 
 import de.hhu.propra.uav.domains.student.Student;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,6 +17,7 @@ import javax.validation.constraints.Positive;
 public class Uebung {
 
   @Id
+  @Getter
   private Long id = null;
   private final String name;
   private final Modus modus;
@@ -35,8 +37,8 @@ public class Uebung {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
   }
 
-  public void addStudent(final Student student, final LocalDateTime zeitpunkt, final String tutor) {
-    final Termin termin = findTermin(zeitpunkt, tutor);
+  public void addStudent(final Student student, final Long terminId) {
+    final Termin termin = findTermin(terminId);
     if (termin == null) {
       return;
     }
@@ -47,8 +49,8 @@ public class Uebung {
     termin.addStudent(student);
   }
 
-  public void deleteStudent(final Student student, final LocalDateTime zeitpunkt, final String tutor) {
-    final Termin termin = findTermin(zeitpunkt, tutor);
+  public void deleteStudent(final Student student, final Long terminId) {
+    final Termin termin = findTermin(terminId);
     if (termin == null) {
       return;
     }
@@ -59,19 +61,18 @@ public class Uebung {
     termin.deleteStudent(student);
   }
 
-  public void moveStudent(final Student student, final LocalDateTime zeitpunkt, final String tutor,
-                          final LocalDateTime zeitpunkt2, final String tutor2) {
-    final Termin termin1 = findTermin(zeitpunkt, tutor);
-    final Termin termin2 = findTermin(zeitpunkt2, tutor2);
-    if (termin1 != null && termin2 != null) {
-      addStudent(student, termin2);
-      deleteStudent(student, termin1);
+  public void moveStudent(final Student student, final Long teminAltId, final Long terminNeuId) {
+    final Termin terminAlt = findTermin(teminAltId);
+    final Termin terminNeu = findTermin(terminNeuId);
+    if (terminAlt != null && terminNeu != null) {
+      addStudent(student, terminNeu);
+      deleteStudent(student, terminAlt);
     }
   }
 
-  private Termin findTermin(final LocalDateTime zeitpunkt, final String tutor) {
+  private Termin findTermin(final Long terminId) {
     for (final Termin t : termine) {
-      if (t.getZeitpunkt().equals(zeitpunkt) && t.getTutor().equals(tutor)) {
+      if (t.getId().equals(terminId)) {
         return t;
       }
     }

@@ -45,12 +45,12 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">
-          <li class="nav-item">
-              <a class="nav-link" th:href="@{/logout}" href="logout">Logout</a>
-          </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}" href="logout">Logout</a>
+            </li>
         </ul>
-      </div>
-    </nav>
+    </div>
+</nav>
 
 <div class="container-fluid">
     <div class="row">
@@ -78,11 +78,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/verwaltung/uebersicht/studenten}" href="verwaltung/uebersicht/studenten">
+                        <a class="nav-link active" th:href="@{/verwaltung/uebersicht/studenten}" href="verwaltung/uebersicht/studenten">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                             </svg>
-                            Studenten
+                            Studenten <span class="sr-only">(current)</span>
                         </a>
                     </li>
                 </ul>
@@ -97,13 +97,13 @@
                 </h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/verwaltung/konfiguration/uebung}" href="verwaltung/konfiguration/uebung">
+                        <a class="nav-link" th:href="@{/verwaltung/konfiguration/uebung}" href="verwaltung/konfiguration/uebung">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-plus" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
                                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                             </svg>
-                            Praktische Übung erstellen <span class="sr-only">(current)</span>
+                            Praktische Übung erstellen
                         </a>
                     </li>
                     <li class="nav-item">
@@ -128,64 +128,35 @@
             </div>
         </nav>
 
-<div class="container">
+        <div class="container">
 
-    <div>
+            <div>
 
-        <h1>Konfiguration</h1>
+                <h1>Übersicht</h1>
 
-        <h2>Praktische Übung konfigurieren</h2>
+                <h2>Studenten</h2>
+                <br>
 
-        <form method="post" th:object="${uebung}">
+                <div th:unless="${#lists.isEmpty(studenten)}">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Github</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="student : ${studenten}">
+                            <td th:text="${student.id}">Student</td>
+                            <td th:text="${student.github}">Student</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" th:value="*{name}" autocomplete="off" class="form-control"
-                       placeholder="PÜ1" required>
             </div>
 
-            <div class="form-group">
-                <label>Anmeldungsmodus</label>
-                <select th:field="*{modus}" class="form-control" name="modus" required>
-                    <option value="">Anmeldungsmodus auswählen</option>
-                    <option th:value="GRUPPENANMELDUNG">Gruppenanmeldung</option>
-                    <option th:value="INDIVIDUALANMELDUNG">Individualanmeldung</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Anmeldebeginn</label>
-                <input class="form-control" name="anmeldebeginn" type="datetime-local"
-                       th:field="*{anmeldebeginn}" autocomplete="off" required>
-            </div>
-
-            <div class="form-group">
-                <label>Anmeldeschluss</label>
-                <input  class="form-control" name="anmeldeschluss" type="datetime-local"
-                        th:field="*{anmeldeschluss}" autocomplete="off" required>
-            </div>
-
-            <div class="form-group">
-                <label>mindest Gruppengröße</label>
-                <input type="text" class="form-control" th:value="*{minGroesse}" name="minGroesse" value="0"
-                       placeholder="1" required>
-                <small class ="text-danger" th:errors="*{minGroesse}"> Muss größer als 0 sein! </small>
-            </div>
-
-            <div class="form-group">
-                <label>maximale Gruppengröße</label>
-                <input type="text" class="form-control" th:value="*{maxGroesse}" name="maxGroesse" value="0"
-                       placeholder="1" required>
-                <small class ="text-danger" th:errors="*{maxGroesse}"> Muss größer als 0 sein! </small>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Praktische Übung erstellen</button>
-
-        </form>
-
-    </div>
-
-</div>
+        </div>
 
     </div>
 </div>

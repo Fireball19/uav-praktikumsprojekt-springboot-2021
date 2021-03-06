@@ -13,7 +13,6 @@ import java.util.List;
 public class Termin {
   @Id
   private Long id = null;
-  private Long uebung_key;
   private final LocalDateTime zeitpunkt;
   private boolean reserviert;
   private int minGroesse;
@@ -27,7 +26,6 @@ public class Termin {
     this.maxGroesse = maxGroesse;
     this.tutor = tutor;
   }
-
 
   public void addStudent(final Student student) {
     studenten.add(new StudentRef(student.getId()));

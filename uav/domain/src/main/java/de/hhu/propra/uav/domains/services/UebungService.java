@@ -27,11 +27,14 @@ public class UebungService {
     uebungRepository.save(uebung);
   }
 
+  public Uebung findById(Long id) {
+    return uebungRepository.findById(id).orElseThrow(() ->
+            new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + id + " vorhanden!"));
+  }
+
   public Uebung findByName(String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
         new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + name + " vorhanden!"));
-
-
   }
 
   public List<Uebung> findAll() {
