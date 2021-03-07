@@ -10,6 +10,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -19,8 +20,8 @@ public class UebungService {
   UebungRepository uebungRepository;
 
   public Uebung createDefault() {
-    return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0, LocalDateTime.of(2000, 1, 1, 1, 1),
-        LocalDateTime.of(2000, 1, 1, 1, 1));
+    return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0, LocalDateTime.now(),
+        LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
   }
 
   public void save(Uebung uebung) {
