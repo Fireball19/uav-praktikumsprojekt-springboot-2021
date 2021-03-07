@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap.min.css}"
+          href="../static/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/starter-template.css}"
+          href="../static/starter-template.css"
+          rel="stylesheet">
+
+    <link th:href="@{/dashboard.css}"
+          href="../static/dashboard.css"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div th:fragment="navbar(activeTab)">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Praktische Übung</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" th:classappend="${activeTab == 'verwaltung'}? 'active' : null">
+                    <a class="nav-link" th:href="@{/verwaltung/uebersicht/uebungen}"
+                       href="verwaltung/uebersicht/uebungen">Verwaltung</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeTab == 'anmeldung'}? 'active' : null">
+                    <a class="nav-link" th:href="@{/anmeldung}" href="anmeldung">Anmeldung</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" href="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

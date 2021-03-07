@@ -27,45 +27,22 @@
 </head>
 
 <body>
+<div th:replace="fragments/navbar :: navbar(anmeldung)"></div>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Praktische Übung</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="container">
+    <div>
+        <h1>Anmeldung</h1>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/verwaltung/uebersicht/uebungen}" href="verwaltung/uebersicht/uebungen">Verwaltung</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/anmeldung}" href="anmeldung">Anmeldung<span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}" href="logout">Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+        <h2>Praktische Übungen</h2>
+        <br>
 
-        <div class="container">
-
-            <div>
-
-                <h1>Anmeldung</h1>
-
-                <h2>Praktische Übungen</h2>
-                <br>
-
-                <div th:if="${#lists.size(uebungen) > 0}">
-                    <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 3)}">
+        <div th:if="${#lists.size(uebungen) > 0}">
+            <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 3)}">
                 <div class="card-deck">
-                    <div class="card" th:each="i: ${#numbers.sequence(index, index + 2, 1)}" th:if="${i < #lists.size(uebungen)}">
-                        <h5 class="card-header text-center text-white bg-dark" th:text="${uebungen[i].name}">Praktische Übung 1</h5>
+                    <div class="card" th:each="i: ${#numbers.sequence(index, index + 2, 1)}"
+                         th:if="${i < #lists.size(uebungen)}">
+                        <h5 class="card-header text-center text-white bg-dark" th:text="${uebungen[i].name}">Praktische
+                            Übung 1</h5>
                         <div class="card-body">
                             <p class="card-text" th:inline="text">Modus: [[${uebungen[i].modus}]]</p>
                             <p class="card-text" th:inline="text">min Größe: [[${uebungen[i].minGroesse}]]</p>
@@ -78,14 +55,11 @@
                         </div>
                     </div>
                 </div>
-                        <br>
-                    </div>
-
-                </div>
-
+                <br>
             </div>
-
         </div>
+    </div>
+</div>
 
 </body>
 </html>
