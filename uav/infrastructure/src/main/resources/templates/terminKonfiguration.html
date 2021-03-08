@@ -73,7 +73,7 @@
                                     th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}"></option>
                         </select>
                     </div>
-
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <button type="submit" class="btn btn-primary"
                             th:formaction="@{|${#httpServletRequest.requestURI}/hinzufuegen|}">Student hinzufügen
                     </button>
@@ -109,7 +109,7 @@
                                     th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}"></option>
                         </select>
                     </div>
-
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                     <button type="submit" class="btn btn-primary"
                             th:formaction="@{|${#httpServletRequest.requestURI}/verschieben|}">Student verschieben
                     </button>

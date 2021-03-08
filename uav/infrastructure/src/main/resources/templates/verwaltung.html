@@ -80,7 +80,7 @@
                        placeholder="1" required>
                 <small class="text-danger" th:errors="*{maxGroesse}"> Muss größer als 0 sein! </small>
             </div>
-
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <button type="submit" class="btn btn-primary">Praktische Übung erstellen</button>
 
         </form>

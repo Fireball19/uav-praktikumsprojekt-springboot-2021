@@ -57,7 +57,7 @@
                 <input class="form-control" name="zeitpunkt" type="datetime-local"
                        th:value="*{zeitpunkt}" autocomplete="off" placeholder="2000-01-01T01:01" required>
             </div>
-
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <button type="submit" class="btn btn-primary">Termin hinzufügen</button>
 
         </form>

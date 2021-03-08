@@ -11,10 +11,9 @@ public class LoginController {
 
   @GetMapping("/")
   public String index(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    model.addAttribute("user",
-        principal != null ?
-            principal.getAttribute("login") : null
-    );
+    if(principal != null) {
+      return "redirect:/anmeldung";
+    }
     return "login";
   }
 }

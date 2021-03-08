@@ -64,7 +64,7 @@
                 <input type="text" name="github" th:value="*{github}" autocomplete="off" class="form-control"
                        placeholder="Github" required>
             </div>
-
+            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <button type="submit" class="btn btn-primary">Student hinzufügen</button>
 
         </form>
