@@ -33,6 +33,9 @@ public class StudentService {
     }
 
     public void save(Student student) {
-        studentRepository.save(student);
+      if(studentRepository.existsByGithub(student.getGithub())) {
+        return;
+      }
+      studentRepository.save(student);
     }
 }
