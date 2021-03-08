@@ -16,8 +16,14 @@ import java.util.List;
 @Service
 public class UebungService {
 
-  @Autowired
-  UebungRepository uebungRepository;
+
+
+
+  private final UebungRepository uebungRepository;
+
+  public UebungService(UebungRepository uebungRepository){
+    this.uebungRepository = uebungRepository;
+  }
 
   public Uebung createDefault() {
     return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0, LocalDateTime.now(),

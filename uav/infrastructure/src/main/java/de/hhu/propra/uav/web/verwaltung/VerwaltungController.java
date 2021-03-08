@@ -3,7 +3,7 @@ package de.hhu.propra.uav.web.verwaltung;
 import de.hhu.propra.uav.domains.services.UebungService;
 import de.hhu.propra.uav.domains.student.Student;
 import de.hhu.propra.uav.domains.uebung.Uebung;
-import de.hhu.propra.uav.repositories.StudentenRepository;
+import de.hhu.propra.uav.repositories.JdbcStudentenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class VerwaltungController {
     @Autowired
     UebungService uebungService;
     @Autowired
-    StudentenRepository studentenRepository;
+    JdbcStudentenRepository jdbcStudentenRepository;
 
     @GetMapping("/verwaltung/konfiguration/uebung")
     public String uebungKonfiguration(Model model, Uebung uebung, Errors errors) {
@@ -63,7 +63,7 @@ public class VerwaltungController {
 
     @GetMapping("/verwaltung/konfiguration/studenten")
     public String studentenVerwaltung(Model model) {
-        model.addAttribute("studenten", studentenRepository.findAll());
+        model.addAttribute("studenten", jdbcStudentenRepository.findAll());
         model.addAttribute("uebungen", uebungService.findAll());
 
         return "termin";
@@ -71,7 +71,7 @@ public class VerwaltungController {
 
     @PostMapping("/verwaltung/konfiguration/studenten")
     public String studentKonfigurieren(Model model, String github) {
-        studentenRepository.save(new Student(github));
+        jdbcStudentenRepository.save(new Student(github));
 
         return "redirect:/verwaltung/konfiguration/studenten";
     }
@@ -86,7 +86,7 @@ public class VerwaltungController {
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
     public String studentenTerminHinzufuegen(Model model, @PathVariable("id") Long id, String github, Long terminId) {
         Uebung uebung = uebungService.findById(id);
-        Optional<Student> student = studentenRepository.findByGithub(github);
+        Optional<Student> student = jdbcStudentenRepository.findByGithub(github);
 
         System.out.println(terminId);
         uebung.addStudent(student.get(), terminId);
@@ -99,7 +99,7 @@ public class VerwaltungController {
     public String studentenTerminVerschieben(Model model, @PathVariable("id") Long id,
                                              String github, Long terminAltId, Long terminNeuId) {
         Uebung uebung = uebungService.findById(id);
-        Optional<Student> student = studentenRepository.findByGithub(github);
+        Optional<Student> student = jdbcStudentenRepository.findByGithub(github);
 
         uebung.moveStudent(student.get(), terminAltId, terminNeuId);
 
