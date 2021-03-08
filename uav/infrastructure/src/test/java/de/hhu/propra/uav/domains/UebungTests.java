@@ -35,7 +35,8 @@ public class UebungTests {
         Uebung uebung = getUebung();
 
         uebung.addTermin("Bill",LocalDateTime.of(2021,1,3,12,30));
-        uebung.addStudent(student,LocalDateTime.of(2021,1,3,12,30),"Bill");
+        uebung.getTermine().get(0).setId(1L);
+        uebung.addStudent(student,1L);
 
         assertThat(uebung.getTermine().get(0).getStudenten().size()).isEqualTo(1);
 
@@ -47,9 +48,10 @@ public class UebungTests {
         Uebung uebung = getUebung();
 
         uebung.addTermin("Bill",LocalDateTime.of(2021,1,3,12,30));
-        uebung.addStudent(student,LocalDateTime.of(2021,1,3,12,30),"Bill");
+        uebung.getTermine().get(0).setId(1L);
+        uebung.addStudent(student,1L);
 
-        uebung.deleteStudent(student,LocalDateTime.of(2021,1,3,12,30),"Bill");
+        uebung.deleteStudent(student,1L);
 
 
         assertThat(uebung.getTermine().get(0).getStudenten().size()).isEqualTo(0);
