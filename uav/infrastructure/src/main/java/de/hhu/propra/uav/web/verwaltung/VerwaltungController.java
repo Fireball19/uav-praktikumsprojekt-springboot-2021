@@ -1,9 +1,9 @@
 package de.hhu.propra.uav.web.verwaltung;
 
+import de.hhu.propra.uav.domains.services.StudentService;
 import de.hhu.propra.uav.domains.services.UebungService;
 import de.hhu.propra.uav.domains.student.Student;
 import de.hhu.propra.uav.domains.uebung.Uebung;
-import de.hhu.propra.uav.repositories.JdbcStudentenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Controller
 public class VerwaltungController {
@@ -23,7 +22,7 @@ public class VerwaltungController {
     @Autowired
     UebungService uebungService;
     @Autowired
-    JdbcStudentenRepository jdbcStudentenRepository;
+    StudentService studentService;
 
     @GetMapping("/verwaltung/konfiguration/uebung")
     public String uebungKonfiguration(Model model, Uebung uebung, Errors errors) {
@@ -45,7 +44,7 @@ public class VerwaltungController {
 
     @GetMapping("/verwaltung/konfiguration/termin")
     public String terminKonfiguration(Model model, Long id) {
-        model.addAttribute("id", Long.valueOf(0));
+        model.addAttribute("id", 0L);
         model.addAttribute("uebungen", uebungService.findAll());
 
         return "uebung";
@@ -63,7 +62,7 @@ public class VerwaltungController {
 
     @GetMapping("/verwaltung/konfiguration/studenten")
     public String studentenVerwaltung(Model model) {
-        model.addAttribute("studenten", jdbcStudentenRepository.findAll());
+        model.addAttribute("studenten", studentService.findAll());
         model.addAttribute("uebungen", uebungService.findAll());
 
         return "termin";
@@ -71,7 +70,7 @@ public class VerwaltungController {
 
     @PostMapping("/verwaltung/konfiguration/studenten")
     public String studentKonfigurieren(Model model, String github) {
-        jdbcStudentenRepository.save(new Student(github));
+        studentService.save(new Student(github));
 
         return "redirect:/verwaltung/konfiguration/studenten";
     }
@@ -86,10 +85,10 @@ public class VerwaltungController {
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
     public String studentenTerminHinzufuegen(Model model, @PathVariable("id") Long id, String github, Long terminId) {
         Uebung uebung = uebungService.findById(id);
-        Optional<Student> student = jdbcStudentenRepository.findByGithub(github);
+        Student student = studentService.findByGithub(github);
 
         System.out.println(terminId);
-        uebung.addStudent(student.get(), terminId);
+        uebung.addStudent(student, terminId);
 
         uebungService.save(uebung);
         return "redirect:/verwaltung/konfiguration/studenten/{id}";
@@ -99,9 +98,9 @@ public class VerwaltungController {
     public String studentenTerminVerschieben(Model model, @PathVariable("id") Long id,
                                              String github, Long terminAltId, Long terminNeuId) {
         Uebung uebung = uebungService.findById(id);
-        Optional<Student> student = jdbcStudentenRepository.findByGithub(github);
+        Student student = studentService.findByGithub(github);
 
-        uebung.moveStudent(student.get(), terminAltId, terminNeuId);
+        uebung.moveStudent(student, terminAltId, terminNeuId);
 
         uebungService.save(uebung);
         return "redirect:/verwaltung/konfiguration/studenten/{id}";

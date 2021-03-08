@@ -12,4 +12,6 @@ public interface StudentRepository {
   Optional<Student> findById(Long id);
 
   Optional<Student> findByGithub(String github);
+
+  Student save (Student student);
 }

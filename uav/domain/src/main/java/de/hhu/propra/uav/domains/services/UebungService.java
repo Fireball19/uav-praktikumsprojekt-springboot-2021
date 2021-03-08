@@ -1,23 +1,18 @@
 package de.hhu.propra.uav.domains.services;
 
+import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.uebung.Modus;
 import de.hhu.propra.uav.domains.uebung.Uebung;
 import de.hhu.propra.uav.repositories.UebungRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@Service
+@ApplicationService
 public class UebungService {
-
-
-
 
   private final UebungRepository uebungRepository;
 
