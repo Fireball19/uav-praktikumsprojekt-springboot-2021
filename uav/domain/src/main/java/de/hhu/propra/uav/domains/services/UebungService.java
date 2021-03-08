@@ -16,7 +16,7 @@ public class UebungService {
 
   private final UebungRepository uebungRepository;
 
-  public UebungService(UebungRepository uebungRepository){
+  public UebungService(final UebungRepository uebungRepository){
     this.uebungRepository = uebungRepository;
   }
 
@@ -25,16 +25,16 @@ public class UebungService {
         LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
   }
 
-  public void save(Uebung uebung) {
+  public void save(final Uebung uebung) {
     uebungRepository.save(uebung);
   }
 
-  public Uebung findById(Long id) {
+  public Uebung findById(final Long id) {
     return uebungRepository.findById(id).orElseThrow(() ->
             new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + id + " vorhanden!"));
   }
 
-  public Uebung findByName(String name) {
+  public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
         new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + name + " vorhanden!"));
   }

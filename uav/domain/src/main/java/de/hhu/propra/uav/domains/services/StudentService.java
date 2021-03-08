@@ -13,7 +13,7 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
 
-    StudentService(StudentRepository studentRepository) {
+    StudentService(final StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -21,18 +21,18 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student findById(Long id) {
+    public Student findById(final Long id) {
         return studentRepository.findById(id).orElseThrow(() ->
                 new HttpClientErrorException(HttpStatus.NOT_FOUND,"Kein Student mit Id " + id + " vorhanden!"));
     }
 
-    public Student findByGithub(String github) {
+    public Student findByGithub(final String github) {
         return studentRepository.findByGithub(github).orElseThrow(() ->
                 new HttpClientErrorException(HttpStatus.NOT_FOUND,
                         "Kein Student mit Github Name " + github + " vorhanden!"));
     }
 
-    public void save(Student student) {
+    public void save(final Student student) {
       if(studentRepository.existsByGithub(student.getGithub())) {
         return;
       }

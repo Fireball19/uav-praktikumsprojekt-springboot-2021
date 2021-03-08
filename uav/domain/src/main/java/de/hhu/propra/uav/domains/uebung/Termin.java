@@ -22,7 +22,7 @@ public class Termin {
   private final String tutor;
   private List<StudentRef> studenten = new ArrayList<>();
 
-  public Termin(LocalDateTime zeitpunkt, int minGroesse, int maxGroesse, String tutor){
+  public Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor){
     this.zeitpunkt = zeitpunkt;
     this.minGroesse = minGroesse;
     this.maxGroesse = maxGroesse;
