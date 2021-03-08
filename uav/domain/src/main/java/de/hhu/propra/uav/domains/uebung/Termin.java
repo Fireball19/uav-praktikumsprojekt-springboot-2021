@@ -4,6 +4,7 @@ import de.hhu.propra.uav.domains.student.Student;
 import de.hhu.propra.uav.domains.student.StudentRef;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 public class Termin {
   @Id
   private Long id = null;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime zeitpunkt;
   private boolean reserviert;
   private int minGroesse;
