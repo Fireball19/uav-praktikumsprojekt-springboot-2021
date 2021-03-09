@@ -1,5 +1,6 @@
 package de.hhu.propra.uav.web.verwaltung;
 
+import de.hhu.propra.uav.authorization.AuthorityService;
 import de.hhu.propra.uav.domains.services.StudentService;
 import de.hhu.propra.uav.domains.services.UebungService;
 import de.hhu.propra.uav.domains.student.Student;
@@ -7,6 +8,8 @@ import de.hhu.propra.uav.domains.uebung.Uebung;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,17 +27,23 @@ public class VerwaltungController {
     UebungService uebungService;
     @Autowired
     StudentService studentService;
+    @Autowired
+    AuthorityService authorityService;
 
 
     @GetMapping("/verwaltung/konfiguration/uebung")
-    public String uebungKonfiguration(Model model, Uebung uebung, Errors errors) {
+    public String uebungKonfiguration(@AuthenticationPrincipal OAuth2User principal, Model model, Uebung uebung, Errors errors) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         model.addAttribute("uebung", uebungService.createDefault());
         return "verwaltung";
     }
 
 
     @PostMapping("/verwaltung/konfiguration/uebung")
-    public String uebungHinzufuegen(Model model, @Valid Uebung uebung, Errors errors) {
+    public String uebungHinzufuegen(@AuthenticationPrincipal OAuth2User principal,Model model, @Valid Uebung uebung, Errors errors) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
 
         if (errors.hasErrors()) {
             return "verwaltung";
@@ -46,7 +55,9 @@ public class VerwaltungController {
     }
 
     @GetMapping("/verwaltung/konfiguration/termin")
-    public String terminKonfiguration(Model model, Long id) {
+    public String terminKonfiguration(@AuthenticationPrincipal OAuth2User principal, Model model, Long id) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         model.addAttribute("id", 0L);
         model.addAttribute("uebungen", uebungService.findAll());
 
@@ -55,8 +66,10 @@ public class VerwaltungController {
 
 
     @PostMapping("/verwaltung/konfiguration/termin")
-    public String terminHinzufuegen(Model model, Long id, String tutor,
+    public String terminHinzufuegen(@AuthenticationPrincipal OAuth2User principal, Model model, Long id, String tutor,
                                     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime zeitpunkt) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         Uebung uebung = uebungService.findById(id);
         uebung.addTermin(tutor, zeitpunkt);
         uebungService.save(uebung);
@@ -66,7 +79,9 @@ public class VerwaltungController {
 
 
     @GetMapping("/verwaltung/konfiguration/studenten")
-    public String studentenVerwaltung(Model model) {
+    public String studentenVerwaltung(@AuthenticationPrincipal OAuth2User principal, Model model) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         model.addAttribute("studenten", studentService.findAll());
         model.addAttribute("uebungen", uebungService.findAll());
 
@@ -75,7 +90,9 @@ public class VerwaltungController {
 
 
     @PostMapping("/verwaltung/konfiguration/studenten")
-    public String studentKonfigurieren(Model model, String github) {
+    public String studentKonfigurieren(@AuthenticationPrincipal OAuth2User principal, Model model, String github) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         studentService.save(new Student(github));
 
         return "redirect:/verwaltung/konfiguration/studenten";
@@ -83,7 +100,9 @@ public class VerwaltungController {
 
 
     @GetMapping("/verwaltung/konfiguration/studenten/{id}")
-    public String studentenVerwaltung(Model model, @PathVariable("id") Long id) {
+    public String studentenVerwaltung(@AuthenticationPrincipal OAuth2User principal, Model model, @PathVariable("id") Long id) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         model.addAttribute("uebung", uebungService.findById(id));
 
         return "terminKonfiguration";
@@ -91,7 +110,9 @@ public class VerwaltungController {
 
 
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
-    public String studentenTerminHinzufuegen(Model model, @PathVariable("id") Long id, String github, Long terminId) {
+    public String studentenTerminHinzufuegen(@AuthenticationPrincipal OAuth2User principal, Model model, @PathVariable("id") Long id, String github, Long terminId) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         Uebung uebung = uebungService.findById(id);
         Student student = studentService.findByGithub(github);
 
@@ -104,8 +125,10 @@ public class VerwaltungController {
 
     @Secured("ROLE_TUTOR")
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
-    public String studentenTerminVerschieben(Model model, @PathVariable("id") Long id,
+    public String studentenTerminVerschieben(@AuthenticationPrincipal OAuth2User principal, Model model, @PathVariable("id") Long id,
                                              String github, Long terminAltId, Long terminNeuId) {
+        authorityService.checkAuthorization(principal.getAttribute("login"));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         Uebung uebung = uebungService.findById(id);
         Student student = studentService.findByGithub(github);
 

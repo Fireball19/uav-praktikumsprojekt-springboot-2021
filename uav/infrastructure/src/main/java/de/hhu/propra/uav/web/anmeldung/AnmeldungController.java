@@ -22,7 +22,7 @@ public class AnmeldungController {
 
     @GetMapping("/anmeldung")
     public String anmeldung(@AuthenticationPrincipal OAuth2User principal, Model model) {
-        model.addAttribute("isAuthorized", authorityService.checkAuthorization(principal.getAttribute("login")));
+        model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
         model.addAttribute("uebungen", uebungService.findAll());
         return "anmeldung";
     }
