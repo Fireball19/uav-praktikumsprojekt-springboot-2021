@@ -34,7 +34,7 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li th:if="${isAuthorized}" class="nav-item" th:classappend="${activeTab == 'verwaltung'}? 'active' : null">
+                <li sec:authorize="hasRole('ROLE_ORGA')" class="nav-item" th:classappend="${activeTab == 'verwaltung'}? 'active' : null">
                     <a class="nav-link" th:href="@{/verwaltung/uebersicht/uebungen}"
                        href="verwaltung/uebersicht/uebungen">Verwaltung</a>
                 </li>
