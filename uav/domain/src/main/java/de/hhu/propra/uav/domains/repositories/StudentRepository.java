@@ -1,10 +1,11 @@
-package de.hhu.propra.uav.repositories;
+package de.hhu.propra.uav.domains.repositories;
 
-import de.hhu.propra.uav.domains.student.Student;
+import de.hhu.propra.uav.domains.model.student.Student;
 
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("PMD")
 public interface StudentRepository {
 
   List<Student> findAll();

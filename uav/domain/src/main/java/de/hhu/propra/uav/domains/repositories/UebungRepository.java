@@ -1,10 +1,11 @@
-package de.hhu.propra.uav.repositories;
+package de.hhu.propra.uav.domains.repositories;
 
-import de.hhu.propra.uav.domains.uebung.Uebung;
+import de.hhu.propra.uav.domains.model.uebung.Uebung;
 
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("PMD")
 public interface UebungRepository {
 
    List<Uebung> findAll();
@@ -12,7 +13,6 @@ public interface UebungRepository {
    Optional<Uebung> findByName(String name);
 
    Optional<Uebung> findById(Long id);
-
 
    Uebung save(Uebung uebung);
 }

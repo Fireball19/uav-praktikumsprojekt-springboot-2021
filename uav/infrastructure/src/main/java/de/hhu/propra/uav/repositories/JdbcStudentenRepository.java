@@ -1,10 +1,8 @@
 package de.hhu.propra.uav.repositories;
 
-import de.hhu.propra.uav.domains.student.Student;
+import de.hhu.propra.uav.domains.model.student.Student;
+import de.hhu.propra.uav.domains.repositories.StudentRepository;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface JdbcStudentenRepository extends CrudRepository<Student, String>, StudentRepository {
 

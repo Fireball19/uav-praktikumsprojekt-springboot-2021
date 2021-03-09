@@ -1,7 +1,7 @@
-package de.hhu.propra.uav.domains.uebung;
+package de.hhu.propra.uav.domains.model.uebung;
 
-import de.hhu.propra.uav.domains.student.Student;
-import de.hhu.propra.uav.domains.student.StudentRef;
+import de.hhu.propra.uav.domains.model.student.Student;
+import de.hhu.propra.uav.domains.model.student.StudentRef;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 public class Termin {
+  @SuppressWarnings("PMD")
   @Id
   private Long id = null;
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

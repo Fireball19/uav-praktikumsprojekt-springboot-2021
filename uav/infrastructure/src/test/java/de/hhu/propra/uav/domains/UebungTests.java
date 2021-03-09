@@ -1,8 +1,8 @@
 package de.hhu.propra.uav.domains;
 
-import de.hhu.propra.uav.domains.student.Student;
-import de.hhu.propra.uav.domains.uebung.Modus;
-import de.hhu.propra.uav.domains.uebung.Uebung;
+import de.hhu.propra.uav.domains.model.student.Student;
+import de.hhu.propra.uav.domains.model.uebung.Modus;
+import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

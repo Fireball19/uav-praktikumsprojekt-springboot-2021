@@ -1,6 +1,6 @@
-package de.hhu.propra.uav.domains.uebung;
+package de.hhu.propra.uav.domains.model.uebung;
 
-import de.hhu.propra.uav.domains.student.Student;
+import de.hhu.propra.uav.domains.model.student.Student;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -19,6 +19,7 @@ public class Uebung {
 
   @Id
   @Getter
+  @SuppressWarnings("PMD")
   private Long id = null;
   private final String name;
   private final Modus modus;
@@ -34,12 +35,11 @@ public class Uebung {
   private final LocalDateTime anmeldeschluss;
   private List<Termin> termine = new ArrayList<>();
 
-
-
   public void addTermin(final String tutor, final LocalDateTime zeitpunkt) {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
   }
 
+  @SuppressWarnings("PMD")
   public void addStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -52,6 +52,7 @@ public class Uebung {
     termin.addStudent(student);
   }
 
+  @SuppressWarnings("PMD")
   public void deleteStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -64,6 +65,7 @@ public class Uebung {
     termin.deleteStudent(student);
   }
 
+  @SuppressWarnings("PMD")
   public void moveStudent(final Student student, final Long teminAltId, final Long terminNeuId) {
     final Termin terminAlt = findTermin(teminAltId);
     final Termin terminNeu = findTermin(terminNeuId);
@@ -73,6 +75,7 @@ public class Uebung {
     }
   }
 
+  @SuppressWarnings("PMD")
   private Termin findTermin(final Long terminId) {
     for (final Termin t : termine) {
       if (t.getId().equals(terminId)) {
