@@ -2,24 +2,22 @@ package de.hhu.propra.uav.authorization;
 
 import org.kohsuke.github.*;
 
-import java.time.LocalDateTime;
-
-
-public class Authorization {
+@SuppressWarnings("PMD")
+public class AuthorizationHelper {
 
   public static void test() throws Exception {
 
-    String appId = "103185";
-    long installationId = 15103623;
+    final String appId = "103185";
+    final long installationId = 15_103_623;
 
-    String jwt = JwtHelper.createJWT(".\\uav\\infrastructure\\key.der", appId, 60000);
+    final String jwt = JwtHelper.createJWT(".\\uav\\infrastructure\\key.der", appId, 60_000);
 
-    GitHub preAuth = new GitHubBuilder().withJwtToken(jwt).build();
+    final GitHub preAuth = new GitHubBuilder().withJwtToken(jwt).build();
 
-    GHAppInstallation appInstallation = preAuth.getApp().getInstallationById(installationId);
+    final GHAppInstallation appInstallation = preAuth.getApp().getInstallationById(installationId);
     GHAppInstallationToken token = appInstallation.createToken().create();
 
-    GitHub gitHub = new GitHubBuilder().withAppInstallationToken(token.getToken()).build();
+    final GitHub gitHub = new GitHubBuilder().withAppInstallationToken(token.getToken()).build();
 
     GHOrganization organization = gitHub.getOrganization("hhu-propra-teamstrgclick-apitest");
     //GHRepository repository = organization.createRepository("foobar5").private_(true).create();
