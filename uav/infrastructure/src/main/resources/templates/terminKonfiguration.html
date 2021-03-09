@@ -30,8 +30,7 @@
 <div th:replace="fragments/navbar :: navbar(verwaltung)"></div>
 <div th:replace="fragments/sidebar :: sidebar(konfigurationStudenten)"></div>
 
-<div class="container">
-    <div>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1>Konfiguration</h1>
 
         <h2 th:inline="text">Studenten verwalten: [[${uebung.name}]]</h2>
@@ -118,7 +117,7 @@
 
             </div>
         </div>
-    </div>
+    </main>
 
 </body>
 </html>
