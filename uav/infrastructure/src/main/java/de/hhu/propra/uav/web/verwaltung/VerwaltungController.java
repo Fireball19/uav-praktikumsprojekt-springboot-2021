@@ -104,6 +104,18 @@ public class VerwaltungController {
     }
 
     @Secured(ROLE_ORGA)
+    @PostMapping("/verwaltung/konfiguration/studenten/{id}/entfernen")
+    public String studentenTerminEntfernen(@PathVariable("id") final Long id, final String github, final Long terminId) {
+        final Uebung uebung = uebungService.findById(id);
+        final Student student = studentService.findByGithub(github);
+
+        uebung.deleteStudent(student, terminId);
+
+        uebungService.save(uebung);
+        return "redirect:/verwaltung/konfiguration/studenten/{id}";
+    }
+
+    @Secured(ROLE_ORGA)
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
     public String studentenTerminVerschieben(@PathVariable("id") final Long id,
                                              final String github, final Long terminAltId, final Long terminNeuId) {
