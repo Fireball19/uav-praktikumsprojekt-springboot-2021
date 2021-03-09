@@ -1,5 +1,6 @@
 package de.hhu.propra.uav.web.anmeldung;
 
+import de.hhu.propra.uav.authorization.AuthorityService;
 import de.hhu.propra.uav.domains.services.UebungService;
 import de.hhu.propra.uav.repositories.JdbcStudentenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,12 @@ public class AnmeldungController {
     UebungService uebungService;
     @Autowired
     JdbcStudentenRepository jdbcStudentenRepository;
+    @Autowired
+    AuthorityService authorityService;
 
     @GetMapping("/anmeldung")
     public String anmeldung(@AuthenticationPrincipal OAuth2User principal, Model model) {
+        model.addAttribute("isAuthorized", authorityService.checkAuthorization(principal.getAttribute("login")));
         model.addAttribute("uebungen", uebungService.findAll());
         return "anmeldung";
     }

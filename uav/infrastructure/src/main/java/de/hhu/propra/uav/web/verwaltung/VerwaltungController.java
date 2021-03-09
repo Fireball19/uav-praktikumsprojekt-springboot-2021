@@ -6,6 +6,7 @@ import de.hhu.propra.uav.domains.student.Student;
 import de.hhu.propra.uav.domains.uebung.Uebung;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -24,11 +25,13 @@ public class VerwaltungController {
     @Autowired
     StudentService studentService;
 
+
     @GetMapping("/verwaltung/konfiguration/uebung")
     public String uebungKonfiguration(Model model, Uebung uebung, Errors errors) {
         model.addAttribute("uebung", uebungService.createDefault());
         return "verwaltung";
     }
+
 
     @PostMapping("/verwaltung/konfiguration/uebung")
     public String uebungHinzufuegen(Model model, @Valid Uebung uebung, Errors errors) {
@@ -50,6 +53,7 @@ public class VerwaltungController {
         return "uebung";
     }
 
+
     @PostMapping("/verwaltung/konfiguration/termin")
     public String terminHinzufuegen(Model model, Long id, String tutor,
                                     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime zeitpunkt) {
@@ -60,6 +64,7 @@ public class VerwaltungController {
         return "uebung";
     }
 
+
     @GetMapping("/verwaltung/konfiguration/studenten")
     public String studentenVerwaltung(Model model) {
         model.addAttribute("studenten", studentService.findAll());
@@ -68,6 +73,7 @@ public class VerwaltungController {
         return "termin";
     }
 
+
     @PostMapping("/verwaltung/konfiguration/studenten")
     public String studentKonfigurieren(Model model, String github) {
         studentService.save(new Student(github));
@@ -75,12 +81,14 @@ public class VerwaltungController {
         return "redirect:/verwaltung/konfiguration/studenten";
     }
 
+
     @GetMapping("/verwaltung/konfiguration/studenten/{id}")
     public String studentenVerwaltung(Model model, @PathVariable("id") Long id) {
         model.addAttribute("uebung", uebungService.findById(id));
 
         return "terminKonfiguration";
     }
+
 
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
     public String studentenTerminHinzufuegen(Model model, @PathVariable("id") Long id, String github, Long terminId) {
@@ -94,6 +102,7 @@ public class VerwaltungController {
         return "redirect:/verwaltung/konfiguration/studenten/{id}";
     }
 
+    @Secured("ROLE_TUTOR")
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
     public String studentenTerminVerschieben(Model model, @PathVariable("id") Long id,
                                              String github, Long terminAltId, Long terminNeuId) {
