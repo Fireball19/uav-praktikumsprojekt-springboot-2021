@@ -18,23 +18,17 @@ public class UebersichtController {
   UebungService uebungService;
   @Autowired
   StudentService studentenService;
-  @Autowired
-  AuthorityService authorityService;
 
-
+  @Secured("ROLE_ORGA")
   @GetMapping("verwaltung/uebersicht/uebungen")
-  public String uebersicht(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    authorityService.checkAuthorization(principal.getAttribute("login"));
-    model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
+  public String uebersicht(Model model) {
     model.addAttribute("uebungen", uebungService.findAll());
     return "uebersicht";
   }
 
-
+  @Secured("ROLE_ORGA")
   @GetMapping("verwaltung/uebersicht/studenten")
-  public String uebersichtStudenten(@AuthenticationPrincipal OAuth2User principal, Model model) {
-    authorityService.checkAuthorization(principal.getAttribute("login"));
-    model.addAttribute("isAuthorized", authorityService.isAuthorized(principal.getAttribute("login")));
+  public String uebersichtStudenten(Model model) {
     model.addAttribute("studenten", studentenService.findAll());
     return "studenten";
   }
