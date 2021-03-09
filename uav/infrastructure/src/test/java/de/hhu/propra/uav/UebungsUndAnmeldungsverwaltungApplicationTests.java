@@ -6,8 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class UebungsUndAnmeldungsverwaltungApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	//Github hat keine Datenbank
+	//@Test
+	//void contextLoads() {
+	//}
 
 }
