@@ -1,6 +1,7 @@
 package de.hhu.propra.uav.domains.services;
 
-import de.hhu.propra.uav.domains.annotations.ApplicationService;
+
+import de.hhu.propra.uav.domains.annotations.DomainService;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.repositories.UebungRepository;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@ApplicationService
+@DomainService
 public class UebungService {
 
   @SuppressWarnings("PMD")

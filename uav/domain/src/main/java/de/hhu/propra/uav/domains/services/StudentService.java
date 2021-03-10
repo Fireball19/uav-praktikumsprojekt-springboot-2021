@@ -1,6 +1,7 @@
 package de.hhu.propra.uav.domains.services;
 
-import de.hhu.propra.uav.domains.annotations.ApplicationService;
+
+import de.hhu.propra.uav.domains.annotations.DomainService;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.repositories.StudentRepository;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
-@ApplicationService
+@DomainService
 public class StudentService {
 
     @SuppressWarnings("PMD")
