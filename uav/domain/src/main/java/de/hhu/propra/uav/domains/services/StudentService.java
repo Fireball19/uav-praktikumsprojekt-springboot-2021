@@ -37,7 +37,8 @@ public class StudentService {
                         "Kein Student mit Github Name " + github + " vorhanden!"));
     }
 
-    public void save(final Student student) {
+    public void addStudent(final String github) {
+      Student student = new Student(github);
       if(studentRepository.existsByGithub(student.getGithub())) {
         return;
       }

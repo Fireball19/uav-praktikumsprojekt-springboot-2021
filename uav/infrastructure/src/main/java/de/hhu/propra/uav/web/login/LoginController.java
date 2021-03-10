@@ -19,7 +19,7 @@ public class LoginController {
   public String index(final @AuthenticationPrincipal OAuth2User principal, final Model model) {
     if(principal != null) {
       final String githubName = principal.getAttribute("login");
-      studentenService.save(new Student(githubName));
+      studentenService.addStudent(githubName);
       return "redirect:/anmeldung";
     }
     return "login";

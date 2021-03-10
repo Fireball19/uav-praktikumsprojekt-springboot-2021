@@ -49,4 +49,22 @@ public class UebungService {
     return uebungRepository.findAll();
   }
 
+  public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {
+    Uebung uebung = findById(uebungId);
+    uebung.addGruppe(gruppenname, terminId);
+    save(uebung);
+  }
+
+  public void deleteGruppe(final Long uebungId, final Long terminId) {
+    Uebung uebung = findById(uebungId);
+    uebung.deleteGruppe(terminId);
+    save(uebung);
+  }
+
+  public void addTermin(final long uebungId, final String tutor, final LocalDateTime zeitpunkt) {
+    Uebung uebung = findById(uebungId);
+    uebung.addTermin(tutor, zeitpunkt);
+    save(uebung);
+  }
+
 }

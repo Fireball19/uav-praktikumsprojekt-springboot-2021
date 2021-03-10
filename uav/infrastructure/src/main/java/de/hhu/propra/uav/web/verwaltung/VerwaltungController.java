@@ -1,9 +1,10 @@
 package de.hhu.propra.uav.web.verwaltung;
 
-import de.hhu.propra.uav.domains.model.student.Student;
+
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.services.StudentService;
 import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.services.VerwaltungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
@@ -25,6 +26,8 @@ public class VerwaltungController {
     private UebungService uebungService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private VerwaltungService verwaltungService;
 
     @Secured("ROLE_ORGA")
     @GetMapping("/verwaltung/konfiguration/uebung")
@@ -51,7 +54,6 @@ public class VerwaltungController {
     public String terminKonfiguration(final Model model) {
         model.addAttribute("id", 0L);
         model.addAttribute("uebungen", uebungService.findAll());
-
         return "uebung";
     }
 
@@ -59,10 +61,7 @@ public class VerwaltungController {
     @PostMapping("/verwaltung/konfiguration/termin")
     public String terminHinzufuegen(final Long id, final String tutor,
                                     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") final LocalDateTime zeitpunkt) {
-        final Uebung uebung = uebungService.findById(id);
-        uebung.addTermin(tutor, zeitpunkt);
-        uebungService.save(uebung);
-
+        uebungService.addTermin(id, tutor, zeitpunkt);
         return "uebung";
     }
 
@@ -78,7 +77,7 @@ public class VerwaltungController {
     @Secured(ROLE_ORGA)
     @PostMapping("/verwaltung/konfiguration/studenten")
     public String studentKonfigurieren(final String github) {
-        studentService.save(new Student(github));
+        studentService.addStudent(github);
 
         return "redirect:/verwaltung/konfiguration/studenten";
     }
@@ -87,6 +86,7 @@ public class VerwaltungController {
     @GetMapping("/verwaltung/konfiguration/studenten/{id}")
     public String studentenVerwaltung(final Model model, @PathVariable("id") final Long id) {
         model.addAttribute("uebung", uebungService.findById(id));
+      model.addAttribute("studenten",studentService.findAllAsMap());
 
         return "terminKonfiguration";
     }
@@ -94,24 +94,14 @@ public class VerwaltungController {
     @Secured(ROLE_ORGA)
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
     public String studentenTerminHinzufuegen(@PathVariable("id") final Long id, final String github, final Long terminId) {
-        final Uebung uebung = uebungService.findById(id);
-        final Student student = studentService.findByGithub(github);
-
-        uebung.addStudent(student, terminId);
-
-        uebungService.save(uebung);
+        verwaltungService.addStudent(github, id, terminId);
         return "redirect:/verwaltung/konfiguration/studenten/{id}";
     }
 
     @Secured(ROLE_ORGA)
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/entfernen")
     public String studentenTerminEntfernen(@PathVariable("id") final Long id, final String github, final Long terminId) {
-        final Uebung uebung = uebungService.findById(id);
-        final Student student = studentService.findByGithub(github);
-
-        uebung.deleteStudent(student, terminId);
-
-        uebungService.save(uebung);
+        verwaltungService.deleteStudent(github, id, terminId);
         return "redirect:/verwaltung/konfiguration/studenten/{id}";
     }
 
@@ -119,12 +109,7 @@ public class VerwaltungController {
     @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
     public String studentenTerminVerschieben(@PathVariable("id") final Long id,
                                              final String github, final Long terminAltId, final Long terminNeuId) {
-        final Uebung uebung = uebungService.findById(id);
-        final Student student = studentService.findByGithub(github);
-
-        uebung.moveStudent(student, terminAltId, terminNeuId);
-
-        uebungService.save(uebung);
+        verwaltungService.moveStudent(github, id, terminAltId, terminNeuId);
         return "redirect:/verwaltung/konfiguration/studenten/{id}";
     }
 

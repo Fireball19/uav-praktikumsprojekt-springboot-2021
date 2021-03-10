@@ -66,17 +66,50 @@ public class Uebung {
   }
 
   @SuppressWarnings("PMD")
-  public void moveStudent(final Student student, final Long teminAltId, final Long terminNeuId) {
-    final Termin terminAlt = findTermin(teminAltId);
+  public void moveStudent(final Student student, final Long terminAltId, final Long terminNeuId) {
+    final Termin terminAlt = findTermin(terminAltId);
     final Termin terminNeu = findTermin(terminNeuId);
     if (terminAlt != null && terminNeu != null) {
-      addStudent(student, terminNeu);
       deleteStudent(student, terminAlt);
+      addStudent(student, terminNeu);
     }
   }
 
   @SuppressWarnings("PMD")
-  private Termin findTermin(final Long terminId) {
+  public void addGruppe(final String gruppenname, final Long terminId) {
+    final Termin termin = findTermin(terminId);
+    if (termin == null) {
+      return;
+    }
+    termin.addGruppe(gruppenname);
+  }
+
+  @SuppressWarnings("PMD")
+  public void deleteGruppe(final Long terminId) {
+    final Termin termin = findTermin(terminId);
+    if (termin == null) {
+      return;
+    }
+    termin.deleteGruppe();
+  }
+
+  @SuppressWarnings("PMD")
+  public boolean terminContainsStudent(final long terminId, final Student student) {
+    Termin termin = findTermin(terminId);
+    return termin.containsStudent(student);
+  }
+
+  public boolean containsStudent(final Student student) {
+    for(Termin termin: termine) {
+      if(termin.containsStudent(student)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @SuppressWarnings("PMD")
+  public Termin findTermin(final Long terminId) {
     for (final Termin t : termine) {
       if (t.getId().equals(terminId)) {
         return t;
