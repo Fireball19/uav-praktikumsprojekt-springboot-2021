@@ -21,13 +21,13 @@ public class UebersichtController {
   public String uebersicht(final Model model) {
     model.addAttribute("uebungen", uebungService.findAll());
     model.addAttribute("studenten", studentenService.findAllAsMap());
-    return "uebersicht";
+    return "uebersichtVerwaltung";
   }
 
   @Secured("ROLE_ORGA")
   @GetMapping("verwaltung/uebersicht/studenten")
   public String uebersichtStudenten(final Model model) {
     model.addAttribute("studenten", studentenService.findAll());
-    return "studenten";
+    return "studentenUebersicht";
   }
 }

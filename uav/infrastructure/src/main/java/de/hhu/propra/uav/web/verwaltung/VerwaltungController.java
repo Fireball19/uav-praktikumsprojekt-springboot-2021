@@ -33,7 +33,7 @@ public class VerwaltungController {
     @GetMapping("/verwaltung/konfiguration/uebung")
     public String uebungKonfiguration(final Model model) {
         model.addAttribute("uebung", uebungService.createDefault());
-        return "verwaltung";
+        return "uebungErstellen";
     }
 
 
@@ -41,7 +41,7 @@ public class VerwaltungController {
     @PostMapping("/verwaltung/konfiguration/uebung")
     public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors) {
         if (errors.hasErrors()) {
-            return "verwaltung";
+            return "uebungErstellen";
         }
 
         uebungService.save(uebung);
@@ -54,7 +54,7 @@ public class VerwaltungController {
     public String terminKonfiguration(final Model model) {
         model.addAttribute("id", 0L);
         model.addAttribute("uebungen", uebungService.findAll());
-        return "uebung";
+        return "termineKonfiguration";
     }
 
     @Secured(ROLE_ORGA)
@@ -62,7 +62,7 @@ public class VerwaltungController {
     public String terminHinzufuegen(final Long id, final String tutor,
                                     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") final LocalDateTime zeitpunkt) {
         uebungService.addTermin(id, tutor, zeitpunkt);
-        return "uebung";
+        return "termineKonfiguration";
     }
 
     @Secured(ROLE_ORGA)
@@ -71,7 +71,7 @@ public class VerwaltungController {
         model.addAttribute("studenten", studentService.findAll());
         model.addAttribute("uebungen", uebungService.findAll());
 
-        return "termin";
+        return "studentenKonfiguration";
     }
 
     @Secured(ROLE_ORGA)
@@ -88,7 +88,7 @@ public class VerwaltungController {
         model.addAttribute("uebung", uebungService.findById(id));
       model.addAttribute("studenten",studentService.findAllAsMap());
 
-        return "terminKonfiguration";
+        return "studentenTermin";
     }
 
     @Secured(ROLE_ORGA)
