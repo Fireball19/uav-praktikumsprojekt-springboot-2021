@@ -25,7 +25,8 @@ public class UebungService {
 
   @SuppressWarnings("PMD")
   public Uebung createDefault() {
-    return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0, LocalDateTime.now(),
+    return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0,
+        LocalDateTime.now().plus(5,ChronoUnit.MINUTES),
         LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
   }
 
