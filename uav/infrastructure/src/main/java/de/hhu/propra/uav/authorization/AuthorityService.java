@@ -11,17 +11,17 @@ import java.util.List;
 @Service
 public class AuthorityService {
 
-
   @Value("${arrayOfOrga}")
   private List<String> organisation;
 
-  public boolean isAuthorized(final String username) {
+  @Value("${arrayOfTutoren}")
+  private List<String> tutoren;
+
+  public boolean isOrga(final String username) {
     return organisation.contains(username);
   }
 
-  public void checkAuthorization(final String username) {
-    if(!isAuthorized(username)) {
-      throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"fehlende Berechtigungen für diesen Link!");
-    }
+  public boolean isTutor(final String username) {
+    return tutoren.contains(username);
   }
 }

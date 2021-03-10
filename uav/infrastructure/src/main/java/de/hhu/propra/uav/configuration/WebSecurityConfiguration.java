@@ -54,10 +54,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
       Set<GrantedAuthority> authorities=new HashSet<>();
 
+      // Standard USER Role hinzufügen
       authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
-      if(authorityService.isAuthorized(attributes.get("login").toString())) {
+      // Prüfen auf Rollen
+      if(authorityService.isOrga(attributes.get("login").toString())) {
         authorities.add(new SimpleGrantedAuthority("ROLE_ORGA"));
+      }
+
+      if(authorityService.isTutor(attributes.get("login").toString())) {
+        authorities.add(new SimpleGrantedAuthority("ROLE_TUTOR"));
       }
 
       return new DefaultOAuth2User(authorities,attributes,attributeNameKey);
