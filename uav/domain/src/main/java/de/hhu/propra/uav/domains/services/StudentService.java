@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @DomainService
 public class StudentService {
@@ -20,8 +23,13 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    public Map<Long,Student> findAllAsMap() {
+      return studentRepository.findAll().stream()
+          .collect(Collectors.toMap(Student::getId, Function.identity()));
+    }
+
     public List<Student> findAll() {
-        return studentRepository.findAll();
+      return studentRepository.findAll();
     }
 
   @SuppressWarnings("PMD")

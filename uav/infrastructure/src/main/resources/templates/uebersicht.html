@@ -91,7 +91,7 @@
                             </thead>
                             <tbody>
                             <tr th:each="studentRef : ${termin.studenten}">
-                                <td th:text="${studentRef.id}">Student</td>
+                                <td th:text="${studenten.get(studentRef.id).github}">Student</td>
                             </tr>
                             </tbody>
                         </table>

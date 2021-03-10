@@ -48,7 +48,8 @@
             <tr th:each="termin : ${uebung.termine}">
                 <td th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}">Termin</td>
                 <td><span th:each="studentRef, iterStat : ${termin.studenten}"
-                          th:text="${!iterStat.last} ? ${studentRef.id} + ',': ${studentRef.id}"></span></td>
+                          th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
             </tr>
             </tbody>
         </table>
