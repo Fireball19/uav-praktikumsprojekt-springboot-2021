@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.authorization;
+package de.hhu.propra.uav.github;
 
 import com.google.common.io.Files;
 import io.jsonwebtoken.JwtBuilder;
