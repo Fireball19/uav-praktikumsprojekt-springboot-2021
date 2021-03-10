@@ -50,7 +50,7 @@
                             <p class="card-text" th:inline="text">Anmeldeschluss: [[${uebungen[i].anmeldeschluss}]]</p>
                         </div>
                         <div class="card-footer text-center">
-                            <a href="#" class="btn btn-primary">Zur Übung anmelden</a>
+                            <a th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Zur Übung anmelden</a>
                         </div>
                     </div>
                 </div>
