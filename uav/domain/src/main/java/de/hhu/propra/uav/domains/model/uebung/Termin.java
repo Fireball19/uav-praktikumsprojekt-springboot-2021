@@ -53,9 +53,4 @@ class Termin {
   boolean containsStudent(final Student student) {
     return studenten.contains(new StudentRef(student.getId()));
   }
-
-  @Override
-  String toString() {
-    return tutor + " | " + zeitpunkt + " | " + reserviert + " | " + studenten;
-  }
 }

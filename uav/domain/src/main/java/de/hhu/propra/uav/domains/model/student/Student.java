@@ -9,9 +9,4 @@ public class Student {
   @Id
   private Long id = null;
   private final String github;
-
-  @Override
-  public String toString() {
-    return github;
-  }
 }
