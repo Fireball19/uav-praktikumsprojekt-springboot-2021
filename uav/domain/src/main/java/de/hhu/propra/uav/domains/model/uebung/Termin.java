@@ -32,11 +32,13 @@ public class Termin {
   }
 
   public void addGruppe(final String gruppenname) {
+    this.reserviert = true;
     this.gruppenname = gruppenname;
   }
 
   public void deleteGruppe() {
     this.gruppenname = "";
+    this.reserviert = false;
     studenten.clear();
   }
 
