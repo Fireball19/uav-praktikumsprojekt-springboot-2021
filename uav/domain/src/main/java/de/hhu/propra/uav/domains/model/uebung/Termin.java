@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class Termin {
+class Termin {
   @SuppressWarnings("PMD")
   @Id
   private Long id = null;
@@ -24,38 +24,38 @@ public class Termin {
   private final String tutor;
   private List<StudentRef> studenten = new ArrayList<>();
 
-  public Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor){
+  Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor){
     this.zeitpunkt = zeitpunkt;
     this.minGroesse = minGroesse;
     this.maxGroesse = maxGroesse;
     this.tutor = tutor;
   }
 
-  public void addGruppe(final String gruppenname) {
+  void addGruppe(final String gruppenname) {
     this.reserviert = true;
     this.gruppenname = gruppenname;
   }
 
-  public void deleteGruppe() {
+  void deleteGruppe() {
     this.gruppenname = "";
     this.reserviert = false;
     studenten.clear();
   }
 
-  public void addStudent(final Student student) {
+  void addStudent(final Student student) {
     studenten.add(new StudentRef(student.getId()));
   }
 
-  public void deleteStudent(final Student student) {
+  void deleteStudent(final Student student) {
     studenten.remove(new StudentRef(student.getId()));
   }
 
-  public boolean containsStudent(final Student student) {
+  boolean containsStudent(final Student student) {
     return studenten.contains(new StudentRef(student.getId()));
   }
 
   @Override
-  public String toString() {
+  String toString() {
     return tutor + " | " + zeitpunkt + " | " + reserviert + " | " + studenten;
   }
 }
