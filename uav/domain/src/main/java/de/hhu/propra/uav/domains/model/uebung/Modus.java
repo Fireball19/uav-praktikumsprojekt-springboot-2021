@@ -1,5 +1,5 @@
 package de.hhu.propra.uav.domains.model.uebung;
 
-enum Modus {
+public enum Modus {
   DEFAULT, GRUPPENANMELDUNG, INDIVIDUALANMELDUNG;
 }
