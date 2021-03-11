@@ -3,5 +3,5 @@
 
 === Onion-Architektur
 
-image:./images/onion-architecture.png[Onion-Architektur]
+image:../images/onion-architecture.png[Onion-Architektur]
 
