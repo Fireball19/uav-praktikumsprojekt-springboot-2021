@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS uebung
     max_groesse    INTEGER,
     anmeldebeginn  DATETIME,
     anmeldeschluss DATETIME,
+    bearbeitet     BOOLEAN,
     PRIMARY KEY (id)
 );
 

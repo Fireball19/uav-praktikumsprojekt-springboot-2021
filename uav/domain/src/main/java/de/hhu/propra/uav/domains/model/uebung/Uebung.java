@@ -33,10 +33,20 @@ public class Uebung {
   @FutureOrPresent(message = "Das Datum muss in der Zukunft oder Gegenwart liegen")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   private final LocalDateTime anmeldeschluss;
+  private boolean bearbeitet;
   private List<Termin> termine = new ArrayList<>();
 
   public void addTermin(final String tutor, final LocalDateTime zeitpunkt) {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
+  }
+
+  public List<Gruppe> getGruppen() {
+    List<Gruppe> gruppen= new ArrayList<>();
+    for (Termin termin : termine) {
+      gruppen.add(new Gruppe(termin.getGruppenname(), termin.getStudenten()));
+    }
+
+    return gruppen;
   }
 
   @SuppressWarnings("PMD")
@@ -116,5 +126,9 @@ public class Uebung {
       }
     }
     return null;
+  }
+
+  public void abschliessen() {
+      this.bearbeitet = true;
   }
 }

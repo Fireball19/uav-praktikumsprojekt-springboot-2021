@@ -22,14 +22,14 @@ public class AnmeldungController {
     @Secured("ROLE_USER")
     @GetMapping("/anmeldung")
     public String anmeldung(final Model model) {
-        model.addAttribute("uebungen", uebungService.findAll());
+        model.addAttribute("uebungen", uebungService.findAllForStudent());
         return "anmeldung";
     }
 
     @Secured("ROLE_USER")
     @GetMapping("/anmeldung/{uebungId}")
     public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
-        model.addAttribute("uebung", uebungService.findById(uebungId));
+        model.addAttribute("uebung", uebungService.findByIdForStudent(uebungId));
         return "anmeldungTermin";
     }
 
@@ -44,7 +44,7 @@ public class AnmeldungController {
     @PostMapping("/anmeldung/{uebungId}/{terminId}")
     public String gruppenAnmeldungAnmelden(final Model model, @PathVariable("uebungId") final Long uebungId,
                                   @PathVariable("terminId") final Long terminId,
-                                           final String gruppenname, final String mitglieder) {
+                                           final String gruppenname, final String mitglieder) throws Exception {
         anmeldungService.gruppenAnmeldung(uebungId, terminId, gruppenname, mitglieder);
         return "gruppenAnmeldung";
     }
