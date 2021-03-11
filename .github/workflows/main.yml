@@ -1,16 +1,14 @@
 name: Test and Check
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
-      - name: Ci-Skip-Check
-        uses: mstachniuk/ci-skip@v1
-        with:
-          commit-filter: '[ci-skip]'
-          fail-fast: true
       - name: Java installieren
         uses: actions/setup-java@v1
         with:
