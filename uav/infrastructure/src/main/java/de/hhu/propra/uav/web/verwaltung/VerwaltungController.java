@@ -59,11 +59,18 @@ public class VerwaltungController {
   }
 
   @Secured(ROLE_ORGA)
-  @PostMapping("/verwaltung/konfiguration/termin")
-  public String terminHinzufuegen(final Long id, final String tutor,
+  @GetMapping("/verwaltung/konfiguration/termin/{uebungId}")
+  public String terminHinzufuegen(@PathVariable("uebungId") final Long uebungId, final Model model) {
+    model.addAttribute("uebung", uebungService.findById(uebungId));
+    return "uebungTermin";
+  }
+
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/termin/{uebungId}/hinzufuegen")
+  public String terminHinzufuegen(@PathVariable("uebungId") final Long uebungId, final String tutor,
                                   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") final LocalDateTime zeitpunkt) {
-    uebungService.addTermin(id, tutor, zeitpunkt);
-    return "termineKonfiguration";
+    uebungService.addTermin(uebungId, tutor, zeitpunkt);
+    return "redirect:/verwaltung/konfiguration/termin/{uebungId}";
   }
 
   @Secured(ROLE_ORGA)
