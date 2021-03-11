@@ -14,39 +14,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AnmeldungController {
 
-    @Autowired
-    private UebungService uebungService;
-    @Autowired
-    private AnmeldungService anmeldungService;
+  @Autowired
+  private UebungService uebungService;
+  @Autowired
+  private AnmeldungService anmeldungService;
 
-    @Secured("ROLE_USER")
-    @GetMapping("/anmeldung")
-    public String anmeldung(final Model model) {
-        model.addAttribute("uebungen", uebungService.findAllForStudent());
-        return "anmeldung";
-    }
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung")
+  public String anmeldung(final Model model) {
+    model.addAttribute("uebungen", uebungService.findAllForStudent());
+    return "anmeldung";
+  }
 
-    @Secured("ROLE_USER")
-    @GetMapping("/anmeldung/{uebungId}")
-    public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
-        model.addAttribute("uebung", uebungService.findByIdForStudent(uebungId));
-        return "anmeldungTermin";
-    }
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung/{uebungId}")
+  public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
+    model.addAttribute("uebung", uebungService.findByIdForStudent(uebungId));
+    return "anmeldungTermin";
+  }
 
-    @Secured("ROLE_USER")
-    @GetMapping("/anmeldung/{uebungId}/{terminId}")
-    public String gruppenAnmeldung(final Model model, @PathVariable("uebungId") final Long uebungId,
-                                  @PathVariable("terminId") final Long terminId) {
-        return "gruppenAnmeldung";
-    }
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung/{uebungId}/{terminId}")
+  public String gruppenAnmeldung(final Model model, @PathVariable("uebungId") final Long uebungId,
+                                 @PathVariable("terminId") final Long terminId) {
+    return "gruppenAnmeldung";
+  }
 
-    @Secured("ROLE_USER")
-    @PostMapping("/anmeldung/{uebungId}/{terminId}")
-    public String gruppenAnmeldungAnmelden(final Model model, @PathVariable("uebungId") final Long uebungId,
-                                  @PathVariable("terminId") final Long terminId,
-                                           final String gruppenname, final String mitglieder) throws Exception {
-        anmeldungService.gruppenAnmeldung(uebungId, terminId, gruppenname, mitglieder);
-        return "gruppenAnmeldung";
-    }
+  @Secured("ROLE_USER")
+  @PostMapping("/anmeldung/{uebungId}/{terminId}")
+  public String gruppenAnmeldungAnmelden(final Model model, @PathVariable("uebungId") final Long uebungId,
+                                         @PathVariable("terminId") final Long terminId,
+                                         final String gruppenname, final String mitglieder) throws Exception {
+    anmeldungService.gruppenAnmeldung(uebungId, terminId, gruppenname, mitglieder);
+    return "gruppenAnmeldung";
+  }
 
 }
