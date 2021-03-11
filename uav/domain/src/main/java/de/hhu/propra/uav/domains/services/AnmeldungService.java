@@ -13,8 +13,7 @@ public class AnmeldungService {
   private final VerwaltungService verwaltungService;
   private final GithubAPIService githubAPIService;
 
-  public AnmeldungService(UebungService uebungService,
-                          VerwaltungService verwaltungService, GithubAPIService githubAPIService) {
+  public AnmeldungService(UebungService uebungService, VerwaltungService verwaltungService) {
     this.uebungService = uebungService;
     this.verwaltungService = verwaltungService;
     this.githubAPIService = githubAPIService;
