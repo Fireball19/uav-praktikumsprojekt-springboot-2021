@@ -2,7 +2,6 @@ package de.hhu.propra.uav.web.anmeldung;
 
 import de.hhu.propra.uav.domains.services.AnmeldungService;
 import de.hhu.propra.uav.domains.services.UebungService;
-import de.hhu.propra.uav.domains.services.VerwaltungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;

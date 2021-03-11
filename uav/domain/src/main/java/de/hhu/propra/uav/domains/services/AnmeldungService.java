@@ -1,7 +1,6 @@
 package de.hhu.propra.uav.domains.services;
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @ApplicationService
 public class AnmeldungService {

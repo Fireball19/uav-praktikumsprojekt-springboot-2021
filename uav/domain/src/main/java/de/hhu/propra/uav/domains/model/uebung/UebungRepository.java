@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.repositories;
+package de.hhu.propra.uav.domains.model.uebung;
 
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 

@@ -1,7 +1,6 @@
 package de.hhu.propra.uav;
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
-import de.hhu.propra.uav.domains.annotations.DomainService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,8 +11,7 @@ import static org.springframework.context.annotation.FilterType.ANNOTATION;
 @SpringBootApplication
 @ComponentScan(
     includeFilters = {
-        @ComponentScan.Filter(type = ANNOTATION, classes = ApplicationService.class),
-        @ComponentScan.Filter(type = ANNOTATION, classes = DomainService.class)
+        @ComponentScan.Filter(type = ANNOTATION, classes = ApplicationService.class)
     }
 )
 public class UebungsUndAnmeldungsverwaltungApplication {
