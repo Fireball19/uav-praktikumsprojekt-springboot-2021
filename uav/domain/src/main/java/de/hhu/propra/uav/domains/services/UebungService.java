@@ -99,4 +99,8 @@ public class UebungService {
     save(uebung);
   }
 
+  public Modus ueberpruefeAnmeldungsModus(final Long Id) {
+    return findById(Id).getModus();
+  }
+
 }
