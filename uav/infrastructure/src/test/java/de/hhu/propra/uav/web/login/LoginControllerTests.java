@@ -1,6 +1,7 @@
 package de.hhu.propra.uav.web.login;
 
 import de.hhu.propra.uav.UebungsUndAnmeldungsverwaltungApplication;
+import de.hhu.propra.uav.web.SetupOAuth2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
-import static de.hhu.propra.uav.web.SetupOAuth2Tests.buildPrincipalUser;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -29,7 +29,7 @@ public class LoginControllerTests {
 
   @Test
   public void testWithAuthentication() throws Exception {
-    OAuth2AuthenticationToken principal = buildPrincipalUser();
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(
         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
