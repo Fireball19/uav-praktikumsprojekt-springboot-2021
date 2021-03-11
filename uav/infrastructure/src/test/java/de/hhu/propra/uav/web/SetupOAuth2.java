@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SetupOAuth2Tests {
+public class SetupOAuth2 {
 
   public static OAuth2AuthenticationToken buildPrincipalUser() {
     Map<String, Object> attributes = new HashMap<>();
