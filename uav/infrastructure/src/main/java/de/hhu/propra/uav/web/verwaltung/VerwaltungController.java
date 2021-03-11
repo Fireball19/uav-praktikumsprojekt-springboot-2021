@@ -17,100 +17,101 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+
 @SuppressWarnings("PMD")
 @Controller
 public class VerwaltungController {
 
-    public static final String ROLE_ORGA = "ROLE_ORGA";
-    @Autowired
-    private UebungService uebungService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private VerwaltungService verwaltungService;
+  public static final String ROLE_ORGA = "ROLE_ORGA";
+  @Autowired
+  private UebungService uebungService;
+  @Autowired
+  private StudentService studentService;
+  @Autowired
+  private VerwaltungService verwaltungService;
 
-    @Secured("ROLE_ORGA")
-    @GetMapping("/verwaltung/konfiguration/uebung")
-    public String uebungKonfiguration(final Model model) {
-        model.addAttribute("uebung", uebungService.createDefault());
-        return "uebungErstellen";
+  @Secured("ROLE_ORGA")
+  @GetMapping("/verwaltung/konfiguration/uebung")
+  public String uebungKonfiguration(final Model model) {
+    model.addAttribute("uebung", uebungService.createDefault());
+    return "uebungErstellen";
+  }
+
+
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/uebung")
+  public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors) {
+    if (errors.hasErrors()) {
+      return "uebungErstellen";
     }
 
+    uebungService.save(uebung);
 
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/uebung")
-    public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors) {
-        if (errors.hasErrors()) {
-            return "uebungErstellen";
-        }
+    return "redirect:/verwaltung/uebersicht/uebungen";
+  }
 
-        uebungService.save(uebung);
+  @Secured(ROLE_ORGA)
+  @GetMapping("/verwaltung/konfiguration/termin")
+  public String terminKonfiguration(final Model model) {
+    model.addAttribute("id", 0L);
+    model.addAttribute("uebungen", uebungService.findAll());
+    return "termineKonfiguration";
+  }
 
-        return "redirect:/verwaltung/uebersicht/uebungen";
-    }
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/termin")
+  public String terminHinzufuegen(final Long id, final String tutor,
+                                  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") final LocalDateTime zeitpunkt) {
+    uebungService.addTermin(id, tutor, zeitpunkt);
+    return "termineKonfiguration";
+  }
 
-    @Secured(ROLE_ORGA)
-    @GetMapping("/verwaltung/konfiguration/termin")
-    public String terminKonfiguration(final Model model) {
-        model.addAttribute("id", 0L);
-        model.addAttribute("uebungen", uebungService.findAll());
-        return "termineKonfiguration";
-    }
+  @Secured(ROLE_ORGA)
+  @GetMapping("/verwaltung/konfiguration/studenten")
+  public String studentenVerwaltung(final Model model) {
+    model.addAttribute("studenten", studentService.findAll());
+    model.addAttribute("uebungen", uebungService.findAll());
 
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/termin")
-    public String terminHinzufuegen(final Long id, final String tutor,
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") final LocalDateTime zeitpunkt) {
-        uebungService.addTermin(id, tutor, zeitpunkt);
-        return "termineKonfiguration";
-    }
+    return "studentenKonfiguration";
+  }
 
-    @Secured(ROLE_ORGA)
-    @GetMapping("/verwaltung/konfiguration/studenten")
-    public String studentenVerwaltung(final Model model) {
-        model.addAttribute("studenten", studentService.findAll());
-        model.addAttribute("uebungen", uebungService.findAll());
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/studenten")
+  public String studentKonfigurieren(final String github) {
+    studentService.addStudent(github);
 
-        return "studentenKonfiguration";
-    }
+    return "redirect:/verwaltung/konfiguration/studenten";
+  }
 
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/studenten")
-    public String studentKonfigurieren(final String github) {
-        studentService.addStudent(github);
+  @Secured(ROLE_ORGA)
+  @GetMapping("/verwaltung/konfiguration/studenten/{id}")
+  public String studentenVerwaltung(final Model model, @PathVariable("id") final Long id) {
+    model.addAttribute("uebung", uebungService.findById(id));
+    model.addAttribute("studenten", studentService.findAllAsMap());
 
-        return "redirect:/verwaltung/konfiguration/studenten";
-    }
+    return "studentenTermin";
+  }
 
-    @Secured(ROLE_ORGA)
-    @GetMapping("/verwaltung/konfiguration/studenten/{id}")
-    public String studentenVerwaltung(final Model model, @PathVariable("id") final Long id) {
-        model.addAttribute("uebung", uebungService.findById(id));
-      model.addAttribute("studenten",studentService.findAllAsMap());
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
+  public String studentenTerminHinzufuegen(@PathVariable("id") final Long id, final String github, final Long terminId) {
+    verwaltungService.addStudent(github, id, terminId);
+    return "redirect:/verwaltung/konfiguration/studenten/{id}";
+  }
 
-        return "studentenTermin";
-    }
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/studenten/{id}/entfernen")
+  public String studentenTerminEntfernen(@PathVariable("id") final Long id, final String github, final Long terminId) {
+    verwaltungService.deleteStudent(github, id, terminId);
+    return "redirect:/verwaltung/konfiguration/studenten/{id}";
+  }
 
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/studenten/{id}/hinzufuegen")
-    public String studentenTerminHinzufuegen(@PathVariable("id") final Long id, final String github, final Long terminId) {
-        verwaltungService.addStudent(github, id, terminId);
-        return "redirect:/verwaltung/konfiguration/studenten/{id}";
-    }
-
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/studenten/{id}/entfernen")
-    public String studentenTerminEntfernen(@PathVariable("id") final Long id, final String github, final Long terminId) {
-        verwaltungService.deleteStudent(github, id, terminId);
-        return "redirect:/verwaltung/konfiguration/studenten/{id}";
-    }
-
-    @Secured(ROLE_ORGA)
-    @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
-    public String studentenTerminVerschieben(@PathVariable("id") final Long id,
-                                             final String github, final Long terminAltId, final Long terminNeuId) {
-        verwaltungService.moveStudent(github, id, terminAltId, terminNeuId);
-        return "redirect:/verwaltung/konfiguration/studenten/{id}";
-    }
+  @Secured(ROLE_ORGA)
+  @PostMapping("/verwaltung/konfiguration/studenten/{id}/verschieben")
+  public String studentenTerminVerschieben(@PathVariable("id") final Long id,
+                                           final String github, final Long terminAltId, final Long terminNeuId) {
+    verwaltungService.moveStudent(github, id, terminAltId, terminNeuId);
+    return "redirect:/verwaltung/konfiguration/studenten/{id}";
+  }
 
 }
