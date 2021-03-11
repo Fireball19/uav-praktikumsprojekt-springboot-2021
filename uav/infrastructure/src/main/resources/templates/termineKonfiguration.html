@@ -37,6 +37,21 @@
 
         <form method="post">
 
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Praktische Übung</th>
+                    <th scope="col">Verwaltung</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="uebung : ${uebungen}">
+                    <td th:text="${uebung.name}">Übung</td>
+                     <td>  Termin hinzufügen </td>
+                </tr>
+                </tbody>
+            </table>
+
             <div class="form-group">
                 <label>Übung</label>
                 <select th:value="*{id}" class="form-control" name="id" required>
@@ -60,6 +75,8 @@
             <button type="submit" class="btn btn-primary">Termin hinzufügen</button>
 
         </form>
+
+
 </main>
 
 </body>
