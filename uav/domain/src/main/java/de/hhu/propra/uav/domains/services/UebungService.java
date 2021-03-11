@@ -1,10 +1,10 @@
 package de.hhu.propra.uav.domains.services;
 
 
-import de.hhu.propra.uav.domains.annotations.DomainService;
+import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
-import de.hhu.propra.uav.domains.repositories.UebungRepository;
+import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-@DomainService
+@ApplicationService
 public class UebungService {
 
   @SuppressWarnings("PMD")
