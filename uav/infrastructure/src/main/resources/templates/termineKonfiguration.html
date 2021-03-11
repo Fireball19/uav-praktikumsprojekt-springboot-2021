@@ -33,9 +33,8 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1>Konfiguration</h1>
 
-        <h2>Termin konfigurieren</h2>
-
-        <form method="post">
+        <h2>Termine konfigurieren</h2>
+        <br>
 
             <table class="table table-bordered">
                 <thead class="thead-dark">
@@ -47,35 +46,11 @@
                 <tbody>
                 <tr th:each="uebung : ${uebungen}">
                     <td th:text="${uebung.name}">Übung</td>
-                     <td>  Termin hinzufügen </td>
+                     <td><a th:href="@{'/verwaltung/konfiguration/termin/' + ${uebung.id}}">
+                     Termine hinzufügen / importieren</a></td>
                 </tr>
                 </tbody>
             </table>
-
-            <div class="form-group">
-                <label>Übung</label>
-                <select th:value="*{id}" class="form-control" name="id" required>
-                    <option value="">Übung auswählen</option>
-                    <option th:each="uebung : ${uebungen}" th:value="${uebung.id}" th:text="${uebung.name}"></option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Tutor</label>
-                <input type="text" name="tutor" th:value="*{tutor}" autocomplete="off" class="form-control"
-                       placeholder="Tutor" required>
-            </div>
-
-            <div class="form-group">
-                <label>Zeitpunkt</label>
-                <input class="form-control" name="zeitpunkt" type="datetime-local"
-                       th:value="*{zeitpunkt}" autocomplete="off" placeholder="2000-01-01T01:01" required>
-            </div>
-            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <button type="submit" class="btn btn-primary">Termin hinzufügen</button>
-
-        </form>
-
 
 </main>
 

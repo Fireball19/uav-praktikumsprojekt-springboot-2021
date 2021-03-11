@@ -1,0 +1,75 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Praktische Übung</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/starter-template.css}"
+          href="../static/css/starter-template.css"
+          rel="stylesheet">
+
+    <link th:href="@{/css/dashboard.css}"
+          href="../static/css/dashboard.css"
+          rel="stylesheet">
+
+    <link rel="icon" th:href="@{/images/logo.png}" href="images/logo.png">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar(verwaltung)"></div>
+<div th:replace="fragments/sidebar :: sidebar(konfigurationTermin)"></div>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h1>Konfiguration</h1>
+
+    <h2>Termine hinzufügen: [[${uebung.name}]]</h2>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Manuell</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label>Tutor</label>
+                    <input type="text" name="tutor" th:value="*{tutor}" autocomplete="off" class="form-control"
+                           placeholder="Tutor" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Zeitpunkt</label>
+                    <input class="form-control" name="zeitpunkt" type="datetime-local"
+                           th:value="*{zeitpunkt}" autocomplete="off" placeholder="2000-01-01T01:01" required>
+                </div>
+                <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                <button type="submit" class="btn btn-primary"
+                        th:formaction="@{|${#httpServletRequest.requestURI}/hinzufuegen|}">Termin hinzufügen</button>
+            </form>
+
+        </div>
+
+        <div class="col-sm-6">
+            <h2>Importieren (TODO)</h2>
+            <form method="post" th:action="@{/upload-csv-file}" enctype="multipart/form-data">
+                <div class="form-group mt-3">
+                    <label for="file">Eine CSV Datei auswählen</label>
+                    <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
+                </div>
+                <button type="submit" class="btn btn-primary">Termine importieren</button>
+            </form>
+
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
