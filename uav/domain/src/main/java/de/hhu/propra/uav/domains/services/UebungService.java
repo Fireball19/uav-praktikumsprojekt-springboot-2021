@@ -11,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationService
 public class UebungService {
@@ -50,6 +51,15 @@ public class UebungService {
             new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + id + " vorhanden!"));
   }
 
+  public Uebung findByIdForStudent(final Long id) {
+    Uebung uebung = findById(id);
+    if(!LocalDateTime.now().isBefore(uebung.getAnmeldeschluss())
+        || !LocalDateTime.now().isAfter(uebung.getAnmeldebeginn())) {
+      throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"Nicht im Anmeldezeitraum!");
+    }
+    return uebung;
+  }
+
   @SuppressWarnings("PMD")
   public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
@@ -58,6 +68,13 @@ public class UebungService {
 
   public List<Uebung> findAll() {
     return uebungRepository.findAll();
+  }
+
+  public List<Uebung> findAllForStudent() {
+    return uebungRepository.findAll().stream()
+        .filter(x -> x.getAnmeldeschluss().isAfter(LocalDateTime.now()))
+        .filter(x -> x.getAnmeldebeginn().isBefore(LocalDateTime.now()))
+        .collect(Collectors.toList());
   }
 
   public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {
