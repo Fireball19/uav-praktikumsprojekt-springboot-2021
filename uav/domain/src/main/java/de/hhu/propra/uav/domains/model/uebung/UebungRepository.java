@@ -15,4 +15,6 @@ public interface UebungRepository {
    Optional<Uebung> findById(Long id);
 
    Uebung save(Uebung uebung);
+
+  Uebung findFirstByBearbeitetIsFalse();
 }

@@ -34,6 +34,16 @@ public class UebungService {
     uebungRepository.save(uebung);
   }
 
+  public Uebung findFirstByBearbeitetIsFalse() {
+    return uebungRepository.findFirstByBearbeitetIsFalse();
+  }
+
+  public void abschliessen(final Long id) {
+    Uebung uebung = findById(id);
+    uebung.abschliessen();
+    save(uebung);
+  }
+
   @SuppressWarnings("PMD")
   public Uebung findById(final Long id) {
     return uebungRepository.findById(id).orElseThrow(() ->
