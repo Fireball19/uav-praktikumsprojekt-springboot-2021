@@ -77,6 +77,10 @@ public class UebungService {
         .collect(Collectors.toList());
   }
 
+  public int ueberpruefeMaxGroesse(final Long Id) {
+    return findById(Id).getMaxGroesse();
+  }
+
   public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {
     Uebung uebung = findById(uebungId);
     uebung.addGruppe(gruppenname, terminId);
