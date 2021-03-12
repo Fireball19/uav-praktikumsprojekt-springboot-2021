@@ -52,7 +52,7 @@ public class TerminImporterImpl implements TerminImporter {
     try {
       inputStream = file.getInputStream();
     } catch (IOException e) {
-      new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
     }
 
     return inputStream;
