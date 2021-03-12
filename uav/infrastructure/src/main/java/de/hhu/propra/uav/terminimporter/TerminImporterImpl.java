@@ -13,13 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class TerminImporterImpl implements TerminImporter {
 
-  public List<TerminFile> convertToTerminFile(InputStream inputStream) {
+  public List<TerminFile> convertToTerminFile(InputStream inputStream)  {
     List<TerminFile> termine = new ArrayList<>();
 
     try {
@@ -39,6 +40,8 @@ public class TerminImporterImpl implements TerminImporter {
       throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler in einer CSV Zeile!");
     } catch (IOException e) {
       throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+    } catch (DateTimeParseException e) {
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Ein Zeitpunkt ist nicht richtig formatiert");
     }
 
     return termine;
@@ -49,7 +52,7 @@ public class TerminImporterImpl implements TerminImporter {
     try {
       inputStream = file.getInputStream();
     } catch (IOException e) {
-      new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
     }
 
     return inputStream;
