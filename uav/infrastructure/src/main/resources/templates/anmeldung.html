@@ -46,8 +46,10 @@
                             <p class="card-text" th:inline="text">Modus: [[${uebungen[i].modus}]]</p>
                             <p class="card-text" th:inline="text">min Größe: [[${uebungen[i].minGroesse}]]</p>
                             <p class="card-text" th:inline="text">max Größe: [[${uebungen[i].maxGroesse}]]</p>
-                            <p class="card-text" th:inline="text">Anmeldebeginn: [[${uebungen[i].anmeldebeginn}]]</p>
-                            <p class="card-text" th:inline="text">Anmeldeschluss: [[${uebungen[i].anmeldeschluss}]]</p>
+                            <p class="card-text" th:inline="text">Anmeldebeginn:
+                                [[${#temporals.format(uebungen[i].anmeldebeginn, 'dd-MM-yyyy HH:mm')}]]</p>
+                            <p class="card-text" th:inline="text">Anmeldeschluss:
+                                [[${#temporals.format(uebungen[i].anmeldeschluss, 'dd-MM-yyyy HH:mm')}]]</p>
                         </div>
                         <div class="card-footer text-center">
                             <a th:if="${uebungen[i].modus.toString() == 'INDIVIDUALANMELDUNG'}"
