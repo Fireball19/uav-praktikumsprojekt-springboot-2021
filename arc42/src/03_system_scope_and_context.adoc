@@ -5,18 +5,20 @@
 
 === Fachlicher Kontext
 
+image:../images/fachlicher-kontext.png[Fachlicher Kontext]
 
-
-**<Diagramm und/oder Tabelle>**
-
-**<optional: Erläuterung der externen fachlichen Schnittstellen>**
+* vorgefertigte Termine
+* Studenten
+* Organisatoren
+* Tutoren
+* Verbindung zu Github
+* Datenbank zur Persistierung von Studenten, Übungen und Terminen
 
 === Technischer Kontext
 
+image:../images/technischer-kontext.png[Technischer Kontext]
 
-
-**<Diagramm oder Tabelle>**
-
-**<optional: Erläuterung der externen technischen Schnittstellen>**
-
-**<Mapping fachliche auf technische Schnittstellen>**
+* (csv-Datei)
+* Authentifizierung mit OAuth2
+* Github API zur Erstellung von Repos und Zuteilung der Studenten
+* Docker image von mariaDB

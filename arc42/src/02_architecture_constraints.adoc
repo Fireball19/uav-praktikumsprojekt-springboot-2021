@@ -1,9 +1,10 @@
 [[section-architecture-constraints]]
 == Randbedingungen
 
-
-* Verwenden von Spring
+* geschrieben in Java
+* Verwende Spring Frameworks
 * Github für die Authentifizierung
-* Docker zum starten der Anwendung
+* Docker zum Starten der Anwendung
 * automatisierte Tests mit Github Action und Gradle
 * Persistenz in Datenbank
+* nur Komponenten mit kostenfreier Lizenz
