@@ -53,7 +53,7 @@ public class UebungServiceTests {
     Uebung testUebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 1, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
-    when(uebungRepository.findById(1L)).thenReturn(java.util.Optional.of(testUebung));
+    when(uebungRepository.findById(1L)).thenReturn(Optional.of(testUebung));
 
     UebungService uebungService = new UebungService(uebungRepository);
     uebungService.abschliessen(1L);
@@ -136,26 +136,4 @@ public class UebungServiceTests {
     assertThat(results.contains(testUebung1)).isFalse();
     assertThat(results.contains(testUebung2)).isTrue();
   }
-
-  /*
-
-  @Test
-  public void addGruppeTest(){
-    Uebung testUebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 1, 4,
-        LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(5, ChronoUnit.MINUTES));
-    testUebung.addTermin("Alex",LocalDateTime.now());
-
-    when(uebungRepository.findById(1L)).thenReturn(Optional.of(testUebung));
-    when(testUebung.findTermin(any())).thenReturn(testUebung.getTermine().get(0));
-
-    UebungService uebungService = new UebungService(uebungRepository);
-    uebungService.addGruppe(1L,1L,"TestTeam");
-
-    assertThat(testUebung.getGruppen().size()).isEqualTo(1);
-  }
-
-   */
-
-
 }
