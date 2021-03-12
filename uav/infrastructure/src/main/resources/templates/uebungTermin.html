@@ -59,7 +59,9 @@
 
         <div class="col-sm-6">
             <h2>Importieren (TODO)</h2>
-            <form method="post" th:action="@{/upload-csv-file}" enctype="multipart/form-data">
+            <form method="post" th:action="@{'/verwaltung/konfiguration/termin/' + ${uebung.id} +
+            '/hinzufuegen/csv-file'}"
+                  enctype="multipart/form-data">
                 <div class="form-group mt-3">
                     <label for="file">Eine CSV Datei auswählen</label>
                     <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
