@@ -36,9 +36,9 @@
         <br>
 
         <div th:if="${#lists.size(uebungen) > 0}">
-            <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 3)}">
+            <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 2)}">
                 <div class="card-deck">
-                    <div class="card" th:each="i: ${#numbers.sequence(index, index + 2, 1)}"
+                    <div class="card" th:each="i: ${#numbers.sequence(index, index + 1, 1)}"
                          th:if="${i < #lists.size(uebungen)}">
                         <h5 class="card-header text-center text-white bg-dark" th:text="${uebungen[i].name}">Praktische
                             Übung 1</h5>
@@ -50,7 +50,14 @@
                             <p class="card-text" th:inline="text">Anmeldeschluss: [[${uebungen[i].anmeldeschluss}]]</p>
                         </div>
                         <div class="card-footer text-center">
-                            <a th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Zur Übung anmelden</a>
+                            <a th:if="${uebungen[i].modus.toString() == 'INDIVIDUALANMELDUNG'}"
+                               th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Zur Übung anmelden</a>
+                            <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
+                               th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Als Gruppe anmelden</a>
+                            <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
+                               th:href="@{'/anmeldung/' + ${uebungen[i].id} + '/restplaetze'}"
+                               class="btn btn-primary">Offene Restplätze</a>
+
                         </div>
                     </div>
                 </div>
