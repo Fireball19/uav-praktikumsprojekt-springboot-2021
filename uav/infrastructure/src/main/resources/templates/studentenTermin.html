@@ -46,7 +46,7 @@
             </thead>
             <tbody>
             <tr th:each="termin : ${uebung.termine}">
-                <td th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}">Termin</td>
+                <td th:text="${termin.tutor} + ' am ' + ${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Termin</td>
                 <td><span th:each="studentRef, iterStat : ${termin.studenten}"
                           th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
                           ', ': ${studenten.get(studentRef.id).github}"></span></td>

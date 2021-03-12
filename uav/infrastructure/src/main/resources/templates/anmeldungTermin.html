@@ -45,7 +45,7 @@
             </thead>
             <tbody>
             <tr th:each="termin : ${uebung.termine}" th:unless="${termin.reserviert}">
-                <td th:text="${termin.zeitpunkt}">Student</td>
+                <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Student</td>
                 <td><a th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id}}">zur Anmeldung</a></td>
             </tr>
             </tbody>
