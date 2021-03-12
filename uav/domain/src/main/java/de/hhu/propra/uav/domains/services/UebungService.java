@@ -5,9 +5,12 @@ import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
+import de.hhu.propra.uav.domains.terminimporter.TerminFile;
+import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -19,9 +22,12 @@ public class UebungService {
   @SuppressWarnings("PMD")
   private final UebungRepository uebungRepository;
 
+  private final TerminImporter terminImporter;
+
   @SuppressWarnings("PMD")
-  public UebungService(final UebungRepository uebungRepository){
+  public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter){
     this.uebungRepository = uebungRepository;
+    this.terminImporter = terminImporter;
   }
 
   @SuppressWarnings("PMD")
@@ -59,8 +65,6 @@ public class UebungService {
     }
     return uebung;
   }
-
-
 
   @SuppressWarnings("PMD")
   public Uebung findByName(final String name) {
@@ -108,4 +112,12 @@ public class UebungService {
     return findById(Id).getModus();
   }
 
+  public void addTermineByTerminImporter(final long uebungId, final InputStream inputStream) {
+    Uebung uebung = findById(uebungId);
+    List<TerminFile> termine = terminImporter.convertToTerminFile(inputStream);
+    for (TerminFile termin : termine) {
+      uebung.addTermin(termin.getTutor(), termin.getZeitpunkt());
+    }
+    save(uebung);
+  }
 }
