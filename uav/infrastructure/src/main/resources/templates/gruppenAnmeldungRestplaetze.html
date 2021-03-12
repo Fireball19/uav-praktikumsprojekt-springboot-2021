@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Restplätze</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/starter-template.css}"
+          href="../static/css/starter-template.css"
+          rel="stylesheet">
+
+    <link th:href="@{/css/dashboard.css}"
+          href="../static/css/dashboard.css"
+          rel="stylesheet">
+
+    <link rel="icon" th:href="@{/images/logo.png}" href="images/logo.png">
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: navbar(anmeldung)"></div>
+
+<div class="container">
+    <h1>Anmeldung: [[${uebung.name}]]</h1>
+
+    <h2>Termine</h2>
+    <br>
+
+    <div th:unless="${#lists.isEmpty(restplaetze)}">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Zeitpunkt</th>
+                <th scope="col">Belegte Plätze</th>
+                <th scope="col">Anmeldung</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="termin : ${restplaetze}" th:if="${termin.reserviert}">
+                <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
+                <td th:text="${termin.getStudenten().size() + ' / ' + termin.getMaxGroesse()}"></td>
+                <td><a class="btn btn-primary" th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +
+                    '/restplaetze/anmelden'}">Anmelden</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script th:src="@{/js/bootstrap.bundle.min.js}" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+</body>
+</html>

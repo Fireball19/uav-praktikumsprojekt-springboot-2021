@@ -8,7 +8,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
 
@@ -67,6 +70,12 @@ public class Uebung {
       return;
     }
     termin.deleteStudent(student);
+  }
+
+  public List<Termin> getRestplaetze() {
+    return termine.stream()
+        .filter(x -> x.getStudenten().size() < maxGroesse)
+        .collect(Collectors.toList());
   }
 
   private void deleteStudent(final Student student, final Termin termin) {
@@ -128,5 +137,26 @@ public class Uebung {
 
   public void abschliessen() {
       this.bearbeitet = true;
+  }
+
+  public Map<LocalDateTime,Integer> getKapazitaeten(){
+    Map<LocalDateTime,Integer> localDateTimeMap = new HashMap<>();
+    for(Termin termin : termine){
+        localDateTimeMap.merge(termin.getZeitpunkt(),termin.getKapazitaet(),Integer::sum);
+    }
+
+    return localDateTimeMap;
+  }
+
+  public boolean hasTerminFreiePlaetze(final Long terminId) {
+    return findTermin(terminId).getKapazitaet() > 0;
+  }
+
+  public List<Long> filterTerminIdsByZeitpunkt(final LocalDateTime zeitpunkt){
+    return termine.stream().filter(x -> x.getZeitpunkt()
+        .isEqual(zeitpunkt))
+        .mapToLong(Termin::getId)
+        .boxed()
+        .collect(Collectors.toList());
   }
 }

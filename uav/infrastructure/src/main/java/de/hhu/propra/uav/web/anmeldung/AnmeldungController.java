@@ -1,14 +1,20 @@
 package de.hhu.propra.uav.web.anmeldung;
 
+import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.services.AnmeldungService;
 import de.hhu.propra.uav.domains.services.UebungService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.time.LocalDateTime;
 
 @SuppressWarnings("PMD")
 @Controller
@@ -30,6 +36,9 @@ public class AnmeldungController {
   @GetMapping("/anmeldung/{uebungId}")
   public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
     model.addAttribute("uebung", uebungService.findByIdForStudent(uebungId));
+    if(uebungService.ueberpruefeAnmeldungsModus(uebungId) == Modus.INDIVIDUALANMELDUNG) {
+      return "individualAnmeldung";
+    }
     return "anmeldungTermin";
   }
 
@@ -49,4 +58,31 @@ public class AnmeldungController {
     return "gruppenAnmeldung";
   }
 
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung/{uebungId}/restplaetze")
+  public String restplaetze(final Model model, @PathVariable("uebungId") final Long uebungId) {
+    model.addAttribute("uebung",uebungService.findById(uebungId));
+    model.addAttribute("restplaetze", uebungService.findById(uebungId).getRestplaetze());
+    return "gruppenAnmeldungRestplaetze";
+
+  }
+
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung/{uebungId}/{terminId}/restplaetze/anmelden")
+  public String restplatzAnmeldung(@PathVariable("uebungId") final Long uebungId,
+                                   @PathVariable("terminId") final Long terminId,
+                                   final @AuthenticationPrincipal OAuth2User principal) {
+    anmeldungService.restAnmeldung(uebungId,terminId, principal.getAttribute("login"));
+    return "redirect:/anmeldung/{uebungId}/restplaetze";
+  }
+
+  @Secured("ROLE_USER")
+  @GetMapping("/anmeldung/{uebungId}/{zeitpunkt}/individualanmeldung/anmelden")
+  public String individualAnmeldung(@PathVariable("uebungId") final Long uebungId,
+                                    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @PathVariable("zeitpunkt")
+                                    final LocalDateTime zeitpunkt,
+                                    final @AuthenticationPrincipal OAuth2User principal) {
+    anmeldungService.individualAnmeldung(uebungId,zeitpunkt, principal.getAttribute("login"));
+    return "redirect:/anmeldung/{uebungId}";
+  }
 }

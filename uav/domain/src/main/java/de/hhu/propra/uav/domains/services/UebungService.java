@@ -27,7 +27,7 @@ public class UebungService {
   @SuppressWarnings("PMD")
   public Uebung createDefault() {
     return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0,
-        LocalDateTime.now().plus(5,ChronoUnit.MINUTES),
+        LocalDateTime.now(),
         LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
   }
 
@@ -60,6 +60,8 @@ public class UebungService {
     return uebung;
   }
 
+
+
   @SuppressWarnings("PMD")
   public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
@@ -79,6 +81,9 @@ public class UebungService {
 
   public int ueberpruefeMaxGroesse(final Long Id) {
     return findById(Id).getMaxGroesse();
+  }
+  public int ueberpruefeMinGroesse(final Long Id) {
+    return findById(Id).getMinGroesse();
   }
 
   public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {

@@ -5,6 +5,7 @@ import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,11 +21,18 @@ public class AnmeldungService {
     this.verwaltungService = verwaltungService;
   }
 
+  public void restAnmeldung(final Long uebungId, final Long terminId, final String mitglied) {
+    verwaltungService.addStudent(mitglied,uebungId,terminId);
+  }
 
 
   public void gruppenAnmeldung(final Long uebungId, final Long terminId,
                                final String gruppenname, final String mitglieder) {
     final String[] split = mitglieder.split(",");
+    if(split.length < uebungService.ueberpruefeMinGroesse(uebungId)) {
+      throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
+          "liegt unter der minimalen Gruppengröße " + uebungService.ueberpruefeMaxGroesse(uebungId) + "!");
+    }
     if(split.length > uebungService.ueberpruefeMaxGroesse(uebungId)) {
       throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
           "übersteigt die maximale Gruppengröße " + uebungService.ueberpruefeMaxGroesse(uebungId) + "!");

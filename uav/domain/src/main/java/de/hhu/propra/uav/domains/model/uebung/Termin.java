@@ -53,4 +53,6 @@ class Termin {
   boolean containsStudent(final Student student) {
     return studenten.contains(new StudentRef(student.getId()));
   }
+
+  int getKapazitaet(){ return maxGroesse - studenten.size();}
 }
