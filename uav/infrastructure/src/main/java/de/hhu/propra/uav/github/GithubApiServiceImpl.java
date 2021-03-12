@@ -3,6 +3,7 @@ package de.hhu.propra.uav.github;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRef;
 import de.hhu.propra.uav.domains.model.uebung.Gruppe;
+import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.services.GithubAPIService;
 import de.hhu.propra.uav.domains.services.StudentService;
@@ -65,7 +66,8 @@ public class GithubApiServiceImpl implements GithubAPIService {
     if(uebung == null) {
       return;
     }
-    if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())) {
+    if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())
+        && uebungService.ueberpruefeAnmeldungsModus(uebung.getId()) == Modus.GRUPPENANMELDUNG) {
       System.out.println("Hallo2!");
       List<Gruppe> gruppen = uebung.getGruppen();
       for (Gruppe gruppe : gruppen) {

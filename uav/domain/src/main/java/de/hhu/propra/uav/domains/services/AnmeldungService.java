@@ -25,6 +25,17 @@ public class AnmeldungService {
     verwaltungService.addStudent(mitglied,uebungId,terminId);
   }
 
+  public void individualAnmeldung(final Long uebungId, final LocalDateTime zeitpunkt, final String student) {
+    Uebung uebung = uebungService.findById(uebungId);
+    List<Long> terminIds = uebung.filterTerminIdsByZeitpunkt(zeitpunkt);
+
+    for (Long terminId : terminIds) {
+      if (uebung.hasTerminFreiePlaetze(terminId)) {
+        verwaltungService.addStudent(student, uebungId, terminId);
+        break;
+      }
+    }
+  }
 
   public void gruppenAnmeldung(final Long uebungId, final Long terminId,
                                final String gruppenname, final String mitglieder) {
