@@ -13,3 +13,17 @@ ifdef::env-github[]
 endif::[]
 
 == Konfiguration
+
+== Verwaltung
+
+=== Termine per CSV Datei importieren
+
+*Format der CSV Dateien:*
+
+[source,csv]
+----
+tutor,zeitpunkt
+Alex,2021-03-12T18:00
+Berta,2021-03-12T18:00
+Steffen,2021-03-12T18:00
+----
