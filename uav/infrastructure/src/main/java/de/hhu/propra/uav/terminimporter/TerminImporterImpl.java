@@ -36,9 +36,9 @@ public class TerminImporterImpl implements TerminImporter {
       reader.close();
 
     } catch (CsvValidationException e) {
-      new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler in einer CSV Zeile!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler in einer CSV Zeile!");
     } catch (IOException e) {
-      new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
     }
 
     return termine;
