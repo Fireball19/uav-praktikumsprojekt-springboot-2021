@@ -46,6 +46,8 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.0-M1'
 	testImplementation 'com.tngtech.archunit:archunit-junit5:0.17.0'
 	testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.8.0'
+
+	implementation group: 'com.opencsv', name: 'opencsv', version: '5.3'
 }
 
 test {
