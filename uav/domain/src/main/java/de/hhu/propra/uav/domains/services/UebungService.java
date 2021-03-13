@@ -4,6 +4,7 @@ package de.hhu.propra.uav.domains.services;
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
+import de.hhu.propra.uav.domains.model.uebung.UebungFactory;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
 import de.hhu.propra.uav.domains.terminimporter.TerminFile;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
@@ -32,9 +33,7 @@ public class UebungService {
 
   @SuppressWarnings("PMD")
   public Uebung createDefault() {
-    return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0,
-        LocalDateTime.now(),
-        LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
+    return UebungFactory.createDefault();
   }
 
   public void save(final Uebung uebung) {
