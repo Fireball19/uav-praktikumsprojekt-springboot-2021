@@ -17,4 +17,6 @@ public interface UebungRepository {
    Uebung save(Uebung uebung);
 
   Uebung findFirstByBearbeitetIsFalse();
+
+  Uebung findTopByOrderByIdDesc();
 }
