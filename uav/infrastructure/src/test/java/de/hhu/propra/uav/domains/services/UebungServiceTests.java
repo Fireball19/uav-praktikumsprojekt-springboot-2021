@@ -3,6 +3,7 @@ package de.hhu.propra.uav.domains.services;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
+import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,12 +26,14 @@ public class UebungServiceTests {
 
   @Mock
   UebungRepository uebungRepository;
+  @Mock
+  TerminImporter terminImporter;
 
   @Test
   public void findByGithubThrowsException() {
     when(uebungRepository.findByName(anyString())).thenReturn(Optional.empty());
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
     assertThrows(HttpClientErrorException.class,
         () -> {
           uebungService.findByName("PU1");
@@ -41,7 +44,7 @@ public class UebungServiceTests {
   public void findByIdThrowsException() {
     when(uebungRepository.findById(any())).thenReturn(Optional.empty());
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
     assertThrows(HttpClientErrorException.class,
         () -> {
           uebungService.findById(any());
@@ -53,9 +56,9 @@ public class UebungServiceTests {
     Uebung testUebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 1, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
-    when(uebungRepository.findById(1L)).thenReturn(java.util.Optional.of(testUebung));
+    when(uebungRepository.findById(1L)).thenReturn(Optional.of(testUebung));
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
     uebungService.abschliessen(1L);
 
     assertThat(testUebung.isBearbeitet()).isTrue();
@@ -69,7 +72,7 @@ public class UebungServiceTests {
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     when(uebungRepository.findByName("TestUebung")).thenReturn(Optional.of(testUebung));
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
 
     assertThat(uebungService.findByName("TestUebung")).isEqualTo(testUebung);
     verify(uebungRepository, times(1)).findByName("TestUebung");
@@ -82,7 +85,7 @@ public class UebungServiceTests {
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     when(uebungRepository.findById(1L)).thenReturn(Optional.of(testUebung));
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
 
     assertThat(uebungService.findById(1L)).isEqualTo(testUebung);
     verify(uebungRepository, times(1)).findById(1L);
@@ -97,7 +100,7 @@ public class UebungServiceTests {
 
     when(uebungRepository.findById(any())).thenReturn(Optional.of(testUebung));
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
 
     assertThrows(HttpClientErrorException.class,
         () -> {
@@ -113,7 +116,7 @@ public class UebungServiceTests {
         LocalDateTime.now().plus(5, ChronoUnit.MINUTES));
 
     when(uebungRepository.findById(any())).thenReturn(Optional.of(testUebung));
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
 
     assertThat(uebungService.findByIdForStudent(any())).isEqualTo(testUebung);
   }
@@ -129,33 +132,11 @@ public class UebungServiceTests {
 
     when(uebungRepository.findAll()).thenReturn(List.of(testUebung1, testUebung2));
 
-    UebungService uebungService = new UebungService(uebungRepository);
+    UebungService uebungService = new UebungService(uebungRepository,terminImporter);
     List<Uebung> results = uebungService.findAllForStudent();
 
     assertThat(results.size()).isEqualTo(1);
     assertThat(results.contains(testUebung1)).isFalse();
     assertThat(results.contains(testUebung2)).isTrue();
   }
-
-  /*
-
-  @Test
-  public void addGruppeTest(){
-    Uebung testUebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 1, 4,
-        LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(5, ChronoUnit.MINUTES));
-    testUebung.addTermin("Alex",LocalDateTime.now());
-
-    when(uebungRepository.findById(1L)).thenReturn(Optional.of(testUebung));
-    when(testUebung.findTermin(any())).thenReturn(testUebung.getTermine().get(0));
-
-    UebungService uebungService = new UebungService(uebungRepository);
-    uebungService.addGruppe(1L,1L,"TestTeam");
-
-    assertThat(testUebung.getGruppen().size()).isEqualTo(1);
-  }
-
-   */
-
-
 }
