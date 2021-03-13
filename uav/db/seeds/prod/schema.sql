@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS uebung
     anmeldeschluss DATETIME,
     bearbeitet     BOOLEAN,
     PRIMARY KEY (id)
-);
+ );
 
 CREATE TABLE IF NOT EXISTS termin
 (
