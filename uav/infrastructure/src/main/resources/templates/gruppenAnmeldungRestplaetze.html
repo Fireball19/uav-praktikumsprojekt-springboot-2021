@@ -40,12 +40,14 @@
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Zeitpunkt</th>
+                <th scope="col">Wochentag</th>
                 <th scope="col">Belegte Plätze</th>
                 <th scope="col">Anmeldung</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="termin : ${restplaetze}" th:if="${termin.reserviert}">
+                <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
                 <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
                 <td th:text="${termin.getStudenten().size() + ' / ' + termin.getMaxGroesse()}"></td>
                 <td><a class="btn btn-primary" th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +

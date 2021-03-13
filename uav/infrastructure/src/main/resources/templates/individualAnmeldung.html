@@ -39,6 +39,7 @@
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
+                <th scope="col">Wochentag</th>
                 <th scope="col">Zeitpunkt</th>
                 <th scope="col">Freie Plätze</th>
                 <th scope="col">Anmeldung</th>
@@ -46,6 +47,7 @@
             </thead>
             <tbody>
             <tr th:each="instance : ${uebung.getKapazitaeten()}">
+                <td th:text="${#temporals.dayOfWeekName(instance.key)}">Tag</td>
                 <td th:text="${#temporals.format(instance.key, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
                 <td th:text="${instance.value}"></td>
                 <td><a class="btn btn-primary" th:href="@{'/anmeldung/' + ${uebung.id} + '/' +

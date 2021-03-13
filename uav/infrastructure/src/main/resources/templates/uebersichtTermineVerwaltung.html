@@ -51,10 +51,11 @@
                     <tbody>
                     <tr>
                         <td th:text="${termin.tutor}">Tutor</td>
-                        <td></td>
+                        <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
                         <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                        <td><span th:each="studentRef : ${termin.studenten}"
-                                   th:text="${studenten.get(studentRef.id).github} + ' '"></span></td>
+                        <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                                  th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
                     </tr>
                     </tbody>
                 </table>

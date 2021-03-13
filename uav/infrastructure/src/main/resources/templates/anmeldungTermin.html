@@ -39,12 +39,14 @@
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
+                <th scope="col">Wochentag</th>
                 <th scope="col">Zeitpunkt</th>
                 <th scope="col">Anmeldung</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="termin : ${uebung.termine}" th:unless="${termin.reserviert}">
+                <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
                 <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Student</td>
                 <td><a th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id}}">zur Anmeldung</a></td>
             </tr>
