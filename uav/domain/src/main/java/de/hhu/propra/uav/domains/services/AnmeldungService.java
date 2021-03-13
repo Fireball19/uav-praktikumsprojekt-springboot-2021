@@ -42,7 +42,7 @@ public class AnmeldungService {
     final String[] split = mitglieder.split(",");
     if(split.length < uebungService.ueberpruefeMinGroesse(uebungId)) {
       throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
-          "liegt unter der minimalen Gruppengröße " + uebungService.ueberpruefeMaxGroesse(uebungId) + "!");
+          "liegt unter der minimalen Gruppengröße " + uebungService.ueberpruefeMinGroesse(uebungId) + "!");
     }
     if(split.length > uebungService.ueberpruefeMaxGroesse(uebungId)) {
       throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
