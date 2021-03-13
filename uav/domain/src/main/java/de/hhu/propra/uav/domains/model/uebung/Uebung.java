@@ -3,14 +3,12 @@ package de.hhu.propra.uav.domains.model.uebung;
 import de.hhu.propra.uav.domains.model.student.Student;
 import lombok.Data;
 import lombok.Getter;
+import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
@@ -48,6 +46,12 @@ public class Uebung {
       gruppen.add(new Gruppe(termin.getGruppenname(), termin.getStudenten()));
     }
     return gruppen;
+  }
+
+  public List<Termin> getTermine() {
+    return termine.stream()
+        .sorted(Comparator.comparing(Termin::getZeitpunkt))
+        .collect(Collectors.toList());
   }
 
   @SuppressWarnings("PMD")
