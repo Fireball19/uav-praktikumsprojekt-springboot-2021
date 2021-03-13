@@ -38,6 +38,16 @@
                 <li class="nav-item" th:classappend="${activeTab == 'anmeldung'}? 'active' : null">
                     <a class="nav-link" th:href="@{/anmeldung}" href="anmeldung">Anmeldung</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Github
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item btn-link"
+                           th:href="'https://github.com/' + ${@environment.getProperty('githubOrganization')}"
+                           target="_blank">Zur Organization</a>
+                    </div>
+                </li>
             </ul>
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item">
