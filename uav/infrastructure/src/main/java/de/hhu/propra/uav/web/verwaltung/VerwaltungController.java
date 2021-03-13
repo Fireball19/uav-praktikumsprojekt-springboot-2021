@@ -40,12 +40,16 @@ public class VerwaltungController {
 
   @Secured(ROLE_ORGA)
   @PostMapping("/verwaltung/konfiguration/uebung")
-  public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors) {
+  public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors, final boolean termineUebernehmen) {
     if (errors.hasErrors()) {
       return "uebungErstellen";
     }
 
-    uebungService.save(uebung);
+    if (termineUebernehmen) {
+      uebungService.saveWithAlteTermine(uebung);
+    } else {
+      uebungService.save(uebung);
+    }
 
     return "redirect:/verwaltung/uebersicht/uebungen";
   }

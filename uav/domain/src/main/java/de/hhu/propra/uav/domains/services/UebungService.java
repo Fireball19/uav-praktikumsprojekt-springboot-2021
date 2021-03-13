@@ -36,6 +36,14 @@ public class UebungService {
     return UebungFactory.createDefault();
   }
 
+  public void saveWithAlteTermine(final Uebung uebung) {
+    Uebung uebungToSave = UebungFactory.createWithAlteTermine(uebung.getName(),
+        uebung.getModus(), uebung.getMinGroesse(),
+        uebung.getMaxGroesse(), uebung.getAnmeldebeginn(), uebung.getAnmeldeschluss(),
+        uebungRepository.findTopByOrderByIdDesc());
+    save(uebungToSave);
+  }
+
   public void save(final Uebung uebung) {
     uebungRepository.save(uebung);
   }

@@ -82,7 +82,7 @@
 
             <div class="form-group">
                 <label>Alte Termine übernehmen</label>
-                <input type="checkbox" name="termineUebernehmen">
+                <input type="checkbox" name="termineUebernehmen" th:checked="${termineUebernehmen}">
             </div>
             <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
             <button type="submit" class="btn btn-primary">Praktische Übung erstellen</button>
@@ -97,5 +97,3 @@
 
 </body>
 </html>
-
-<!--<input type="checkbox" name="mycheckbox" th:checked="${flag}" />-->
