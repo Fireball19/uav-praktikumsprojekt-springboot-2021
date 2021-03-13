@@ -58,13 +58,18 @@
         </div>
 
         <div class="col-sm-6">
-            <h2>Importieren (TODO)</h2>
+            <h2>Importieren</h2>
             <form method="post" th:action="@{'/verwaltung/konfiguration/termin/' + ${uebung.id} +
             '/hinzufuegen/csv-file'}"
                   enctype="multipart/form-data">
                 <div class="form-group mt-3">
                     <label for="file">Eine CSV Datei auswählen</label>
                     <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    <h5>Format der CSV Dateien</h5>
+                    <h6>tutor,zeitpunkt</h6>
+                    <span>Alex,2021-03-12T18:00</span>
                 </div>
                 <button type="submit" class="btn btn-primary">Termine importieren</button>
             </form>
