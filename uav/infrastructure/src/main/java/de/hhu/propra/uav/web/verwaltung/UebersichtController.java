@@ -20,7 +20,6 @@ public class UebersichtController {
   @GetMapping("verwaltung/uebersicht/uebungen")
   public String uebersicht(final Model model) {
     model.addAttribute("uebungen", uebungService.findAll());
-    model.addAttribute("studenten", studentenService.findAllAsMap());
     return "uebersichtVerwaltung";
   }
 

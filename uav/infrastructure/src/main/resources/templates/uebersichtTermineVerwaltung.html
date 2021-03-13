@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Praktische Übung</title>
+    <title>Uebersicht der Termine</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/css/bootstrap.min.css}"
@@ -31,39 +31,42 @@
 <div th:replace="fragments/sidebar :: sidebar(uebersichtUebungen)"></div>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <h1>Übersicht</h1>
+    <h1>Übersicht</h1>
 
-        <h2>Praktische Übungen</h2>
+    <h2>Praktische Übungen</h2>
+    <br>
+
+        <div th:unless="${#lists.isEmpty(uebung.termine)}">
+            <div th:each="termin : ${uebung.termine}">
+                <h5>Termin</h5>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Tutor</th>
+                        <th scope="col">Wochentag</th>
+                        <th scope="col">Zeitpunkt</th>
+                        <th scope="col">Angemeldete Studenten</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${termin.tutor}">Tutor</td>
+                        <td></td>
+                        <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                        <td><span th:each="studentRef : ${termin.studenten}"
+                                   th:text="${studenten.get(studentRef.id).github} + ' '"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <hr/>
+
+            </div>
+
+        </div>
+
         <br>
-
-        <div th:each="uebung : ${uebungen}">
-            <h4 th:text="${uebung.name}"></h4>
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Modus</th>
-                    <th scope="col">min. Größe</th>
-                    <th scope="col">max. Größe</th>
-                    <th scope="col">Anmeldebeginn</th>
-                    <th scope="col">Anmeldeschluss</th>
-                    <th scope="col">Termine</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${uebung.modus}">0</td>
-                    <td th:text="${uebung.minGroesse}">0</td>
-                    <td th:text="${uebung.maxGroesse}">0</td>
-                    <td th:text="${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                    <td th:text="${#temporals.format(uebung.anmeldeschluss, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                    <td><a class="btn btn-primary"
-                           th:href="@{'/verwaltung/uebersicht/' + ${uebung.id} + '/terminuebersicht'}">Termine
-                        ansehen</a></td>
-                </tr>
-                </tbody>
-            </table>
-
-           <hr/>
+    <a href="/verwaltung/uebersicht/uebungen" class="btn btn-primary">Zurück zur Übersicht</a>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -71,4 +74,4 @@
 <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 
 </body>
-</html>
+</html>ml>
