@@ -33,7 +33,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <h1>Übersicht</h1>
 
-        <h2>Praktische Übungen</h2>
+        <h2><span class="badge badge-dark" th:text="${#lists.size(uebungen)}">0</span> Praktische Übungen</h2>
         <br>
 
         <div th:each="uebung : ${uebungen}">
