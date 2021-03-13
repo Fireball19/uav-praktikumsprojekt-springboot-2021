@@ -33,7 +33,7 @@ public class SetupOAuth2 {
     return new OAuth2AuthenticationToken(user, authorities, "whatever");
   }
 
-  public static OAuth2AuthenticationToken buildPrincipalUserTutor() {
+  public static OAuth2AuthenticationToken buildPrincipalTutor() {
     Map<String, Object> attributes = new HashMap<>();
     attributes.put("login","tutor");
 
