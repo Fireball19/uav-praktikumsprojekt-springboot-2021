@@ -33,7 +33,7 @@
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <h1>Übersicht</h1>
 
-    <h2>Praktische Übungen</h2>
+    <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine</h2>
     <br>
 
         <div th:unless="${#lists.isEmpty(uebung.termine)}">
@@ -75,4 +75,4 @@
 <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
 
 </body>
-</html>ml>
+</html>
