@@ -2,7 +2,9 @@ version: "3.8"
 services:
   database:
     image: mariadb:10.5.9
+    ports:
+      - "3307:3306"
     volumes:
-      - ./db/seeds/prod:/docker-entrypoint-initdb.d/
+      - ./db/seeds/dev:/docker-entrypoint-initdb.d/
     environment:
       - "MYSQL_ROOT_PASSWORD=iamgroot"
