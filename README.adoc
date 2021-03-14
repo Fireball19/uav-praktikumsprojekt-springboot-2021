@@ -14,11 +14,29 @@ endif::[]
 
 == Konfiguration
 
+=== Github Organization
+
+Die Github Organization wird in application.properties gesetzt.
+
+[source]
+----
+githubOrganization=hhu-propra-teamstrgclick-apitest
+----
+
+=== Rollen
+
+Organisatoren und Tutoren werden in application.properties gesetzt. Verwendet wird der Github Name der Personen.
+[source]
+----
+arrayOfOrga=YangCAO-AKM
+arrayOfTutoren=zandatzu,ToxicBill,Fireball19
+----
+
 == Verwaltung
 
 === Termine per CSV Datei importieren
 
-*Format der CSV Dateien:*
+Format der CSV Dateien:
 
 [source,csv]
 ----
