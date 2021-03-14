@@ -1,5 +1,12 @@
 version: "3.8"
 services:
+  application:
+    build: .
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
   database:
     image: mariadb:10.5.9
     volumes:
