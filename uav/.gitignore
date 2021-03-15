@@ -38,3 +38,6 @@ out/
 
 ### Docker ###
 .env
+
+### Database ###
+/db/data/
