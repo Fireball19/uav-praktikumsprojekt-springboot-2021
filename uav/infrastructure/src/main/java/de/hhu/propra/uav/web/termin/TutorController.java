@@ -17,14 +17,6 @@ public class TutorController {
   @Autowired
   StudentService studentService;
 
-
-  @Secured("ROLE_TUTOR")
-  @GetMapping("tutor/uebersicht/uebungen")
-  public String tutorUebersicht(final Model model) {
-    model.addAttribute("uebungen", uebungService.findAll());
-    return "uebungenTutoren";
-  }
-
   @Secured("ROLE_TUTOR")
   @GetMapping("tutor/uebersicht/{uebungId}/terminuebersicht")
   public String tutorUebersichtTermine(final Model model, @PathVariable("uebungId") final Long uebungId) {
