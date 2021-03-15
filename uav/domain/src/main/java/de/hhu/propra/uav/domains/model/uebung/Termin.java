@@ -19,9 +19,9 @@ class Termin {
   private final LocalDateTime zeitpunkt;
   private String gruppenname = "";
   private boolean reserviert;
-  private int minGroesse;
-  private int maxGroesse;
-  private final String tutor;
+  private final int minGroesse;
+  private final int maxGroesse;
+  private String tutor;
   private List<StudentRef> studenten = new ArrayList<>();
 
   Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor){
