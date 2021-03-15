@@ -61,14 +61,13 @@ public class GithubApiServiceImpl implements GithubAPIService {
 
   @Scheduled(fixedDelayString = "${intervall}")
   public void checkAnmeldeschluss() throws Exception {
-    System.out.println("Hallo!");
     Uebung uebung = uebungService.findFirstByBearbeitetIsFalse();
     if(uebung == null) {
       return;
     }
     if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())
         && uebungService.ueberpruefeAnmeldungsModus(uebung.getId()) == Modus.GRUPPENANMELDUNG) {
-      System.out.println("Hallo2!");
+      uebungService.shuffleTutoren(uebung.getId());
       List<Gruppe> gruppen = uebung.getGruppen();
       for (Gruppe gruppe : gruppen) {
         createGithubRepositoryGruppenAnmeldung(gruppe.getGruppenname(),
