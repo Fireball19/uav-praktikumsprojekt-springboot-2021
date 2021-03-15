@@ -40,6 +40,10 @@ public class Uebung {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
   }
 
+  public void deleteTermin(final Long id) {
+    termine.removeIf(termin -> termin.getId().equals(id));
+  }
+
   public List<Gruppe> getGruppen() {
     List<Gruppe> gruppen= new ArrayList<>();
     for (Termin termin : termine) {
@@ -156,9 +160,16 @@ public class Uebung {
     return findTermin(terminId).getKapazitaet() > 0;
   }
 
-  public List<Long> filterTerminIdsByZeitpunkt(final LocalDateTime zeitpunkt){
+  public List<Long> filterTerminIdsByZeitpunkt(final LocalDateTime zeitpunkt) {
     return termine.stream().filter(x -> x.getZeitpunkt()
         .isEqual(zeitpunkt))
+        .mapToLong(Termin::getId)
+        .boxed()
+        .collect(Collectors.toList());
+  }
+
+  public List<Long> filterTerminIdsByStudent(final Student student) {
+    return termine.stream().filter(x -> !x.containsStudent(student))
         .mapToLong(Termin::getId)
         .boxed()
         .collect(Collectors.toList());

@@ -2,10 +2,8 @@ package de.hhu.propra.uav.domains.services;
 
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
-import de.hhu.propra.uav.domains.model.uebung.Modus;
-import de.hhu.propra.uav.domains.model.uebung.Uebung;
-import de.hhu.propra.uav.domains.model.uebung.UebungFactory;
-import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
+import de.hhu.propra.uav.domains.model.student.Student;
+import de.hhu.propra.uav.domains.model.uebung.*;
 import de.hhu.propra.uav.domains.terminimporter.TerminFile;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -125,6 +122,30 @@ public class UebungService {
     for (TerminFile termin : termine) {
       uebung.addTermin(termin.getTutor(), termin.getZeitpunkt());
     }
+    save(uebung);
+  }
+
+  public List<Uebung> findTermineByStudentId(final Student student) {
+    List<Uebung> uebungen = findAll();
+    for (Uebung uebung: uebungen) {
+      List<Long> termineIds = uebung.filterTerminIdsByStudent(student);
+      for (Long id : termineIds) {
+        uebung.deleteTermin(id);
+      }
+    }
+
+    return uebungen;
+  }
+
+  public void deleteTermin(final Long uebungId, final Long terminId){
+    Uebung uebung = findById(uebungId);
+    uebung.deleteTermin(terminId);
+    save(uebung);
+  }
+
+  public void shuffleTutoren(final Long uebungId) {
+    Uebung uebung = findById(uebungId);
+    verteilungsService.tutorenVerteilen(uebung);
     save(uebung);
   }
 }

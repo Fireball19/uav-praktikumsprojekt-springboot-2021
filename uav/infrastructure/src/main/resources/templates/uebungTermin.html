@@ -75,6 +75,51 @@
             </form>
 
         </div>
+        </div>
+
+        <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine</h2>
+        <br>
+
+        <div th:unless="${#lists.isEmpty(uebung.termine)}">
+            <div>
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Tutor</th>
+                        <th scope="col">Wochentag</th>
+                        <th scope="col">Zeitpunkt</th>
+                        <th scope="col">Angemeldete Studenten</th>
+                        <th scope="col">Termin entfernen</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="termin : ${uebung.termine}">
+                        <td th:text="${termin.tutor}">Tutor</td>
+                        <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
+                        <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                        <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                                  th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
+                        <td>
+                            <form method="POST" th:action="@{'/verwaltung/konfiguration/termin/' + ${uebung.id} + '/' + ${termin.id} +
+                    '/entfernen'}">
+                                <button class="btn btn-danger" type="submit" name="submit" value="value">Entfernen</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+
+
+            </div>
+
+
+
+
     </div>
 </main>
 
