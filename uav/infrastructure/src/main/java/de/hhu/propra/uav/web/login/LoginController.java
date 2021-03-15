@@ -19,7 +19,7 @@ public class LoginController {
     if(principal != null) {
       final String githubName = principal.getAttribute("login");
       studentenService.addStudent(githubName);
-      return "redirect:/anmeldung";
+      return "redirect:/termine/uebersicht/uebungen";
     }
     return "login";
   }
