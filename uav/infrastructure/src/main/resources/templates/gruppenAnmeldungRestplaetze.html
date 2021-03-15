@@ -42,6 +42,7 @@
                 <th scope="col">Wochentag</th>
                 <th scope="col">Zeitpunkt</th>
                 <th scope="col">Belegte Plätze</th>
+                <th scope="col">Gruppenmitglieder</th>
                 <th scope="col">Anmeldung</th>
             </tr>
             </thead>
@@ -50,6 +51,9 @@
                 <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
                 <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
                 <td th:text="${termin.getStudenten().size() + ' / ' + termin.getMaxGroesse()}"></td>
+                <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                              th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>>
                 <td><a class="btn btn-primary" th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +
                     '/restplaetze/anmelden'}">Anmelden</a></td>
             </tr>

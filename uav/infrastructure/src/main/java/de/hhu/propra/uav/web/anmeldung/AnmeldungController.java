@@ -2,6 +2,7 @@ package de.hhu.propra.uav.web.anmeldung;
 
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.services.AnmeldungService;
+import de.hhu.propra.uav.domains.services.StudentService;
 import de.hhu.propra.uav.domains.services.UebungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +25,8 @@ public class AnmeldungController {
   private UebungService uebungService;
   @Autowired
   private AnmeldungService anmeldungService;
+  @Autowired
+  private StudentService studentService;
 
   @Secured("ROLE_USER")
   @GetMapping("/anmeldung")
@@ -63,6 +66,7 @@ public class AnmeldungController {
   public String restplaetze(final Model model, @PathVariable("uebungId") final Long uebungId) {
     model.addAttribute("uebung",uebungService.findById(uebungId));
     model.addAttribute("restplaetze", uebungService.findById(uebungId).getRestplaetze());
+    model.addAttribute("studenten", studentService.findAllAsMap());
     return "gruppenAnmeldungRestplaetze";
 
   }
