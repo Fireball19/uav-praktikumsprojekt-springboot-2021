@@ -48,10 +48,11 @@ public class AnmeldungService {
       throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
           "übersteigt die maximale Gruppengröße " + uebungService.ueberpruefeMaxGroesse(uebungId) + "!");
     }
-    uebungService.addGruppe(uebungId, terminId, gruppenname);
     for (String s : split) {
       s = s.trim();
       verwaltungService.addStudent(s, uebungId, terminId);
     }
+
+    uebungService.addGruppe(uebungId, terminId, gruppenname);
   }
 }
