@@ -22,10 +22,14 @@ public class UebungService {
 
   private final TerminImporter terminImporter;
 
+  private final VerteilungsService verteilungsService;
+
   @SuppressWarnings("PMD")
-  public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter){
+  public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter,
+                       final VerteilungsService verteilungsService){
     this.uebungRepository = uebungRepository;
     this.terminImporter = terminImporter;
+    this.verteilungsService = verteilungsService;
   }
 
   @SuppressWarnings("PMD")
