@@ -53,9 +53,14 @@
                 <td th:text="${termin.getStudenten().size() + ' / ' + termin.getMaxGroesse()}"></td>
                 <td><span th:each="studentRef, iterStat : ${termin.studenten}"
                               th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
-                          ', ': ${studenten.get(studentRef.id).github}"></span></td>>
-                <td><a class="btn btn-primary" th:href="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +
-                    '/restplaetze/anmelden'}">Anmelden</a></td>
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
+                <td>
+                    <form method="POST" th:action="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +
+                            '/restplaetze/anmelden'}">
+                        <button class="btn btn-primary" type="submit" name="submit" value="value">Anmelden</button>
+                    </form>
+                </td>
+
             </tr>
             </tbody>
         </table>

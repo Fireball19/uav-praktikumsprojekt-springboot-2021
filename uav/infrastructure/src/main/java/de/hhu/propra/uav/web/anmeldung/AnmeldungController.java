@@ -72,7 +72,7 @@ public class AnmeldungController {
   }
 
   @Secured("ROLE_USER")
-  @GetMapping("/anmeldung/{uebungId}/{terminId}/restplaetze/anmelden")
+  @PostMapping("/anmeldung/{uebungId}/{terminId}/restplaetze/anmelden")
   public String restplatzAnmeldung(@PathVariable("uebungId") final Long uebungId,
                                    @PathVariable("terminId") final Long terminId,
                                    final @AuthenticationPrincipal OAuth2User principal) {
@@ -81,7 +81,7 @@ public class AnmeldungController {
   }
 
   @Secured("ROLE_USER")
-  @GetMapping("/anmeldung/{uebungId}/{zeitpunkt}/individualanmeldung/anmelden")
+  @PostMapping("/anmeldung/{uebungId}/{zeitpunkt}/individualanmeldung/anmelden")
   public String individualAnmeldung(@PathVariable("uebungId") final Long uebungId,
                                     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @PathVariable("zeitpunkt")
                                     final LocalDateTime zeitpunkt,
