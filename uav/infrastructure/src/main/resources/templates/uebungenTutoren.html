@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Praktische Übung</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/starter-template.css}"
+          href="../static/css/starter-template.css"
+          rel="stylesheet">
+
+    <link th:href="@{/css/dashboard.css}"
+          href="../static/css/dashboard.css"
+          rel="stylesheet">
+
+    <link rel="icon" th:href="@{/images/logo.png}" href="images/logo.png">
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: navbar(termine)"></div>
+
+<div class="container">
+    <h1>Übersicht</h1>
+
+    <h2><span class="badge badge-dark" th:text="${#lists.size(uebungen)}">0</span> Praktische Übungen</h2>
+    <br>
+
+    <div th:each="uebung : ${uebungen}">
+        <h4 th:text="${uebung.name}"></h4>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Modus</th>
+                <th scope="col">min. Größe</th>
+                <th scope="col">max. Größe</th>
+                <th scope="col">Anmeldebeginn</th>
+                <th scope="col">Anmeldeschluss</th>
+                <th scope="col">Termine</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${uebung.modus}">0</td>
+                <td th:text="${uebung.minGroesse}">0</td>
+                <td th:text="${uebung.maxGroesse}">0</td>
+                <td th:text="${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                <td th:text="${#temporals.format(uebung.anmeldeschluss, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/tutor/uebersicht/' + ${uebung.id} + '/terminuebersicht'}">Termine
+                    ansehen</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <hr/>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+
+</body>
+</html>

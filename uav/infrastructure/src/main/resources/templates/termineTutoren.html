@@ -1,0 +1,77 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Uebersicht der Termine</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../static/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/starter-template.css}"
+          href="../static/css/starter-template.css"
+          rel="stylesheet">
+
+    <link th:href="@{/css/dashboard.css}"
+          href="../static/css/dashboard.css"
+          rel="stylesheet">
+
+    <link rel="icon" th:href="@{/images/logo.png}" href="images/logo.png">
+</head>
+
+<body>
+<div th:replace="fragments/navbar :: navbar(termine)"></div>
+
+<div class="container">
+    <h1>Übersicht</h1>
+
+    <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine</h2>
+    <br>
+
+    <div th:unless="${#lists.isEmpty(uebung.termine)}">
+        <div th:each="termin : ${uebung.termine}">
+            <h5>Termin</h5>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Tutor</th>
+                    <th scope="col">Wochentag</th>
+                    <th scope="col">Zeitpunkt</th>
+                    <th scope="col">Angemeldete Studenten</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${termin.tutor}">Tutor</td>
+                    <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
+                    <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                    <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                              th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <hr/>
+
+        </div>
+
+    </div>
+
+    <br>
+    <a href="/tutor/uebersicht/uebungen" class="btn btn-primary">Zurück zur Übersicht</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+
+</body>
+</html>
