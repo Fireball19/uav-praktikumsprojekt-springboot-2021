@@ -35,10 +35,10 @@
                     <a class="nav-link" th:href="@{/verwaltung/uebersicht/uebungen}"
                        href="verwaltung/uebersicht/uebungen">Verwaltung</a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_TUTOR')" class="nav-item"
+                <li class="nav-item"
                     th:classappend="${activeTab == 'termine'}? 'active' : null">
-                    <a class="nav-link" th:href="@{/tutor/uebersicht/uebungen}"
-                       href="tutor/uebersicht/uebungen">Termine</a>
+                    <a class="nav-link" th:href="@{/termine/uebersicht/uebungen}"
+                       href="termine/uebersicht/uebungen">Termine</a>
                 </li>
                 <li class="nav-item" th:classappend="${activeTab == 'anmeldung'}? 'active' : null">
                     <a class="nav-link" th:href="@{/anmeldung}" href="anmeldung">Anmeldung</a>
