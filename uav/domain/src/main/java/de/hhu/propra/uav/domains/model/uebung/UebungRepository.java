@@ -19,4 +19,6 @@ public interface UebungRepository {
   Uebung findFirstByBearbeitetIsFalse();
 
   Uebung findTopByOrderByIdDesc();
+
+  List<Uebung> findAllByModusEquals(Modus modus);
 }
