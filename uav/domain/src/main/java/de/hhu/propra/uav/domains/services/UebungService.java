@@ -152,4 +152,14 @@ public class UebungService {
     verteilungsService.tutorenVerteilen(uebung);
     save(uebung);
   }
+
+  public List<Uebung> findAllIndividualAnmeldung(){
+    return uebungRepository.findAllByModusEquals(Modus.INDIVIDUALANMELDUNG);
+  }
+
+  public void shuffleStudenten(Long uebungId){
+    Uebung uebung = findById(uebungId);
+    verteilungsService.perfekteVerteilung(uebung);
+    save(uebung);
+  }
 }
