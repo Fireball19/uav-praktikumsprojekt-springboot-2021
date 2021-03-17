@@ -5,9 +5,9 @@ import de.hhu.propra.uav.domains.model.student.StudentRef;
 import de.hhu.propra.uav.domains.model.uebung.Gruppe;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
-import de.hhu.propra.uav.domains.services.GithubAPIService;
-import de.hhu.propra.uav.domains.services.StudentService;
-import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.applicationservices.StudentService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import org.kohsuke.github.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +21,7 @@ import java.util.List;
 @SuppressWarnings("PMD")
 @Service
 @EnableScheduling
-public class GithubApiServiceImpl implements GithubAPIService {
+public class GithubApiImpl implements GithubApi {
   @Value("${githubOrganization}")
   private String organization;
   
@@ -50,10 +50,29 @@ public class GithubApiServiceImpl implements GithubAPIService {
                                                      List<StudentRef> mitglieder) throws Exception {
     GitHub gitHub = setup();
     GHOrganization ghOrganization = gitHub.getOrganization(this.organization);
-    ghOrganization.createRepository(gruppenname+"-"+uebungsname).private_(true).create();
-    GHRepository repository = ghOrganization.getRepository(gruppenname + "-" + uebungsname);
+    String repositoryName = (uebungsname + "-" + gruppenname).replace(" ", "-");
+    ghOrganization.createRepository(repositoryName).private_(true).create();
+    GHRepository repository = ghOrganization.getRepository(repositoryName);
 
     for (StudentRef studentRef : mitglieder) {
+      Student student = studentService.findById(studentRef.getId());
+      repository.addCollaborators(gitHub.getUser(student.getGithub()));
+    }
+  }
+
+  @Override
+  public void createGithubRepositoryIndividualanmeldung(final List<StudentRef> studenten, final String uebungsname,
+                                                        final String tutor, final LocalDateTime zeitpunkt) throws Exception {
+    GitHub gitHub = setup();
+    GHOrganization ghOrganization = gitHub.getOrganization(this.organization);
+    String repositoryName = (uebungsname + "-" + tutor + "-" + zeitpunkt.toString())
+        .replace(" ", "-")
+        .replace(":", "-");
+    ghOrganization.createRepository(repositoryName)
+        .private_(true)
+        .create();
+    GHRepository repository = ghOrganization.getRepository(repositoryName);
+    for (StudentRef studentRef : studenten) {
       Student student = studentService.findById(studentRef.getId());
       repository.addCollaborators(gitHub.getUser(student.getGithub()));
     }
