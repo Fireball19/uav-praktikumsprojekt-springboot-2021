@@ -1,7 +1,6 @@
 package de.hhu.propra.uav.configuration;
 
-import de.hhu.propra.uav.authorization.AuthorityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +17,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,47 +26,59 @@ import java.util.Set;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  AuthorityService authorityService;
+  @Value("${arrayOfOrga}")
+  private List<String> organisation;
+
+  @Value("${arrayOfTutoren}")
+  private List<String> tutoren;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests(a -> a
-        .antMatchers("/", "/error","/css/**","/images/**").permitAll()
+        .antMatchers("/", "/error", "/css/**", "/images/**").permitAll()
         .anyRequest().authenticated())
         .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
         .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .logout(l -> l.logoutSuccessUrl("/").permitAll())
         .oauth2Login()
-            .userInfoEndpoint()
-            .userService(initOAuth2UserService());
+        .userInfoEndpoint()
+        .userService(initOAuth2UserService());
   }
 
-  private OAuth2UserService<OAuth2UserRequest, OAuth2User> initOAuth2UserService(){
-    OAuth2UserService<OAuth2UserRequest,OAuth2User> oAuth2UserService=new DefaultOAuth2UserService();
+  private OAuth2UserService<OAuth2UserRequest, OAuth2User> initOAuth2UserService() {
+    OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService = new DefaultOAuth2UserService();
 
     return oAuth2UserRequest -> {
-      OAuth2User oAuth2User=oAuth2UserService.loadUser(oAuth2UserRequest);
+      OAuth2User oAuth2User = oAuth2UserService.loadUser(oAuth2UserRequest);
 
-      Map<String,Object> attributes=oAuth2User.getAttributes();
-      String attributeNameKey=oAuth2UserRequest.getClientRegistration()
-              .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+      Map<String, Object> attributes = oAuth2User.getAttributes();
+      String attributeNameKey = oAuth2UserRequest.getClientRegistration()
+          .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-      Set<GrantedAuthority> authorities=new HashSet<>();
+      Set<GrantedAuthority> authorities = new HashSet<>();
 
       // Standard USER Role hinzufügen
       authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
       // Prüfen auf Rollen
-      if(authorityService.isOrga(attributes.get("login").toString())) {
+      if (isOrga(attributes.get("login").toString())) {
         authorities.add(new SimpleGrantedAuthority("ROLE_ORGA"));
       }
 
-      if(authorityService.isTutor(attributes.get("login").toString())) {
+      if (isTutor(attributes.get("login").toString())) {
         authorities.add(new SimpleGrantedAuthority("ROLE_TUTOR"));
       }
 
-      return new DefaultOAuth2User(authorities,attributes,attributeNameKey);
+      return new DefaultOAuth2User(authorities, attributes, attributeNameKey);
     };
   }
+
+  private boolean isOrga(final String username) {
+    return organisation.contains(username);
+  }
+
+  private boolean isTutor(final String username) {
+    return tutoren.contains(username);
+  }
+
 }

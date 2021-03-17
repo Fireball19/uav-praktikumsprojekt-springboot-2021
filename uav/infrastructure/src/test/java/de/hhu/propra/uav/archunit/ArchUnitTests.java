@@ -4,9 +4,6 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import de.hhu.propra.uav.UebungsUndAnmeldungsverwaltungApplication;
-import de.hhu.propra.uav.authorization.AuthorityService;
-import de.hhu.propra.uav.configuration.WebSecurityConfiguration;
-import de.hhu.propra.uav.domains.annotations.ApplicationService;
 
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 
@@ -18,13 +15,8 @@ public class ArchUnitTests {
       .domainModels("de.hhu.propra.uav.domains.model..")
       .domainServices("de.hhu.propra.uav.domains.model..")
       .applicationServices("de.hhu.propra.uav.domains.applicationservices..")
-      .adapter("authorization", "de.hhu.propra.uav.authorization..")
+      //.adapter("authorization", "de.hhu.propra.uav.authorization..")
       .adapter("persistence", "de.hhu.propra.uav.repositories..")
       .adapter("web", "de.hhu.propra.uav.web..")
-      .adapter("github","de.hhu.propra.uav.github..")
-      // Nice ArchUnit
-      .ignoreDependency(ArchUnitTests.class, AuthorityService.class)
-      .ignoreDependency(ArchUnitTests.class, ApplicationService.class)
-      .ignoreDependency(WebSecurityConfiguration.class, AuthorityService.class)
-      .ignoreDependency(UebungsUndAnmeldungsverwaltungApplication.class, ApplicationService.class);
+      .adapter("github","de.hhu.propra.uav.github..");
 }
