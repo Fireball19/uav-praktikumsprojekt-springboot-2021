@@ -1,8 +1,8 @@
 package de.hhu.propra.uav.web.verwaltung;
 
 import de.hhu.propra.uav.UebungsUndAnmeldungsverwaltungApplication;
-import de.hhu.propra.uav.domains.services.StudentService;
-import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.StudentService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import de.hhu.propra.uav.web.SetupOAuth2;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

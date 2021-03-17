@@ -1,10 +1,10 @@
 package de.hhu.propra.uav;
 
 
-import de.hhu.propra.uav.domains.services.AnmeldungService;
-import de.hhu.propra.uav.domains.services.StudentService;
-import de.hhu.propra.uav.domains.services.UebungService;
-import de.hhu.propra.uav.domains.services.VerwaltungService;
+import de.hhu.propra.uav.domains.applicationservices.AnmeldungService;
+import de.hhu.propra.uav.domains.applicationservices.StudentService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.VerwaltungService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -12,8 +12,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

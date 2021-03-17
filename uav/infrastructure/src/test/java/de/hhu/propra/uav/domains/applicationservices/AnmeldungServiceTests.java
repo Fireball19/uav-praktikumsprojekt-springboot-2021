@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.services;
+package de.hhu.propra.uav.domains.applicationservices;
 
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
