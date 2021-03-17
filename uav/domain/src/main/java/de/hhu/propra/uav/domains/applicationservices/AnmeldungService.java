@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.services;
+package de.hhu.propra.uav.domains.applicationservices;
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @ApplicationService

@@ -56,6 +56,7 @@ public class VerteilungsService {
       uebung.getTermine().addAll(neueVerteilung);
     }
 
+    uebung.abschliessen();
   }
 
   private List<Termin> verteilung(List<Termin> terminList, int gruppenanzahl, int studentenanzahl) {

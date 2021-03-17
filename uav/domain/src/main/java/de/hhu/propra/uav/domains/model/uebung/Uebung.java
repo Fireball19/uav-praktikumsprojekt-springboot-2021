@@ -174,4 +174,14 @@ public class Uebung {
         .boxed()
         .collect(Collectors.toList());
   }
+
+  public List<Daten> getTerminDatenIndividualmodus() {
+    List<Daten> daten = new ArrayList<>();
+    for (Termin termin : termine) {
+      if (!termin.getStudenten().isEmpty()) {
+        daten.add(new Daten(termin.getTutor(), termin.getZeitpunkt(), termin.getStudenten()));
+      }
+    }
+    return daten;
+  }
 }

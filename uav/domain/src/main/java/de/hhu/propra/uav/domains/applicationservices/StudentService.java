@@ -1,9 +1,8 @@
-package de.hhu.propra.uav.domains.services;
+package de.hhu.propra.uav.domains.applicationservices;
 
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.student.Student;
-import de.hhu.propra.uav.domains.model.student.StudentRef;
 import de.hhu.propra.uav.domains.model.student.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;

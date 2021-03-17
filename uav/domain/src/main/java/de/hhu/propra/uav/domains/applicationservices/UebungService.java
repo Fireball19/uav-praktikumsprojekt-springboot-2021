@@ -1,7 +1,8 @@
-package de.hhu.propra.uav.domains.services;
+package de.hhu.propra.uav.domains.applicationservices;
 
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
+import de.hhu.propra.uav.domains.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.*;
 import de.hhu.propra.uav.domains.terminimporter.TerminFile;
@@ -24,12 +25,15 @@ public class UebungService {
 
   private final VerteilungsService verteilungsService;
 
+  private final GithubApi githubAPI;
+
   @SuppressWarnings("PMD")
   public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter,
-                       final VerteilungsService verteilungsService){
+                       final VerteilungsService verteilungsService, final GithubApi githubAPI){
     this.uebungRepository = uebungRepository;
     this.terminImporter = terminImporter;
     this.verteilungsService = verteilungsService;
+    this.githubAPI = githubAPI;
   }
 
   @SuppressWarnings("PMD")
@@ -157,9 +161,26 @@ public class UebungService {
     return uebungRepository.findAllByModusEquals(Modus.INDIVIDUALANMELDUNG);
   }
 
-  public void shuffleStudenten(Long uebungId){
+  public void shuffleStudenten(final Long uebungId){
     Uebung uebung = findById(uebungId);
     verteilungsService.perfekteVerteilung(uebung);
+    save(uebung);
+  }
+
+  public void individualModusAbschliessen(final Long uebungId) throws Exception {
+    Uebung uebung = findById(uebungId);
+    List<Daten> daten = uebung.getTerminDatenIndividualmodus();
+
+    System.out.println(daten);
+
+    for (Daten daten1: daten) {
+      githubAPI.createGithubRepositoryIndividualanmeldung(daten1.getStudenten(),
+          uebung.getName(),
+          daten1.getTutor(),
+          daten1.getZeitpunkt());
+    }
+
+    uebung.abschliessen();
     save(uebung);
   }
 }
