@@ -10,12 +10,6 @@ import static org.springframework.context.annotation.FilterType.ANNOTATION;
 
 @SuppressWarnings("PMD")
 @SpringBootApplication
-@ComponentScan(
-    includeFilters = {
-        @ComponentScan.Filter(type = ANNOTATION, classes = ApplicationService.class),
-        @ComponentScan.Filter(type = ANNOTATION, classes = DomainService.class)
-    }
-)
 public class UebungsUndAnmeldungsverwaltungApplication {
 
   public static void main(String[] args) throws Exception {
