@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.session.RegisterSessionAu
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 @SuppressWarnings("PMD")
 @Configuration
-public class SecurityConfig {
+public class SecurityConfiguration {
 
     @Bean
     protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
