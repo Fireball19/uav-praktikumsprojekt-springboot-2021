@@ -30,7 +30,7 @@ public class TerminImporterImpl implements TerminImporter {
       String[] record;
       while ((record = csvReader.readNext()) != null) {
         termine.add(new TerminFile(record[0], LocalDateTime.parse(record[1],
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"))));
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))));
       }
 
       csvReader.close();
