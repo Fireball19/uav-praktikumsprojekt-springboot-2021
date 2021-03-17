@@ -4,10 +4,12 @@ import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
 import de.hhu.propra.uav.UebungsUndAnmeldungsverwaltungApplication;
+import org.springframework.test.context.ActiveProfiles;
 
 import static com.tngtech.archunit.library.Architectures.onionArchitecture;
 
 @AnalyzeClasses(packagesOf = UebungsUndAnmeldungsverwaltungApplication.class)
+@ActiveProfiles("test")
 public class ArchUnitTests {
 
   @ArchTest

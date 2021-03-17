@@ -13,6 +13,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LoginController.class)
 @AutoConfigureMockMvc
 @Import({MethodSecurityConfiguration.class})
+@ActiveProfiles("test")
 public class LoginControllerTests {
   @Autowired
   private MockMvc mockMvc;

@@ -2,12 +2,13 @@ package de.hhu.propra.uav.domains.model.uebung;
 
 import de.hhu.propra.uav.domains.model.student.Student;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@ActiveProfiles("test")
 public class UebungTests {
 
     private Uebung getUebung() {
