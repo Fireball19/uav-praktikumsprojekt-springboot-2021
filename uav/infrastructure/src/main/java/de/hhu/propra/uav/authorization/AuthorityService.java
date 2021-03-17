@@ -1,14 +1,12 @@
 package de.hhu.propra.uav.authorization;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @SuppressWarnings("PMD")
-@Service
+@Component
 public class AuthorityService {
 
   @Value("${arrayOfOrga}")
