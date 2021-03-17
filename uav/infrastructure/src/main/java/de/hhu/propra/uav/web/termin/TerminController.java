@@ -1,8 +1,8 @@
 package de.hhu.propra.uav.web.termin;
 
 import de.hhu.propra.uav.domains.model.student.Student;
-import de.hhu.propra.uav.domains.services.StudentService;
-import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.StudentService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +24,7 @@ public class TerminController {
   public String tutorUebersicht(final @AuthenticationPrincipal OAuth2User principal, final Model model) {
     if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TUTOR"))) {
       model.addAttribute("uebungen", uebungService.findAll());
-      return "uebungenTutoren";
+      return "termin/uebungenTutoren";
     }
 
     String studentGithub = principal.getAttribute("login");
@@ -32,6 +32,6 @@ public class TerminController {
 
     model.addAttribute("uebungen", uebungService.findTermineByStudentId(student));
 
-    return "termineStudenten";
+    return "termin/termineStudenten";
   }
 }

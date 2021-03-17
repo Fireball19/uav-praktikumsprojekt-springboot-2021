@@ -1,7 +1,7 @@
 package de.hhu.propra.uav.web.termin;
 
-import de.hhu.propra.uav.domains.services.StudentService;
-import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.StudentService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,6 @@ public class TutorController {
   public String tutorUebersichtTermine(final Model model, @PathVariable("uebungId") final Long uebungId) {
     model.addAttribute("uebung", uebungService.findById(uebungId));
     model.addAttribute("studenten", studentService.findAllAsMap());
-    return "termineTutoren";
+    return "termin/termineTutoren";
   }
 }

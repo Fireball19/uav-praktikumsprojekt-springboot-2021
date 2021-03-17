@@ -1,7 +1,7 @@
-package de.hhu.propra.uav.web.verwaltung;
+package de.hhu.propra.uav.web.verwaltung.konfiguration;
 
 import de.hhu.propra.uav.terminimporter.TerminImporterImpl;
-import de.hhu.propra.uav.domains.services.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class CSVController {
+public class TerminImportController {
 
   @Autowired
   TerminImporterImpl terminImporterCSV;
@@ -28,6 +28,6 @@ public class CSVController {
       uebungService.addTermineByTerminImporter(uebungId, TerminImporterImpl.convertMultipartFileToInputStream(file));
     }
 
-    return "redirect:/";
+    return "redirect:/verwaltung/konfiguration/termin/{uebungId}";
   }
 }
