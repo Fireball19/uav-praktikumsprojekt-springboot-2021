@@ -37,8 +37,6 @@ public class AnmeldungServiceTests {
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     when(uebungService.ueberpruefeMinGroesse(any())).thenReturn(testUebung.getMinGroesse());
-    when(uebungService.ueberpruefeMaxGroesse(any())).thenReturn(testUebung.getMaxGroesse());
-
     assertThrows(HttpClientErrorException.class,
         () -> {
           anmeldungService.gruppenAnmeldung(1L,1L,
