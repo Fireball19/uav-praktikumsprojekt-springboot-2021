@@ -7,20 +7,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Individualanmeldung</title>
+    <title>Restplätze</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/css/bootstrap.min.css}"
-          href="../static/css/bootstrap.min.css"
+          href="../../static/css/bootstrap.min.css"
           rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/starter-template.css}"
-          href="../static/css/starter-template.css"
+          href="../../static/css/starter-template.css"
           rel="stylesheet">
 
     <link th:href="@{/css/dashboard.css}"
-          href="../static/css/dashboard.css"
+          href="../../static/css/dashboard.css"
           rel="stylesheet">
 
     <link rel="icon" th:href="@{/images/logo.png}" href="images/logo.png">
@@ -35,24 +35,28 @@
     <h2>Termine</h2>
     <br>
 
-    <div th:unless="${#lists.isEmpty(uebung.termine)}">
+    <div th:unless="${#lists.isEmpty(restplaetze)}">
         <table class="table table-bordered">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">Wochentag</th>
                 <th scope="col">Zeitpunkt</th>
-                <th scope="col">Freie Plätze</th>
+                <th scope="col">Belegte Plätze</th>
+                <th scope="col">Gruppenmitglieder</th>
                 <th scope="col">Anmeldung</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="instance : ${uebung.getKapazitaeten()}">
-                <td th:text="${#temporals.dayOfWeekName(instance.key)}">Tag</td>
-                <td th:text="${#temporals.format(instance.key, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
-                <td th:text="${instance.value}"></td>
+            <tr th:each="termin : ${restplaetze}" th:if="${termin.reserviert}">
+                <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
+                <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">Zeitpunkt</td>
+                <td th:text="${termin.getStudenten().size() + ' / ' + termin.getMaxGroesse()}"></td>
+                <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                              th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
                 <td>
-                    <form method="POST" th:action="@{'/anmeldung/' + ${uebung.id} + '/' +
-                ${instance.key} + '/individualanmeldung/anmelden'}">
+                    <form method="POST" th:action="@{'/anmeldung/' + ${uebung.id} + '/' + ${termin.id} +
+                            '/restplaetze/anmelden'}">
                         <button class="btn btn-primary" type="submit" name="submit" value="value">Anmelden</button>
                     </form>
                 </td>
@@ -61,7 +65,11 @@
             </tbody>
         </table>
     </div>
+    <br>
+    <a href="/anmeldung" class="btn btn-primary">Zurück zur Anmeldung</a>
+    <br>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>

@@ -60,25 +60,67 @@
                 </tbody>
             </table>
 
-            <form method="POST" th:action="@{'/verwaltung/verteilung/individualmodus/' + ${uebung.id}  + '/verteilen'}">
-                <button class="btn btn-primary" type="submit" name="submit" value="value">Studenten Verteilen</button>
-            </form>
+            <div>
+
+                 <form method="POST" th:action="@{'/verwaltung/verteilung/individualmodus/' + ${uebung.id}  + '/verteilen'}">
+                    <button class="btn btn-primary" type="submit" name="submit" value="value">Studenten Verteilen</button>
+                </form>
+
+            </div>
+
             <br>
+
+                <h2>Student verschieben</h2>
+                <form method="post"
+                      th:action="@{'/verwaltung/verteilung/individualmodus/' + ${uebung.id} + '/verschieben'}">
+
+                    <div class="form-group">
+                        <label>Student</label>
+                        <input type="text" name="github" th:value="*{github}" autocomplete="off" class="form-control"
+                               placeholder="Github" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Alter Termin</label>
+                        <select th:value="*{terminAltId}" class="form-control" name="terminAltId" required>
+                            <option value="">Termin auswählen</option>
+                            <option th:each="termin : ${uebung.termine}" th:value="${termin.id}"
+                                    th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Neuer Termin</label>
+                        <select th:value="*{terminNeuId}" class="form-control" name="terminNeuId" required>
+                            <option value="">Termin auswählen</option>
+                            <option th:each="termin : ${uebung.termine}" th:value="${termin.id}"
+                                    th:text="${termin.tutor} + ' am ' + ${termin.zeitpunkt}"></option>
+                        </select>
+                    </div>
+                    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+                    <button type="submit" class="btn btn-primary">
+                        Student verschieben
+                    </button>
+
+                </form>
+
             <br>
-            <form method="POST" th:action="@{'/verwaltung/verteilung/individualmodus/' + ${uebung.id}  + '/verteilen'}">
+
+            <form method="POST" th:action="@{'/verwaltung/verteilung/individualmodus/' + ${uebung.id}  + '/abschliessen'}">
                 <button class="btn btn-danger" type="submit" name="submit" value="value">Repositories
                     erstellen</button>
             </form>
 
-
-
+            <br>
 
         </div>
 
     </div>
 
-    <br>
     <a href="/verwaltung/verteilung/individualmodus" class="btn btn-primary">Zurück zur Übersicht</a>
+    <br>
+
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
