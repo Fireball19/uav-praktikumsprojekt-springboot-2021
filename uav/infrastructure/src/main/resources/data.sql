@@ -1,1 +1,0 @@
-INSERT INTO student VALUES ('1','Bert');
