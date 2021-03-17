@@ -1,8 +1,8 @@
-package de.hhu.propra.uav.web.anmeldung;
+package de.hhu.propra.uav.web.verwaltung.konfiguration;
 
+import de.hhu.propra.uav.configuration.MethodSecurityConfiguration;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
-import de.hhu.propra.uav.domains.applicationservices.AnmeldungService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import de.hhu.propra.uav.web.SetupOAuth2;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -24,19 +25,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AnmeldungController.class)
+@WebMvcTest(UebungKonfigController.class)
 @AutoConfigureMockMvc
-public class AnmeldungControllerTests {
+@Import({MethodSecurityConfiguration.class})
+public class UebungKonfigControllerTests {
   @Autowired
   private MockMvc mockMvc;
   @MockBean
   private UebungService uebungService;
-  @MockBean
-  private AnmeldungService anmeldungService;
 
   public List<Uebung> setUpUebungen(){
     List<Uebung> uebungen = new ArrayList<>();
@@ -52,38 +53,20 @@ public class AnmeldungControllerTests {
   }
 
   @Test
-  public void anmeldungTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
+  public void uebungKonfigurationTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(
         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
         new SecurityContextImpl(principal));
 
-    when(uebungService.findAllForStudent()).thenReturn(setUpUebungen());
+    when(uebungService.createDefault()).thenReturn(setUpUebungen().get(0));
 
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung")
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/verwaltung/konfiguration/uebung")
         .session(session))
         .andExpect(status().isOk())
-        .andReturn();
-
-
-    List<Uebung> uebungen = (List<Uebung>) mvcResult.getModelAndView().getModel().get("uebungen");
-    assertThat(uebungen.size()).isEqualTo(2);
-  }
-
-  @Test
-  public void anmeldungTerminTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
-    MockHttpSession session = new MockHttpSession();
-    session.setAttribute(
-        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-        new SecurityContextImpl(principal));
-
-    when(uebungService.findByIdForStudent(any())).thenReturn(setUpUebungen().get(0));
-
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung/1")
-        .session(session))
-        .andExpect(status().isOk())
+        .andExpect(content().string(containsString("Praktische Übung konfigurieren")))
+        .andExpect(content().string(containsString("Praktische Übung erstellen")))
         .andReturn();
 
     Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
@@ -91,22 +74,26 @@ public class AnmeldungControllerTests {
   }
 
   @Test
-  public void restplaetzeTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
+  public void uebungHinzufuegen() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(
         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
         new SecurityContextImpl(principal));
 
-    when(uebungService.findById(any())).thenReturn(setUpUebungen().get(0));
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung/1/restplaetze")
-        .session(session))
-        .andExpect(status().isOk())
+    when(uebungService.createDefault()).thenReturn(setUpUebungen().get(0));
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/verwaltung/konfiguration/uebung")
+        .session(session)
+        .param("name","TestUebung")
+        .param("modus","GRUPPENANMELDUNG")
+        .param("maxGroesse","0")
+        .param("minGroesse","1")
+        .param("anmeldebeginn",LocalDateTime.now().plus(10,ChronoUnit.MINUTES).toString())
+        .param("anmeldebeginn",LocalDateTime.now().plus(20,ChronoUnit.MINUTES).toString()))
+        .andExpect(status().isForbidden())
         .andReturn();
 
-    Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
-    assertThat(uebung.getName()).isEqualTo("TestUebung1");
+    verify(uebungService,never()).save(any());
   }
-
-
 }

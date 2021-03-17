@@ -1,37 +1,34 @@
-package de.hhu.propra.uav.web.verwaltung;
+package de.hhu.propra.uav.web.verwaltung.uebersicht;
 
-import de.hhu.propra.uav.UebungsUndAnmeldungsverwaltungApplication;
+import de.hhu.propra.uav.configuration.MethodSecurityConfiguration;
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
 import de.hhu.propra.uav.web.SetupOAuth2;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(
-    webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-    classes = UebungsUndAnmeldungsverwaltungApplication.class)
+@WebMvcTest(UebersichtController.class)
 @AutoConfigureMockMvc
+@Import({MethodSecurityConfiguration.class})
 public class UebersichtControllerTests {
   @Autowired
   private MockMvc mockMvc;
-  @Mock
+  @MockBean
   private UebungService uebungService;
-  @Mock
+  @MockBean
   private StudentService studentenService;
 
   @Test
