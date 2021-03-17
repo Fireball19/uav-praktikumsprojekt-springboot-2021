@@ -16,8 +16,8 @@ public class ArchUnitTests {
   @ArchTest
   final static ArchRule onionArchitecture = onionArchitecture()
       .domainModels("de.hhu.propra.uav.domains.model..")
-      .domainServices("de.hhu.propra.uav.domains.services..")
-      .applicationServices("de.hhu.propra.uav.domains.services..")
+      .domainServices("de.hhu.propra.uav.domains.model..")
+      .applicationServices("de.hhu.propra.uav.domains.applicationservices..")
       .adapter("authorization", "de.hhu.propra.uav.authorization..")
       .adapter("persistence", "de.hhu.propra.uav.repositories..")
       .adapter("web", "de.hhu.propra.uav.web..")
