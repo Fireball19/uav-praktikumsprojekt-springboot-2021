@@ -7,18 +7,30 @@
 
 image:../images/fachlicher-kontext.png[Fachlicher Kontext]
 
-* vorgefertigte Termine
+
 * Studenten
+** Kann sich zu Terminen anmelden
+** Wird zum Anmeldeschluss oder durch Organisator einem Github repo zugewiesen
+** Ihre persönlichen Termine einsehen
 * Organisatoren
+** Kann Übungen/Termine erstellen
+** Studenten zuweisen
+** Github Repositories erstellen und Studenten hinzufügen
 * Tutoren
-* Verbindung zu Github
-* Datenbank zur Persistierung von Studenten, Übungen und Terminen
+** Übersicht der Termine einsehen
+
 
 === Technischer Kontext
 
 image:../images/technischer-kontext.png[Technischer Kontext]
 
-* (csv-Datei)
-* Authentifizierung mit OAuth2
-* Github API zur Erstellung von Repos und Zuteilung der Studenten
-* Docker image von mariaDB
+* Web-Interface
+** CSV-Datei für Termin-Importer
+** Restlicher Input siehe oben
+* Github
+** Github API zur Erstellung von Repos und Zuteilung der Studenten
+** Authentifizierung mit OAuth2
+* Datenbank
+** Zur Persistierung von Studenten, Übungen und Terminen (Docker image von mariaDB)
+
+

@@ -1,6 +1,7 @@
 [[section-architecture-constraints]]
 == Randbedingungen
 
+
 * geschrieben in Java
 * Verwende Spring Frameworks
 * Github für die Authentifizierung
@@ -8,3 +9,4 @@
 * automatisierte Tests mit Github Action und Gradle
 * Persistenz in Datenbank
 * nur Komponenten mit kostenfreier Lizenz
+* dokumentiert in Arc42
