@@ -59,7 +59,8 @@
                               th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
                           ', ': ${studenten.get(studentRef.id).github}"></span></td>
                     <td>
-                        <span th:if="${termin.studenten.size() < termin.minGroesse}" class="alert-danger">Nicht
+                        <span th:if="${termin.studenten.size() < termin.minGroesse && termin.studenten.size() > 0}"
+                              class="alert-danger">Nicht
                         ok!</span>
                         <span th:if="${termin.studenten.size() >= termin.minGroesse}" class="alert-success">Ok!</span>
                     </td>
