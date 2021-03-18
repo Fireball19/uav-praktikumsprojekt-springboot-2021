@@ -14,6 +14,19 @@ endif::[]
 
 == Konfiguration
 
+=== Docker
+
+Zuerst sollte ein .env File erstellt werden, indem die Client-Id und das Client-Secret stehen, diese findet man in
+der Github-OAuthApp.
+
+Beispiel:
+[source]
+----
+CLIENT_ID=12345678
+CLIENT_SECRET=21328785fbngbjbv3834ngrvr
+----
+
+
 === Github Organization
 
 Die Github Organization wird in application.properties gesetzt.
@@ -31,6 +44,14 @@ Organisatoren und Tutoren werden in application.properties gesetzt. Verwendet wi
 arrayOfOrga=YangCAO-AKM
 arrayOfTutoren=zandatzu,ToxicBill,Fireball19
 ----
+== Anwendung starten
+Man startet die Anwendung, indem man im Ordner anmeldung-zum-praktikum-teamstrgclick\uav
+docker-compose up eingibt.
+[source]
+----
+...anmeldung-zum-praktikum-teamstrgclick\uav>docker-compose up
+----
+
 
 == Verwaltung
 
@@ -41,7 +62,7 @@ Format der CSV Dateien:
 [source,csv]
 ----
 tutor,zeitpunkt
-Alex,2021-03-12T18:00
-Berta,2021-03-12T18:00
-Steffen,2021-03-12T18:00
+Alex,12-03-2021 18:00
+Berta,12-03-2021 18:00
+Steffen,12-03-2021 18:00
 ----
