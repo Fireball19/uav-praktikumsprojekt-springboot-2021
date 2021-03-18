@@ -3,14 +3,18 @@ package de.hhu.propra.uav.domains.model.uebung;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+@SuppressWarnings({"PMD.UseUtilityClass","PMD.ClassNamingConventions"})
 public class UebungFactory {
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public static Uebung createDefault() {
+    final LocalDateTime jetzt = LocalDateTime.now();
     return new Uebung("DEFAULT", Modus.DEFAULT, 0, 0,
-        LocalDateTime.now(),
-        LocalDateTime.now().plus(1, ChronoUnit.WEEKS));
+        jetzt,
+        jetzt.plus(1, ChronoUnit.WEEKS));
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public static Uebung createWithAlteTermine(final String name, final Modus modus, final int minGroesse,
                                              final int maxGroesse,
                                              final LocalDateTime anmeldebeginn, final LocalDateTime anmeldeschluss,

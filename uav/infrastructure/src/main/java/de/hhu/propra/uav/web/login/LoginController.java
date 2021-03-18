@@ -7,13 +7,15 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-@SuppressWarnings("PMD")
+
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class LoginController {
 
   @Autowired
   private StudentService studentenService;
 
+  @SuppressWarnings("PMD.OnlyOneReturn")
   @GetMapping("/")
   public String index(final @AuthenticationPrincipal OAuth2User principal, final Model model) {
     if(principal != null) {

@@ -7,34 +7,42 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.AvoidDuplicateLiterals"})
 @DomainService
 public class VerteilungsService {
 
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
   public void tutorenVerteilen(final Uebung uebung) {
     final List<Termin> termine = uebung.getTermine();
     final Map<LocalDateTime, List<Termin>> map = termine.stream()
         .collect(Collectors.groupingBy(Termin::getZeitpunkt));
     uebung.getTermine().clear();
+
     for (final LocalDateTime zeitpunkt : map.keySet()) {
       zufallsverteilung(map.get(zeitpunkt));
       termine.addAll(map.get(zeitpunkt));
     }
    }
 
-  private void zufallsverteilung(List<Termin> termine) {
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
+  private void zufallsverteilung(final List<Termin> termine) {
     final List<String> tutoren = new ArrayList<>();
+
     for (final Termin termin : termine) {
       tutoren.add(termin.getTutor());
     }
+
     Collections.shuffle(tutoren);
     int counter = 0;
+
     for (final Termin termin : termine) {
       termin.setTutor(tutoren.get(counter));
       counter++;
     }
   }
 
-  public void perfekteVerteilung(Uebung uebung) {
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
+  public void perfekteVerteilung(final Uebung uebung) {
     final List<Termin> termine = uebung.getTermine();
     final Map<LocalDateTime, List<Termin>> map = termine.stream()
         .collect(Collectors.groupingBy(Termin::getZeitpunkt));
@@ -59,6 +67,7 @@ public class VerteilungsService {
     uebung.abschliessen();
   }
 
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis","PMD.OnlyOneReturn"})
   private List<Termin> verteilung(final List<Termin> terminList, final int gruppenanzahl, final int studentenanzahl) {
     if(studentenanzahl == 0) {
       return terminList;

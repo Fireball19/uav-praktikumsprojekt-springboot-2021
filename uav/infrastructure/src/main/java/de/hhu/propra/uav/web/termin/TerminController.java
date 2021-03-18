@@ -11,15 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class TerminController {
 
   @Autowired
-  UebungService uebungService;
+  private UebungService uebungService;
 
   @Autowired
-  StudentService studentService;
+  private StudentService studentService;
 
+  @SuppressWarnings("PMD.OnlyOneReturn")
   @GetMapping("termine/uebersicht/uebungen")
   public String tutorUebersicht(final @AuthenticationPrincipal OAuth2User principal, final Model model) {
     if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_TUTOR"))) {
@@ -27,8 +29,8 @@ public class TerminController {
       return "termin/uebungenTutoren";
     }
 
-    String studentGithub = principal.getAttribute("login");
-    Student student = studentService.findByGithub(studentGithub);
+    final String studentGithub = principal.getAttribute("login");
+    final Student student = studentService.findByGithub(studentGithub);
 
     model.addAttribute("uebungen", uebungService.findTermineByStudentId(student));
 

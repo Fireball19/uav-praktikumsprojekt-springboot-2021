@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class UebungKonfigController {
 
@@ -26,6 +27,7 @@ public class UebungKonfigController {
   }
 
 
+  @SuppressWarnings({"PMD.LongVariable","PMD.OnlyOneReturn"})
   @Secured("ROLE_ORGA")
   @PostMapping("/verwaltung/konfiguration/uebung")
   public String uebungHinzufuegen(@Valid final Uebung uebung, final Errors errors, final boolean termineUebernehmen) {

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 
 import static org.springframework.context.annotation.FilterType.ANNOTATION;
 
+@SuppressWarnings("PMD")
 @Configuration
 @Profile("!test")
 @ComponentScan(

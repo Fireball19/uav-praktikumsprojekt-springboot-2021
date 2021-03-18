@@ -8,14 +8,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
 
-
+@SuppressWarnings({"PMD.TooManyMethods","PMD.AvoidDuplicateLiterals"})
 @Data
 public class Uebung {
 
+  @SuppressWarnings({"PMD.RedundantFieldInitializer","PMD.ShortVariable"})
   @Id
   @Getter
   private Long id = null;
@@ -49,12 +51,14 @@ public class Uebung {
     return gruppen;
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public List<Termin> getTermine() {
     return termine.stream()
         .sorted(Comparator.comparing(Termin::getZeitpunkt))
         .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void addStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -67,6 +71,7 @@ public class Uebung {
     termin.addStudent(student);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void deleteStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -75,6 +80,7 @@ public class Uebung {
     termin.deleteStudent(student);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public List<Termin> getRestplaetze() {
     return termine.stream()
         .filter(x -> x.getStudenten().size() < maxGroesse)
@@ -94,6 +100,7 @@ public class Uebung {
     }
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void addGruppe(final String gruppenname, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -102,6 +109,7 @@ public class Uebung {
     termin.addGruppe(gruppenname);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void deleteGruppe(final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -110,11 +118,13 @@ public class Uebung {
     termin.deleteGruppe();
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public boolean terminContainsStudent(final long terminId, final Student student) {
     final Termin termin = findTermin(terminId);
     return termin.containsStudent(student);
   }
 
+  @SuppressWarnings("PMD.OnlyOneReturn")
   public boolean containsStudent(final Student student) {
     for(final Termin termin: termine) {
       if(termin.containsStudent(student)) {
@@ -124,10 +134,11 @@ public class Uebung {
     return false;
   }
 
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.OnlyOneReturn"})
   public Termin findTermin(final Long terminId) {
-    for (final Termin t : termine) {
-      if (t.getId().equals(terminId)) {
-        return t;
+    for (final Termin termin : termine) {
+      if (termin.getId().equals(terminId)) {
+        return termin;
       }
     }
     return null;
@@ -138,7 +149,7 @@ public class Uebung {
   }
 
   public Map<LocalDateTime,Integer> getKapazitaeten(){
-    final Map<LocalDateTime,Integer> localDateTimeMap = new HashMap<>();
+    final Map<LocalDateTime,Integer> localDateTimeMap = new ConcurrentHashMap<>();
     for(final Termin termin : termine){
         localDateTimeMap.merge(termin.getZeitpunkt(),termin.getKapazitaet(),Integer::sum);
     }
@@ -146,10 +157,13 @@ public class Uebung {
     return localDateTimeMap;
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public boolean hasTerminFreiePlaetze(final Long terminId) {
-    return findTermin(terminId).getKapazitaet() > 0;
+    final Termin termin = findTermin(terminId);
+    return termin.getKapazitaet() > 0;
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public List<Long> filterTerminIdsByZeitpunkt(final LocalDateTime zeitpunkt) {
     return termine.stream().filter(x -> x.getZeitpunkt()
         .isEqual(zeitpunkt))
@@ -158,6 +172,7 @@ public class Uebung {
         .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public List<Long> filterTerminIdsByStudent(final Student student) {
     return termine.stream().filter(x -> !x.containsStudent(student))
         .mapToLong(Termin::getId)
@@ -165,6 +180,7 @@ public class Uebung {
         .collect(Collectors.toList());
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public List<TerminInfoDTO> getTerminDatenIndividualmodus() {
     final List<TerminInfoDTO> terminInfoDTO = new ArrayList<>();
     for (final Termin termin : termine) {

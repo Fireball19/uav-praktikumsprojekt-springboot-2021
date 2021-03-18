@@ -6,10 +6,14 @@ import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 @ApplicationService
 public class VerwaltungService {
 
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final StudentService studentService;
+
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final UebungService uebungService;
 
   public VerwaltungService(final StudentService studentService, final UebungService uebungService) {
@@ -17,6 +21,7 @@ public class VerwaltungService {
     this.uebungService = uebungService;
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void addStudent(final String github, final Long uebungId, final Long terminId) {
     final Uebung uebung = uebungService.findById(uebungId);
 
@@ -36,6 +41,7 @@ public class VerwaltungService {
     uebungService.save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void deleteStudent(final String github, final Long uebungId, final Long terminId) {
     final Uebung uebung = uebungService.findById(uebungId);
 
@@ -55,6 +61,7 @@ public class VerwaltungService {
     uebungService.save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void moveStudent(final String github, final Long uebungId, final Long terminAltId, final Long terminNeuId) {
     final Uebung uebung = uebungService.findById(uebungId);
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class IndividualVerteilungController {
 
@@ -23,14 +24,14 @@ public class IndividualVerteilungController {
 
   @Secured("ROLE_ORGA")
   @GetMapping("/verwaltung/verteilung/individualmodus")
-  public String individualUebersicht(Model model){
+  public String individualUebersicht(final Model model){
     model.addAttribute("uebungen",uebungService.findAllIndividualAnmeldung());
     return "verwaltung/individualUebersicht";
   }
 
   @Secured("ROLE_ORGA")
   @GetMapping("/verwaltung/verteilung/individualmodus/{uebungId}")
-  public String individualKonfiguration(Model model, @PathVariable("uebungId") final Long uebungId){
+  public String individualKonfiguration(final Model model, @PathVariable("uebungId") final Long uebungId){
     model.addAttribute("uebung",uebungService.findById(uebungId));
     model.addAttribute("studenten",studentService.findAllAsMap());
     return "verwaltung/individualKonfiguration";
@@ -43,6 +44,7 @@ public class IndividualVerteilungController {
     return "redirect:/verwaltung/verteilung/individualmodus/{uebungId}";
   }
 
+  @SuppressWarnings("PMD.SignatureDeclareThrowsException")
   @Secured("ROLE_ORGA")
   @PostMapping("/verwaltung/verteilung/individualmodus/{uebungId}/abschliessen")
   public String individualAbschliessen(@PathVariable("uebungId") final Long uebungId) throws Exception {

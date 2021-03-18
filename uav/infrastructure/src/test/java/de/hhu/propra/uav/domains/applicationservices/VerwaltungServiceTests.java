@@ -29,12 +29,10 @@ public class VerwaltungServiceTests {
   @Test
   public void addStudentThrowsExceptionOfNullTerminId(){
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
-    Student student = new Student("Alex");
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
 
-    when(studentService.findByGithub(any())).thenReturn(student);
     when(uebungService.findById(any())).thenReturn(uebung);
 
 
@@ -47,12 +45,10 @@ public class VerwaltungServiceTests {
   @Test
   public void deleteStudentThrowsExceptionOfNullTerminId(){
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
-    Student student = new Student("Alex");
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
 
-    when(studentService.findByGithub(any())).thenReturn(student);
     when(uebungService.findById(any())).thenReturn(uebung);
 
 
@@ -65,12 +61,10 @@ public class VerwaltungServiceTests {
   @Test
   public void moveStudentThrowsExceptionOfNullTerminId(){
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
-    Student student = new Student("Alex");
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
         LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
 
-    when(studentService.findByGithub(any())).thenReturn(student);
     when(uebungService.findById(any())).thenReturn(uebung);
 
 

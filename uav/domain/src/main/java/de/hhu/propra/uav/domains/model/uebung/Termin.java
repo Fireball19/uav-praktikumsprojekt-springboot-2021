@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"PMD.CommentDefaultAccessModifier","PMD.DefaultPackage"})
 @Data
 class Termin {
   @SuppressWarnings("PMD")

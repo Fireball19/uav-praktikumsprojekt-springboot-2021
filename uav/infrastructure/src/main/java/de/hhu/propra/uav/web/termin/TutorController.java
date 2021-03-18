@@ -9,13 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class TutorController {
 
   @Autowired
-  UebungService uebungService;
+  private UebungService uebungService;
   @Autowired
-  StudentService studentService;
+  private StudentService studentService;
 
   @Secured("ROLE_TUTOR")
   @GetMapping("tutor/uebersicht/{uebungId}/terminuebersicht")

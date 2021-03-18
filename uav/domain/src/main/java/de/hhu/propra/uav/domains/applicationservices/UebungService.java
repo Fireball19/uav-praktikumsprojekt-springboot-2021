@@ -15,16 +15,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals","PMD.LongVariable"})
 @ApplicationService
 public class UebungService {
 
-
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final UebungRepository uebungRepository;
 
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final TerminImporter terminImporter;
 
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final VerteilungsService verteilungsService;
 
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final GithubApi githubAPI;
 
 
@@ -57,27 +61,31 @@ public class UebungService {
     return uebungRepository.findFirstByBearbeitetIsFalse();
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void abschliessen(final Long uebungId) {
     final Uebung uebung = findById(uebungId);
     uebung.abschliessen();
     save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public Uebung findById(final Long uebungId) {
     return uebungRepository.findById(uebungId).orElseThrow(() ->
             new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + uebungId + " vorhanden!"));
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public Uebung findByIdForStudent(final Long uebungId) {
     final Uebung uebung = findById(uebungId);
-    if(!LocalDateTime.now().isBefore(uebung.getAnmeldeschluss())
-        || !LocalDateTime.now().isAfter(uebung.getAnmeldebeginn())) {
+    final LocalDateTime jetzt = LocalDateTime.now();
+    if(!jetzt.isBefore(uebung.getAnmeldeschluss())
+        || !jetzt.isAfter(uebung.getAnmeldebeginn())) {
       throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"Nicht im Anmeldezeitraum!");
     }
     return uebung;
   }
 
-
+  @SuppressWarnings("PMD.LawOfDemeter")
   public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
         new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + name + " vorhanden!"));
@@ -87,40 +95,50 @@ public class UebungService {
     return uebungRepository.findAll();
   }
 
+  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
   public List<Uebung> findAllForStudent() {
+    final LocalDateTime jetzt = LocalDateTime.now();
     return uebungRepository.findAll().stream()
-        .filter(x -> x.getAnmeldeschluss().isAfter(LocalDateTime.now()))
-        .filter(x -> x.getAnmeldebeginn().isBefore(LocalDateTime.now()))
+        .filter(x -> x.getAnmeldeschluss().isAfter(jetzt))
+        .filter(x -> x.getAnmeldebeginn().isBefore(jetzt))
         .collect(Collectors.toList());
   }
-
+  @SuppressWarnings("PMD.LawOfDemeter")
   public int ueberpruefeMaxGroesse(final Long uebungId) {
-    return findById(uebungId).getMaxGroesse();
+    final Uebung uebung = findById(uebungId);
+    return uebung.getMaxGroesse();
   }
+  @SuppressWarnings("PMD.LawOfDemeter")
   public int ueberpruefeMinGroesse(final Long uebungId) {
-    return findById(uebungId).getMinGroesse();
+    final Uebung uebung = findById(uebungId);
+    return uebung.getMinGroesse();
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {
     final Uebung uebung = findById(uebungId);
     uebung.addGruppe(gruppenname, terminId);
     save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void deleteGruppe(final Long uebungId, final Long terminId) {
     final Uebung uebung = findById(uebungId);
     uebung.deleteGruppe(terminId);
     save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void addTermin(final long uebungId, final String tutor, final LocalDateTime zeitpunkt) {
     final Uebung uebung = findById(uebungId);
     uebung.addTermin(tutor, zeitpunkt);
     save(uebung);
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public Modus ueberpruefeAnmeldungsModus(final Long uebungId) {
-    return findById(uebungId).getModus();
+     final Uebung uebung = findById(uebungId);
+     return uebung.getModus();
   }
 
   public void addTermineByTerminImporter(final long uebungId, final InputStream inputStream) {
@@ -144,6 +162,7 @@ public class UebungService {
     return uebungen;
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   public void deleteTermin(final Long uebungId, final Long terminId){
     final Uebung uebung = findById(uebungId);
     uebung.deleteTermin(terminId);
@@ -166,6 +185,7 @@ public class UebungService {
     save(uebung);
   }
 
+  @SuppressWarnings({"PMD.SignatureDeclareThrowsException","PMD.LawOfDemeter"})
   public void individualModusAbschliessen(final Long uebungId) throws Exception {
     final Uebung uebung = findById(uebungId);
     final List<TerminInfoDTO> terminInfoDTOList = uebung.getTerminDatenIndividualmodus();

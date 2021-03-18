@@ -11,21 +11,25 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("PMD.AtLeastOneConstructor")
 @Component
 public class TerminImporterImpl implements TerminImporter {
 
-  public List<TerminFileDTO> convertToTerminFile(InputStream inputStream)  {
-    List<TerminFileDTO> termine = new ArrayList<>();
+  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis","PMD.CloseResource","PMD.AssignmentInOperand","PMD.PreserveStackTrace"})
+  @Override
+  public List<TerminFileDTO> convertToTerminFile(final InputStream inputStream)  {
+    final List<TerminFileDTO> termine = new ArrayList<>();
 
     try {
-      Reader reader = new BufferedReader(new InputStreamReader(inputStream));
-      CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+      final Reader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+      final CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
 
       String[] record;
       while ((record = csvReader.readNext()) != null) {
@@ -43,12 +47,12 @@ public class TerminImporterImpl implements TerminImporter {
     } catch (DateTimeParseException e) {
       throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Ein Zeitpunkt ist nicht richtig formatiert");
     }
-
     return termine;
   }
 
-  public static InputStream convertMultipartFileToInputStream(MultipartFile file) {
-    InputStream inputStream = InputStream.nullInputStream();
+  @SuppressWarnings({"PMD.AvoidFinalLocalVariable","PMD.DataflowAnomalyAnalysis","PMD.DataflowAnomalyAnalysis","PMD.PreserveStackTrace"})
+  public static InputStream convertMultipartFileToInputStream(final MultipartFile file) {
+    final InputStream inputStream;
     try {
       inputStream = file.getInputStream();
     } catch (IOException e) {

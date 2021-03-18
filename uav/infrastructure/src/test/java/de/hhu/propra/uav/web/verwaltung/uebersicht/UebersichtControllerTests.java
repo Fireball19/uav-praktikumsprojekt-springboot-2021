@@ -1,5 +1,6 @@
 package de.hhu.propra.uav.web.verwaltung.uebersicht;
 
+import de.hhu.propra.uav.ComponentScanConfiguration;
 import de.hhu.propra.uav.configuration.MethodSecurityConfiguration;
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import({MethodSecurityConfiguration.class})
 @ActiveProfiles("test")
 public class UebersichtControllerTests {
+
   @Autowired
   private MockMvc mockMvc;
   @MockBean

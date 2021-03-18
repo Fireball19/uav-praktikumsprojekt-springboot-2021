@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class GruppenAnmeldungController {
 
@@ -31,6 +32,7 @@ public class GruppenAnmeldungController {
     return "anmeldung/gruppenAnmeldung";
   }
 
+  @SuppressWarnings("PMD.SignatureDeclareThrowsException")
   @Secured("ROLE_USER")
   @PostMapping("/anmeldung/{uebungId}/{terminId}")
   public String gruppenAnmeldungAnmelden(final Model model, @PathVariable("uebungId") final Long uebungId,
@@ -40,6 +42,7 @@ public class GruppenAnmeldungController {
     return "anmeldung/gruppenAnmeldung";
   }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
   @Secured("ROLE_USER")
   @GetMapping("/anmeldung/{uebungId}/restplaetze")
   public String restplaetze(final Model model, @PathVariable("uebungId") final Long uebungId) {

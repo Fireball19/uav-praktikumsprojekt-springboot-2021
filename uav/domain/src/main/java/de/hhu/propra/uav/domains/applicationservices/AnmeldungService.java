@@ -11,8 +11,10 @@ import java.util.List;
 @ApplicationService
 public class AnmeldungService {
 
-
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final UebungService uebungService;
+
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
   private final VerwaltungService verwaltungService;
 
   public AnmeldungService(final UebungService uebungService, final VerwaltungService verwaltungService) {
@@ -47,9 +49,10 @@ public class AnmeldungService {
       throw new HttpClientErrorException(HttpStatus.CONFLICT, "Die Anzahl der eingetragenen Mitglieder " +
           "übersteigt die maximale Gruppengröße " + uebungService.ueberpruefeMaxGroesse(uebungId) + "!");
     }
-    for (String mitglied : split) {
-      mitglied = mitglied.trim();
-      verwaltungService.addStudent(mitglied, uebungId, terminId);
+
+    for (final String mitglied : split) {
+      final String result = mitglied.trim();
+      verwaltungService.addStudent(result, uebungId, terminId);
     }
 
     uebungService.addGruppe(uebungId, terminId, gruppenname);

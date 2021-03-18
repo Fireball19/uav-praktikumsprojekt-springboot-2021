@@ -12,10 +12,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("PMD.CommentDefaultAccessModifier")
 @ApplicationService
 public class StudentService {
 
-
+  @SuppressWarnings("PMD.BeanMembersShouldSerialize")
     private final StudentRepository studentRepository;
 
 
@@ -23,6 +24,7 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    @SuppressWarnings("PMD.LawOfDemeter")
     public Map<Long,Student> findAllAsMap() {
       return studentRepository.findAll().stream()
           .collect(Collectors.toMap(Student::getId, Function.identity()));
@@ -32,12 +34,13 @@ public class StudentService {
       return studentRepository.findAll();
     }
 
-
+  @SuppressWarnings("PMD.LawOfDemeter")
     public Student findById(final Long studentId) {
         return studentRepository.findById(studentId).orElseThrow(() ->
                 new HttpClientErrorException(HttpStatus.NOT_FOUND,"Kein Student mit Id " + studentId + " vorhanden!"));
     }
 
+  @SuppressWarnings("PMD.LawOfDemeter")
     public Student findByGithub(final String github) {
         return studentRepository.findByGithub(github).orElseThrow(() ->
                 new HttpClientErrorException(HttpStatus.NOT_FOUND,

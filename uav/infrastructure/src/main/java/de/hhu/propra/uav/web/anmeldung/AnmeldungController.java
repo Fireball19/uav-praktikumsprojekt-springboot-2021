@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@SuppressWarnings("PMD")
+@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
 @Controller
 public class AnmeldungController {
 
@@ -23,6 +23,7 @@ public class AnmeldungController {
     return "anmeldung/anmeldung";
   }
 
+  @SuppressWarnings("PMD.OnlyOneReturn")
   @Secured("ROLE_USER")
   @GetMapping("/anmeldung/{uebungId}")
   public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
