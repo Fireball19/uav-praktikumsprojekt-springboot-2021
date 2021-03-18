@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class Daten {
+public class TerminInfoDTO {
   private final String tutor;
   private final LocalDateTime zeitpunkt;
   private final List<StudentRef> studenten;

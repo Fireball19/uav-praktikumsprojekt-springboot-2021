@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Gruppe {
+public class GruppeDTO {
   private final String gruppenname;
   private final List<StudentRef> mitglieder;
 }

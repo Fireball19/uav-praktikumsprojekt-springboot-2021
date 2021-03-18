@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 @ApplicationService
 public class StudentService {
 
-    @SuppressWarnings("PMD")
+
     private final StudentRepository studentRepository;
 
-    @SuppressWarnings("PMD")
+
     StudentService(final StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -32,13 +32,12 @@ public class StudentService {
       return studentRepository.findAll();
     }
 
-  @SuppressWarnings("PMD")
-    public Student findById(final Long id) {
-        return studentRepository.findById(id).orElseThrow(() ->
-                new HttpClientErrorException(HttpStatus.NOT_FOUND,"Kein Student mit Id " + id + " vorhanden!"));
+
+    public Student findById(final Long studentId) {
+        return studentRepository.findById(studentId).orElseThrow(() ->
+                new HttpClientErrorException(HttpStatus.NOT_FOUND,"Kein Student mit Id " + studentId + " vorhanden!"));
     }
 
-  @SuppressWarnings("PMD")
     public Student findByGithub(final String github) {
         return studentRepository.findByGithub(github).orElseThrow(() ->
                 new HttpClientErrorException(HttpStatus.NOT_FOUND,
@@ -46,7 +45,7 @@ public class StudentService {
     }
 
     public void addStudent(final String github) {
-      Student student = new Student(github);
+      final Student student = new Student(github);
       if(studentRepository.existsByGithub(student.getGithub())) {
         return;
       }

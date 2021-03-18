@@ -5,7 +5,7 @@ import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.*;
-import de.hhu.propra.uav.domains.terminimporter.TerminFile;
+import de.hhu.propra.uav.domains.terminimporter.TerminFileDTO;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @ApplicationService
 public class UebungService {
 
-  @SuppressWarnings("PMD")
+
   private final UebungRepository uebungRepository;
 
   private final TerminImporter terminImporter;
@@ -27,7 +27,7 @@ public class UebungService {
 
   private final GithubApi githubAPI;
 
-  @SuppressWarnings("PMD")
+
   public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter,
                        final VerteilungsService verteilungsService, final GithubApi githubAPI){
     this.uebungRepository = uebungRepository;
@@ -36,13 +36,13 @@ public class UebungService {
     this.githubAPI = githubAPI;
   }
 
-  @SuppressWarnings("PMD")
+
   public Uebung createDefault() {
     return UebungFactory.createDefault();
   }
 
   public void saveWithAlteTermine(final Uebung uebung) {
-    Uebung uebungToSave = UebungFactory.createWithAlteTermine(uebung.getName(),
+    final Uebung uebungToSave = UebungFactory.createWithAlteTermine(uebung.getName(),
         uebung.getModus(), uebung.getMinGroesse(),
         uebung.getMaxGroesse(), uebung.getAnmeldebeginn(), uebung.getAnmeldeschluss(),
         uebungRepository.findTopByOrderByIdDesc());
@@ -57,20 +57,19 @@ public class UebungService {
     return uebungRepository.findFirstByBearbeitetIsFalse();
   }
 
-  public void abschliessen(final Long id) {
-    Uebung uebung = findById(id);
+  public void abschliessen(final Long uebungId) {
+    final Uebung uebung = findById(uebungId);
     uebung.abschliessen();
     save(uebung);
   }
 
-  @SuppressWarnings("PMD")
-  public Uebung findById(final Long id) {
-    return uebungRepository.findById(id).orElseThrow(() ->
-            new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + id + " vorhanden!"));
+  public Uebung findById(final Long uebungId) {
+    return uebungRepository.findById(uebungId).orElseThrow(() ->
+            new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + uebungId + " vorhanden!"));
   }
 
-  public Uebung findByIdForStudent(final Long id) {
-    Uebung uebung = findById(id);
+  public Uebung findByIdForStudent(final Long uebungId) {
+    final Uebung uebung = findById(uebungId);
     if(!LocalDateTime.now().isBefore(uebung.getAnmeldeschluss())
         || !LocalDateTime.now().isAfter(uebung.getAnmeldebeginn())) {
       throw new HttpClientErrorException(HttpStatus.FORBIDDEN,"Nicht im Anmeldezeitraum!");
@@ -78,7 +77,7 @@ public class UebungService {
     return uebung;
   }
 
-  @SuppressWarnings("PMD")
+
   public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
         new HttpClientErrorException(HttpStatus.NOT_FOUND,"Keine Uebung mit " + name + " vorhanden!"));
@@ -95,50 +94,50 @@ public class UebungService {
         .collect(Collectors.toList());
   }
 
-  public int ueberpruefeMaxGroesse(final Long Id) {
-    return findById(Id).getMaxGroesse();
+  public int ueberpruefeMaxGroesse(final Long uebungId) {
+    return findById(uebungId).getMaxGroesse();
   }
-  public int ueberpruefeMinGroesse(final Long Id) {
-    return findById(Id).getMinGroesse();
+  public int ueberpruefeMinGroesse(final Long uebungId) {
+    return findById(uebungId).getMinGroesse();
   }
 
   public void addGruppe(final Long uebungId, final Long terminId, final String gruppenname) {
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     uebung.addGruppe(gruppenname, terminId);
     save(uebung);
   }
 
   public void deleteGruppe(final Long uebungId, final Long terminId) {
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     uebung.deleteGruppe(terminId);
     save(uebung);
   }
 
   public void addTermin(final long uebungId, final String tutor, final LocalDateTime zeitpunkt) {
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     uebung.addTermin(tutor, zeitpunkt);
     save(uebung);
   }
 
-  public Modus ueberpruefeAnmeldungsModus(final Long Id) {
-    return findById(Id).getModus();
+  public Modus ueberpruefeAnmeldungsModus(final Long uebungId) {
+    return findById(uebungId).getModus();
   }
 
   public void addTermineByTerminImporter(final long uebungId, final InputStream inputStream) {
-    Uebung uebung = findById(uebungId);
-    List<TerminFile> termine = terminImporter.convertToTerminFile(inputStream);
-    for (TerminFile termin : termine) {
+    final Uebung uebung = findById(uebungId);
+    final List<TerminFileDTO> termine = terminImporter.convertToTerminFile(inputStream);
+    for (final TerminFileDTO termin : termine) {
       uebung.addTermin(termin.getTutor(), termin.getZeitpunkt());
     }
     save(uebung);
   }
 
   public List<Uebung> findTermineByStudentId(final Student student) {
-    List<Uebung> uebungen = findAll();
-    for (Uebung uebung: uebungen) {
-      List<Long> termineIds = uebung.filterTerminIdsByStudent(student);
-      for (Long id : termineIds) {
-        uebung.deleteTermin(id);
+    final List<Uebung> uebungen = findAll();
+    for (final Uebung uebung: uebungen) {
+      final List<Long> termineIds = uebung.filterTerminIdsByStudent(student);
+      for (final Long terminId : termineIds) {
+        uebung.deleteTermin(terminId);
       }
     }
 
@@ -146,13 +145,13 @@ public class UebungService {
   }
 
   public void deleteTermin(final Long uebungId, final Long terminId){
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     uebung.deleteTermin(terminId);
     save(uebung);
   }
 
   public void shuffleTutoren(final Long uebungId) {
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     verteilungsService.tutorenVerteilen(uebung);
     save(uebung);
   }
@@ -162,22 +161,20 @@ public class UebungService {
   }
 
   public void shuffleStudenten(final Long uebungId){
-    Uebung uebung = findById(uebungId);
+    final Uebung uebung = findById(uebungId);
     verteilungsService.perfekteVerteilung(uebung);
     save(uebung);
   }
 
   public void individualModusAbschliessen(final Long uebungId) throws Exception {
-    Uebung uebung = findById(uebungId);
-    List<Daten> daten = uebung.getTerminDatenIndividualmodus();
+    final Uebung uebung = findById(uebungId);
+    final List<TerminInfoDTO> terminInfoDTOList = uebung.getTerminDatenIndividualmodus();
 
-    System.out.println(daten);
-
-    for (Daten daten1: daten) {
-      githubAPI.createGithubRepositoryIndividualanmeldung(daten1.getStudenten(),
+    for (final TerminInfoDTO terminInfoDTO : terminInfoDTOList) {
+      githubAPI.createGithubRepositoryIndividualanmeldung(terminInfoDTO.getStudenten(),
           uebung.getName(),
-          daten1.getTutor(),
-          daten1.getZeitpunkt());
+          terminInfoDTO.getTutor(),
+          terminInfoDTO.getZeitpunkt());
     }
 
     uebung.abschliessen();

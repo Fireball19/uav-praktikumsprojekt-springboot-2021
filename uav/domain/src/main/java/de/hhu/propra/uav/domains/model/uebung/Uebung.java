@@ -3,7 +3,6 @@ package de.hhu.propra.uav.domains.model.uebung;
 import de.hhu.propra.uav.domains.model.student.Student;
 import lombok.Data;
 import lombok.Getter;
-import org.apache.tomcat.jni.Local;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,13 +13,11 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
 
 
-@SuppressWarnings("LossyEncoding")
 @Data
 public class Uebung {
 
   @Id
   @Getter
-  @SuppressWarnings("PMD")
   private Long id = null;
   private final String name;
   private final Modus modus;
@@ -40,14 +37,14 @@ public class Uebung {
     termine.add(new Termin(zeitpunkt, this.minGroesse, this.maxGroesse, tutor));
   }
 
-  public void deleteTermin(final Long id) {
-    termine.removeIf(termin -> termin.getId().equals(id));
+  public void deleteTermin(final Long uebungId) {
+    termine.removeIf(termin -> termin.getId().equals(uebungId));
   }
 
-  public List<Gruppe> getGruppen() {
-    List<Gruppe> gruppen= new ArrayList<>();
-    for (Termin termin : termine) {
-      gruppen.add(new Gruppe(termin.getGruppenname(), termin.getStudenten()));
+  public List<GruppeDTO> getGruppen() {
+    final List<GruppeDTO> gruppen = new ArrayList<>();
+    for (final Termin termin : termine) {
+      gruppen.add(new GruppeDTO(termin.getGruppenname(), termin.getStudenten()));
     }
     return gruppen;
   }
@@ -58,7 +55,6 @@ public class Uebung {
         .collect(Collectors.toList());
   }
 
-  @SuppressWarnings("PMD")
   public void addStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -71,7 +67,6 @@ public class Uebung {
     termin.addStudent(student);
   }
 
-  @SuppressWarnings("PMD")
   public void deleteStudent(final Student student, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -90,7 +85,6 @@ public class Uebung {
     termin.deleteStudent(student);
   }
 
-  @SuppressWarnings("PMD")
   public void moveStudent(final Student student, final Long terminAltId, final Long terminNeuId) {
     final Termin terminAlt = findTermin(terminAltId);
     final Termin terminNeu = findTermin(terminNeuId);
@@ -100,7 +94,6 @@ public class Uebung {
     }
   }
 
-  @SuppressWarnings("PMD")
   public void addGruppe(final String gruppenname, final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -109,7 +102,6 @@ public class Uebung {
     termin.addGruppe(gruppenname);
   }
 
-  @SuppressWarnings("PMD")
   public void deleteGruppe(final Long terminId) {
     final Termin termin = findTermin(terminId);
     if (termin == null) {
@@ -118,14 +110,13 @@ public class Uebung {
     termin.deleteGruppe();
   }
 
-  @SuppressWarnings("PMD")
   public boolean terminContainsStudent(final long terminId, final Student student) {
-    Termin termin = findTermin(terminId);
+    final Termin termin = findTermin(terminId);
     return termin.containsStudent(student);
   }
 
   public boolean containsStudent(final Student student) {
-    for(Termin termin: termine) {
+    for(final Termin termin: termine) {
       if(termin.containsStudent(student)) {
         return true;
       }
@@ -133,7 +124,6 @@ public class Uebung {
     return false;
   }
 
-  @SuppressWarnings("PMD")
   public Termin findTermin(final Long terminId) {
     for (final Termin t : termine) {
       if (t.getId().equals(terminId)) {
@@ -148,8 +138,8 @@ public class Uebung {
   }
 
   public Map<LocalDateTime,Integer> getKapazitaeten(){
-    Map<LocalDateTime,Integer> localDateTimeMap = new HashMap<>();
-    for(Termin termin : termine){
+    final Map<LocalDateTime,Integer> localDateTimeMap = new HashMap<>();
+    for(final Termin termin : termine){
         localDateTimeMap.merge(termin.getZeitpunkt(),termin.getKapazitaet(),Integer::sum);
     }
 
@@ -175,13 +165,13 @@ public class Uebung {
         .collect(Collectors.toList());
   }
 
-  public List<Daten> getTerminDatenIndividualmodus() {
-    List<Daten> daten = new ArrayList<>();
-    for (Termin termin : termine) {
+  public List<TerminInfoDTO> getTerminDatenIndividualmodus() {
+    final List<TerminInfoDTO> terminInfoDTO = new ArrayList<>();
+    for (final Termin termin : termine) {
       if (!termin.getStudenten().isEmpty()) {
-        daten.add(new Daten(termin.getTutor(), termin.getZeitpunkt(), termin.getStudenten()));
+        terminInfoDTO.add(new TerminInfoDTO(termin.getTutor(), termin.getZeitpunkt(), termin.getStudenten()));
       }
     }
-    return daten;
+    return terminInfoDTO;
   }
 }

@@ -10,40 +10,40 @@ import java.util.stream.Collectors;
 @DomainService
 public class VerteilungsService {
 
-  public void tutorenVerteilen(Uebung uebung) {
-    List<Termin> termine = uebung.getTermine();
-    Map<LocalDateTime, List<Termin>> map = termine.stream()
+  public void tutorenVerteilen(final Uebung uebung) {
+    final List<Termin> termine = uebung.getTermine();
+    final Map<LocalDateTime, List<Termin>> map = termine.stream()
         .collect(Collectors.groupingBy(Termin::getZeitpunkt));
     uebung.getTermine().clear();
-    for (LocalDateTime zeitpunkt : map.keySet()) {
+    for (final LocalDateTime zeitpunkt : map.keySet()) {
       zufallsverteilung(map.get(zeitpunkt));
       termine.addAll(map.get(zeitpunkt));
     }
    }
 
   private void zufallsverteilung(List<Termin> termine) {
-    List<String> tutoren = new ArrayList<>();
-    for (Termin termin : termine) {
+    final List<String> tutoren = new ArrayList<>();
+    for (final Termin termin : termine) {
       tutoren.add(termin.getTutor());
     }
     Collections.shuffle(tutoren);
-    int i = 0;
-    for (Termin termin : termine) {
-      termin.setTutor(tutoren.get(i));
-      i++;
+    int counter = 0;
+    for (final Termin termin : termine) {
+      termin.setTutor(tutoren.get(counter));
+      counter++;
     }
   }
 
   public void perfekteVerteilung(Uebung uebung) {
-    List<Termin> termine = uebung.getTermine();
-    Map<LocalDateTime, List<Termin>> map = termine.stream()
+    final List<Termin> termine = uebung.getTermine();
+    final Map<LocalDateTime, List<Termin>> map = termine.stream()
         .collect(Collectors.groupingBy(Termin::getZeitpunkt));
     uebung.getTermine().clear();
 
-    for (LocalDateTime zeitpunkt : map.keySet()) {
-      List<Termin> terminList = map.get(zeitpunkt);
+    for (final LocalDateTime zeitpunkt : map.keySet()) {
+      final List<Termin> terminList = map.get(zeitpunkt);
       int studentenAnzahl = 0;
-      for (Termin termin : terminList) {
+      for (final Termin termin : terminList) {
         studentenAnzahl += termin.getStudenten().size();
       }
 
@@ -52,20 +52,20 @@ public class VerteilungsService {
         gruppenanzahl++;
       }
 
-      List<Termin> neueVerteilung = verteilung(terminList, gruppenanzahl, studentenAnzahl);
+      final List<Termin> neueVerteilung = verteilung(terminList, gruppenanzahl, studentenAnzahl);
       uebung.getTermine().addAll(neueVerteilung);
     }
 
     uebung.abschliessen();
   }
 
-  private List<Termin> verteilung(List<Termin> terminList, int gruppenanzahl, int studentenanzahl) {
+  private List<Termin> verteilung(final List<Termin> terminList, final int gruppenanzahl, final int studentenanzahl) {
     if(studentenanzahl == 0) {
       return terminList;
     }
-    List<StudentRef> studenten = new ArrayList<>();
-    List<Termin> termineCopy = new ArrayList<>(terminList);
-    for (Termin termin : termineCopy) {
+    final List<StudentRef> studenten = new ArrayList<>();
+    final List<Termin> termineCopy = new ArrayList<>(terminList);
+    for (final Termin termin : termineCopy) {
       studenten.addAll(termin.getStudenten());
       termin.getStudenten().clear();
     }

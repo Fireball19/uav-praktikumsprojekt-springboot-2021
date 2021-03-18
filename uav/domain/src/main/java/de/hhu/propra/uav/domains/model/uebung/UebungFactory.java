@@ -15,8 +15,8 @@ public class UebungFactory {
                                              final int maxGroesse,
                                              final LocalDateTime anmeldebeginn, final LocalDateTime anmeldeschluss,
                                              final Uebung alteUebung) {
-    Uebung uebung = new Uebung(name, modus, minGroesse, maxGroesse, anmeldebeginn, anmeldeschluss);
-    for (Termin termin: alteUebung.getTermine()) {
+    final Uebung uebung = new Uebung(name, modus, minGroesse, maxGroesse, anmeldebeginn, anmeldeschluss);
+    for (final Termin termin: alteUebung.getTermine()) {
       uebung.addTermin(termin.getTutor(), termin.getZeitpunkt().plus(1, ChronoUnit.WEEKS));
     }
     return uebung;

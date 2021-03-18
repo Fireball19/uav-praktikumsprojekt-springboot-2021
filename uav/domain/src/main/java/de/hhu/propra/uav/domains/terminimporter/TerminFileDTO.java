@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class TerminFile {
+public class TerminFileDTO {
 
   private final String tutor;
 

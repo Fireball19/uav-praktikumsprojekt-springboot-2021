@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface TerminImporter {
 
-  public List<TerminFile> convertToTerminFile(InputStream inputStream);
+  List<TerminFileDTO> convertToTerminFile(InputStream inputStream);
 }

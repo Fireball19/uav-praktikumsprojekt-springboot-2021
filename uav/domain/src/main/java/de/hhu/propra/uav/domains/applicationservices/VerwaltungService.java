@@ -12,19 +12,20 @@ public class VerwaltungService {
   private final StudentService studentService;
   private final UebungService uebungService;
 
-  public VerwaltungService(StudentService studentService, UebungService uebungService) {
+  public VerwaltungService(final StudentService studentService, final UebungService uebungService) {
     this.studentService = studentService;
     this.uebungService = uebungService;
   }
 
   public void addStudent(final String github, final Long uebungId, final Long terminId) {
-    Student student = studentService.findByGithub(github);
-    Uebung uebung = uebungService.findById(uebungId);
+    final Uebung uebung = uebungService.findById(uebungId);
 
     if (uebung.findTermin(terminId) == null) {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
           "Kein Termin mit id " + terminId + " vorhanden!");
     }
+
+    final Student student = studentService.findByGithub(github);
 
     if (uebung.containsStudent(student)) {
       throw new HttpClientErrorException(HttpStatus.CONFLICT,
@@ -36,13 +37,14 @@ public class VerwaltungService {
   }
 
   public void deleteStudent(final String github, final Long uebungId, final Long terminId) {
-    Student student = studentService.findByGithub(github);
-    Uebung uebung = uebungService.findById(uebungId);
+    final Uebung uebung = uebungService.findById(uebungId);
 
     if (uebung.findTermin(terminId) == null) {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
           "Kein Termin mit id " + terminId + " vorhanden!");
     }
+
+    final Student student = studentService.findByGithub(github);
 
     if (!uebung.terminContainsStudent(terminId, student)) {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
@@ -54,8 +56,7 @@ public class VerwaltungService {
   }
 
   public void moveStudent(final String github, final Long uebungId, final Long terminAltId, final Long terminNeuId) {
-    Student student = studentService.findByGithub(github);
-    Uebung uebung = uebungService.findById(uebungId);
+    final Uebung uebung = uebungService.findById(uebungId);
 
     if (uebung.findTermin(terminAltId) == null) {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
@@ -66,6 +67,8 @@ public class VerwaltungService {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
           "Kein Termin mit id " + terminNeuId + " vorhanden!");
     }
+
+    final Student student = studentService.findByGithub(github);
 
     if (!uebung.terminContainsStudent(terminAltId, student)) {
       throw new HttpClientErrorException(HttpStatus.NOT_FOUND,

@@ -2,7 +2,7 @@ package de.hhu.propra.uav.github;
 
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRef;
-import de.hhu.propra.uav.domains.model.uebung.Gruppe;
+import de.hhu.propra.uav.domains.model.uebung.GruppeDTO;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.github.GithubApi;
@@ -87,10 +87,10 @@ public class GithubApiImpl implements GithubApi {
     if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())
         && uebungService.ueberpruefeAnmeldungsModus(uebung.getId()) == Modus.GRUPPENANMELDUNG) {
       uebungService.shuffleTutoren(uebung.getId());
-      List<Gruppe> gruppen = uebung.getGruppen();
-      for (Gruppe gruppe : gruppen) {
-        createGithubRepositoryGruppenAnmeldung(gruppe.getGruppenname(),
-            uebung.getName(), gruppe.getMitglieder());
+      List<GruppeDTO> gruppen = uebung.getGruppen();
+      for (GruppeDTO gruppeDTO : gruppen) {
+        createGithubRepositoryGruppenAnmeldung(gruppeDTO.getGruppenname(),
+            uebung.getName(), gruppeDTO.getMitglieder());
       }
       uebungService.abschliessen(uebung.getId());
     }

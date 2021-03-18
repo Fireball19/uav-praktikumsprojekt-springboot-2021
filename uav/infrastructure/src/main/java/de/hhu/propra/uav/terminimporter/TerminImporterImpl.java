@@ -3,7 +3,7 @@ package de.hhu.propra.uav.terminimporter;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-import de.hhu.propra.uav.domains.terminimporter.TerminFile;
+import de.hhu.propra.uav.domains.terminimporter.TerminFileDTO;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ import java.util.List;
 @Component
 public class TerminImporterImpl implements TerminImporter {
 
-  public List<TerminFile> convertToTerminFile(InputStream inputStream)  {
-    List<TerminFile> termine = new ArrayList<>();
+  public List<TerminFileDTO> convertToTerminFile(InputStream inputStream)  {
+    List<TerminFileDTO> termine = new ArrayList<>();
 
     try {
       Reader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -29,7 +29,7 @@ public class TerminImporterImpl implements TerminImporter {
 
       String[] record;
       while ((record = csvReader.readNext()) != null) {
-        termine.add(new TerminFile(record[0], LocalDateTime.parse(record[1],
+        termine.add(new TerminFileDTO(record[0], LocalDateTime.parse(record[1],
             DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))));
       }
 

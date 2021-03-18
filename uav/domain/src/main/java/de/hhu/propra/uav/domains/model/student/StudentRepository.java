@@ -1,16 +1,13 @@
 package de.hhu.propra.uav.domains.model.student;
 
-import de.hhu.propra.uav.domains.model.student.Student;
-
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("PMD")
 public interface StudentRepository {
 
   List<Student> findAll();
 
-  Optional<Student> findById(Long id);
+  Optional<Student> findById(Long studentId);
 
   Optional<Student> findByGithub(String github);
 
