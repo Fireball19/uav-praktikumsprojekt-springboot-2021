@@ -47,6 +47,7 @@
                     <th scope="col">Wochentag</th>
                     <th scope="col">Zeitpunkt</th>
                     <th scope="col">Angemeldete Studenten</th>
+                    <th scope="col">Mindestgröße eingehalten</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,6 +58,11 @@
                     <td><span th:each="studentRef, iterStat : ${termin.studenten}"
                               th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
                           ', ': ${studenten.get(studentRef.id).github}"></span></td>
+                    <td>
+                        <span th:if="${termin.studenten.size() < termin.minGroesse}" class="alert-danger">Nicht
+                        ok!</span>
+                        <span th:if="${termin.studenten.size() >= termin.minGroesse}" class="alert-success">Ok!</span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
