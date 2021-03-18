@@ -3,16 +3,50 @@
 
 
 
-=== _<Konzept 1>_
+=== PMD
 
-_<Erklärung>_
+Folgende RuleSets sind in diesem Projekt aktiviert:
 
-=== _<Konzept 2>_
+* ErrorProne
+* BestPractices
+* CodeStyle
+* Design
+* Multithreading
+* Performance
+* Security
 
-_<Erklärung>_
+Einige PMD Fehlermeldungen wurden aus folgenden Gründen unterdrückt
 
-...
+|===
+|unterdrückte Fehlermeldung |Begründung
+| _BeanMembersShouldSerialize_ | _Diese Felder sollten nicht nach außen gegeben werden._
+| _TooManyMethods_ | _Uebung und UebungService sind der Backbone der Logik der Anwendung und sind deshalb die Klassen
+mit den meisten Methoden_
+| _LongVariable_ | _erhöht die Lesbarkeit_
+| _ShortVariable_ | _id als field-name nach Konvention_
+| _AvoidDuplicateLiterals_ | _direkter Exceptionwurf bei jeder Methode erhöht Lesbarkeit/ PMD weist auf eigene
+SupressWarnings hin_
+| _DataFlowAnomalyAnalysis_ | _reagiert auf Stream.filter() und auf eine Zählvariable in einer Schleife_
+| _SiganuteDeclareThrowsException_ | _Methoden wären zu überladen mit Exceptions. Für Details kann man sich die inneren
+Methoden ansehen_
+| _CommentDefaultAccessModifier_ | _diese Methoden sollten package-private sein_
+| _UseExplicitScope_ | _default erfüllt den Zweck von package-private. Extra Benennung wäre redundant._
+| _RedundantFieldInitializer_ | _id muss null sein für JDBC_
+| _OnlyOneReturn_ | _mehrfache returns erhöhen Lesbarkeit für verschiedene Fälle_
+| _UseUtilityClass_ | _andere Naming-Conventions werden benutzt_
+| _AtLeastOneConstructor_ | _die Helper-Klassen brauchen keine Konstruktoren,ebenso die Konfigurations-Klasse,
+die Main-Klasse, und die Controller_
+| _CloseResource_ | _wird immer geschlossen_
+| _AssignmentInOperand_ | _neue Zuweisung ist notwendig, um zu überprüfen, ob es weitere Eingaben gibt_
+| _PreserveStackTrace_ | _es wird immer nur eine einzige Exception geworfen_
+| _AvoidFinalLocalVariable_ | _Methode ist static, Variable kann nicht außerhalb definiert werden_
+|===
 
-=== _<Konzept n>_
+=== _Spotbugs_
 
-_<Erklärung>_
+Ist aktiviert mit Effort = max und ReportLevel = high.
+
+
+=== _Check Style_
+Für dieses Projekt wurde der Google Code Style eingehalten.
+JavaDocs wurden nicht erstellt.
