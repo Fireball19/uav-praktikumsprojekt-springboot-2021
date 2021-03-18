@@ -41,7 +41,7 @@ public class UebungKonfigController {
       uebungService.save(uebung);
     }
 
-    return "redirect:/verwaltung/uebersicht/uebungen";
+    return "redirect:/verwaltung/konfiguration/termin";
   }
 
 }
