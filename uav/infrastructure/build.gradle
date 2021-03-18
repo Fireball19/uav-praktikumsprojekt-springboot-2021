@@ -77,3 +77,10 @@ spotbugs {
 	effort = "max"
 	reportLevel = "high"
 }
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
