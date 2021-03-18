@@ -10,5 +10,5 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("termin_student")
 public class StudentRef {
 
-    private final Long id;
+  private final Long id;
 }

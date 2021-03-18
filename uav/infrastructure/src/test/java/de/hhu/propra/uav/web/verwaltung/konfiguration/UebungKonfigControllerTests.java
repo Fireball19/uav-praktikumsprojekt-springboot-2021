@@ -42,14 +42,14 @@ public class UebungKonfigControllerTests {
   @MockBean
   private UebungService uebungService;
 
-  public List<Uebung> setUpUebungen(){
+  public List<Uebung> setUpUebungen() {
     List<Uebung> uebungen = new ArrayList<>();
-    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2,4,
+    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
-    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2,4,
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
+    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     uebungen.add(uebung1);
     uebungen.add(uebung2);
     return uebungen;
@@ -88,15 +88,15 @@ public class UebungKonfigControllerTests {
 
     mockMvc.perform(MockMvcRequestBuilders.post("/verwaltung/konfiguration/uebung")
         .session(session)
-        .param("name","TestUebung")
-        .param("modus","GRUPPENANMELDUNG")
-        .param("maxGroesse","0")
-        .param("minGroesse","1")
-        .param("anmeldebeginn",LocalDateTime.now().plus(10,ChronoUnit.MINUTES).toString())
-        .param("anmeldebeginn",LocalDateTime.now().plus(20,ChronoUnit.MINUTES).toString()))
+        .param("name", "TestUebung")
+        .param("modus", "GRUPPENANMELDUNG")
+        .param("maxGroesse", "0")
+        .param("minGroesse", "1")
+        .param("anmeldebeginn", LocalDateTime.now().plus(10, ChronoUnit.MINUTES).toString())
+        .param("anmeldebeginn", LocalDateTime.now().plus(20, ChronoUnit.MINUTES).toString()))
         .andExpect(status().isForbidden())
         .andReturn();
 
-    verify(uebungService,never()).save(any());
+    verify(uebungService, never()).save(any());
   }
 }

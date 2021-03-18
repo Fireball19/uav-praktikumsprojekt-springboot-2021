@@ -43,14 +43,14 @@ public class AnmeldungControllerTests {
   @MockBean
   private AnmeldungService anmeldungService;
 
-  public List<Uebung> setUpUebungen(){
+  public List<Uebung> setUpUebungen() {
     List<Uebung> uebungen = new ArrayList<>();
-    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2,4,
+    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
-    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2,4,
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
+    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     uebungen.add(uebung1);
     uebungen.add(uebung2);
     return uebungen;

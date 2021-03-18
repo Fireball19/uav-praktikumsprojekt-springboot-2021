@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class LoginController {
 
@@ -18,7 +18,7 @@ public class LoginController {
   @SuppressWarnings("PMD.OnlyOneReturn")
   @GetMapping("/")
   public String index(final @AuthenticationPrincipal OAuth2User principal, final Model model) {
-    if(principal != null) {
+    if (principal != null) {
       final String githubName = principal.getAttribute("login");
       studentenService.addStudent(githubName);
       return "redirect:/termine/uebersicht/uebungen";

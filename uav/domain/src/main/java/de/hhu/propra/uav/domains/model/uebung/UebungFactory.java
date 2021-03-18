@@ -3,7 +3,7 @@ package de.hhu.propra.uav.domains.model.uebung;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-@SuppressWarnings({"PMD.UseUtilityClass","PMD.ClassNamingConventions"})
+@SuppressWarnings({"PMD.UseUtilityClass", "PMD.ClassNamingConventions"})
 public class UebungFactory {
 
   @SuppressWarnings("PMD.LawOfDemeter")
@@ -20,7 +20,7 @@ public class UebungFactory {
                                              final LocalDateTime anmeldebeginn, final LocalDateTime anmeldeschluss,
                                              final Uebung alteUebung) {
     final Uebung uebung = new Uebung(name, modus, minGroesse, maxGroesse, anmeldebeginn, anmeldeschluss);
-    for (final Termin termin: alteUebung.getTermine()) {
+    for (final Termin termin : alteUebung.getTermine()) {
       uebung.addTermin(termin.getTutor(), termin.getZeitpunkt().plus(1, ChronoUnit.WEEKS));
     }
     return uebung;

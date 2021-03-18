@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class TerminImportController {
 
@@ -23,7 +23,7 @@ public class TerminImportController {
                               @PathVariable("uebungId") final Long uebungId) {
 
     if (file.isEmpty()) {
-      throw new HttpClientErrorException(HttpStatus.EXPECTATION_FAILED,"Die Datei ist leer!");
+      throw new HttpClientErrorException(HttpStatus.EXPECTATION_FAILED, "Die Datei ist leer!");
     } else {
       uebungService.addTermineByTerminImporter(uebungId, TerminImporterImpl.convertMultipartFileToInputStream(file));
     }

@@ -31,7 +31,8 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li sec:authorize="hasRole('ROLE_ORGA')" class="nav-item" th:classappend="${activeTab == 'verwaltung'}? 'active' : null">
+                <li sec:authorize="hasRole('ROLE_ORGA')" class="nav-item"
+                    th:classappend="${activeTab == 'verwaltung'}? 'active' : null">
                     <a class="nav-link" th:href="@{/verwaltung/uebersicht/uebungen}"
                        href="verwaltung/uebersicht/uebungen">Verwaltung</a>
                 </li>
@@ -44,7 +45,8 @@
                     <a class="nav-link" th:href="@{/anmeldung}" href="anmeldung">Anmeldung</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
                         Github
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

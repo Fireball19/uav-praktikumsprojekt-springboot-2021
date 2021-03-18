@@ -31,45 +31,47 @@
 <div th:replace="fragments/sidebar :: sidebar(uebersichtUebungen)"></div>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <h1>Übersicht</h1>
+    <h1>Übersicht</h1>
 
-        <h2><span class="badge badge-dark" th:text="${#lists.size(uebungen)}">0</span> Praktische Übungen</h2>
-        <br>
+    <h2><span class="badge badge-dark" th:text="${#lists.size(uebungen)}">0</span> Praktische Übungen</h2>
+    <br>
 
-        <div th:each="uebung : ${uebungen}">
-            <h4 th:text="${uebung.name}"></h4>
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Modus</th>
-                    <th scope="col">min. Größe</th>
-                    <th scope="col">max. Größe</th>
-                    <th scope="col">Anmeldebeginn</th>
-                    <th scope="col">Anmeldeschluss</th>
-                    <th scope="col">Termine</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td th:text="${uebung.modus}">0</td>
-                    <td th:text="${uebung.minGroesse}">0</td>
-                    <td th:text="${uebung.maxGroesse}">0</td>
-                    <td th:text="${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                    <td th:text="${#temporals.format(uebung.anmeldeschluss, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                    <td><a class="btn btn-primary"
-                           th:href="@{'/verwaltung/uebersicht/' + ${uebung.id} + '/terminuebersicht'}">Termine
-                        ansehen</a></td>
-                </tr>
-                </tbody>
-            </table>
+    <div th:each="uebung : ${uebungen}">
+        <h4 th:text="${uebung.name}"></h4>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Modus</th>
+                <th scope="col">min. Größe</th>
+                <th scope="col">max. Größe</th>
+                <th scope="col">Anmeldebeginn</th>
+                <th scope="col">Anmeldeschluss</th>
+                <th scope="col">Termine</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${uebung.modus}">0</td>
+                <td th:text="${uebung.minGroesse}">0</td>
+                <td th:text="${uebung.maxGroesse}">0</td>
+                <td th:text="${#temporals.format(uebung.anmeldebeginn, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                <td th:text="${#temporals.format(uebung.anmeldeschluss, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                <td><a class="btn btn-primary"
+                       th:href="@{'/verwaltung/uebersicht/' + ${uebung.id} + '/terminuebersicht'}">Termine
+                    ansehen</a></td>
+            </tr>
+            </tbody>
+        </table>
 
-           <hr/>
-        </div>
+        <hr/>
+    </div>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>

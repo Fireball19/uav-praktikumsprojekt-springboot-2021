@@ -94,7 +94,7 @@ public class StudentServiceTests {
     Student charlie = new Student("Charlie");
     charlie.setId(3L);
 
-    when(studentRepository.findAll()).thenReturn(Arrays.asList(alex,bob,charlie));
+    when(studentRepository.findAll()).thenReturn(Arrays.asList(alex, bob, charlie));
 
     StudentService studentService = new StudentService(studentRepository);
 

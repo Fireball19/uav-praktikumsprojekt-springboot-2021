@@ -52,7 +52,8 @@
                 </div>
                 <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
                 <button type="submit" class="btn btn-primary"
-                        th:formaction="@{|${#httpServletRequest.requestURI}/hinzufuegen|}">Termin hinzufügen</button>
+                        th:formaction="@{|${#httpServletRequest.requestURI}/hinzufuegen|}">Termin hinzufügen
+                </button>
             </form>
 
         </div>
@@ -75,57 +76,58 @@
             </form>
 
         </div>
-        </div>
+    </div>
 
-        <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine</h2>
-        <br>
+    <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine
+    </h2>
+    <br>
 
-        <div th:unless="${#lists.isEmpty(uebung.termine)}">
-            <div>
-                <table class="table table-bordered">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Tutor</th>
-                        <th scope="col">Wochentag</th>
-                        <th scope="col">Zeitpunkt</th>
-                        <th scope="col">Angemeldete Studenten</th>
-                        <th scope="col">Termin entfernen</th>
+    <div th:unless="${#lists.isEmpty(uebung.termine)}">
+        <div>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Tutor</th>
+                    <th scope="col">Wochentag</th>
+                    <th scope="col">Zeitpunkt</th>
+                    <th scope="col">Angemeldete Studenten</th>
+                    <th scope="col">Termin entfernen</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="termin : ${uebung.termine}">
-                        <td th:text="${termin.tutor}">Tutor</td>
-                        <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
-                        <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
-                        <td><span th:each="studentRef, iterStat : ${termin.studenten}"
-                                  th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="termin : ${uebung.termine}">
+                    <td th:text="${termin.tutor}">Tutor</td>
+                    <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
+                    <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                    <td><span th:each="studentRef, iterStat : ${termin.studenten}"
+                              th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
                           ', ': ${studenten.get(studentRef.id).github}"></span></td>
-                        <td>
-                            <form method="POST" th:action="@{'/verwaltung/konfiguration/termin/' + ${uebung.id} + '/' + ${termin.id} +
+                    <td>
+                        <form method="POST" th:action="@{'/verwaltung/konfiguration/termin/' + ${uebung.id} + '/' + ${termin.id} +
                     '/entfernen'}">
-                                <button class="btn btn-danger" type="submit" name="submit" value="value">Entfernen</button>
-                            </form>
+                            <button class="btn btn-danger" type="submit" name="submit" value="value">Entfernen</button>
+                        </form>
 
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br>
-                <br>
-
-
-            </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
 
 
+        </div>
 
 
     </div>
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>

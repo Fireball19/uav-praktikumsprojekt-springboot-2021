@@ -11,7 +11,7 @@ public interface StudentRepository {
 
   Optional<Student> findByGithub(String github);
 
-  Student save (Student student);
+  Student save(Student student);
 
   boolean existsByGithub(String github);
 }

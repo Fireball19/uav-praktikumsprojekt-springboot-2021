@@ -22,9 +22,9 @@ import java.util.List;
 @Component
 public class TerminImporterImpl implements TerminImporter {
 
-  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis","PMD.CloseResource","PMD.AssignmentInOperand","PMD.PreserveStackTrace"})
+  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.CloseResource", "PMD.AssignmentInOperand", "PMD.PreserveStackTrace"})
   @Override
-  public List<TerminFileDTO> convertToTerminFile(final InputStream inputStream)  {
+  public List<TerminFileDTO> convertToTerminFile(final InputStream inputStream) {
     final List<TerminFileDTO> termine = new ArrayList<>();
 
     try {
@@ -41,22 +41,22 @@ public class TerminImporterImpl implements TerminImporter {
       reader.close();
 
     } catch (CsvValidationException e) {
-      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler in einer CSV Zeile!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler in einer CSV Zeile!");
     } catch (IOException e) {
-      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler beim einlesen der Datei!");
     } catch (DateTimeParseException e) {
-      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Ein Zeitpunkt ist nicht richtig formatiert");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Ein Zeitpunkt ist nicht richtig formatiert");
     }
     return termine;
   }
 
-  @SuppressWarnings({"PMD.AvoidFinalLocalVariable","PMD.DataflowAnomalyAnalysis","PMD.DataflowAnomalyAnalysis","PMD.PreserveStackTrace"})
+  @SuppressWarnings({"PMD.AvoidFinalLocalVariable", "PMD.DataflowAnomalyAnalysis", "PMD.DataflowAnomalyAnalysis", "PMD.PreserveStackTrace"})
   public static InputStream convertMultipartFileToInputStream(final MultipartFile file) {
     final InputStream inputStream;
     try {
       inputStream = file.getInputStream();
     } catch (IOException e) {
-      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,"Fehler beim einlesen der Datei!");
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler beim einlesen der Datei!");
     }
 
     return inputStream;

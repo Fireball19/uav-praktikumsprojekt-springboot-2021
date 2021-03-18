@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
 
-@SuppressWarnings({"PMD.TooManyMethods","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 @Data
 public class Uebung {
 
-  @SuppressWarnings({"PMD.RedundantFieldInitializer","PMD.ShortVariable"})
+  @SuppressWarnings({"PMD.RedundantFieldInitializer", "PMD.ShortVariable"})
   @Id
   @Getter
   private Long id = null;
@@ -126,15 +126,15 @@ public class Uebung {
 
   @SuppressWarnings("PMD.OnlyOneReturn")
   public boolean containsStudent(final Student student) {
-    for(final Termin termin: termine) {
-      if(termin.containsStudent(student)) {
+    for (final Termin termin : termine) {
+      if (termin.containsStudent(student)) {
         return true;
       }
     }
     return false;
   }
 
-  @SuppressWarnings({"PMD.LawOfDemeter","PMD.OnlyOneReturn"})
+  @SuppressWarnings({"PMD.LawOfDemeter", "PMD.OnlyOneReturn"})
   public Termin findTermin(final Long terminId) {
     for (final Termin termin : termine) {
       if (termin.getId().equals(terminId)) {
@@ -145,13 +145,13 @@ public class Uebung {
   }
 
   public void abschliessen() {
-      this.bearbeitet = true;
+    this.bearbeitet = true;
   }
 
-  public Map<LocalDateTime,Integer> getKapazitaeten(){
-    final Map<LocalDateTime,Integer> localDateTimeMap = new ConcurrentHashMap<>();
-    for(final Termin termin : termine){
-        localDateTimeMap.merge(termin.getZeitpunkt(),termin.getKapazitaet(),Integer::sum);
+  public Map<LocalDateTime, Integer> getKapazitaeten() {
+    final Map<LocalDateTime, Integer> localDateTimeMap = new ConcurrentHashMap<>();
+    for (final Termin termin : termine) {
+      localDateTimeMap.merge(termin.getZeitpunkt(), termin.getKapazitaet(), Integer::sum);
     }
 
     return localDateTimeMap;

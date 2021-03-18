@@ -27,7 +27,7 @@ public class VerwaltungServiceTests {
   UebungService uebungService;
 
   @Test
-  public void addStudentThrowsExceptionOfNullTerminId(){
+  public void addStudentThrowsExceptionOfNullTerminId() {
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
@@ -38,12 +38,12 @@ public class VerwaltungServiceTests {
 
     assertThrows(HttpClientErrorException.class,
         () -> {
-          verwaltungService.addStudent("Alex",null,1L);
+          verwaltungService.addStudent("Alex", null, 1L);
         });
   }
 
   @Test
-  public void deleteStudentThrowsExceptionOfNullTerminId(){
+  public void deleteStudentThrowsExceptionOfNullTerminId() {
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
@@ -54,12 +54,12 @@ public class VerwaltungServiceTests {
 
     assertThrows(HttpClientErrorException.class,
         () -> {
-          verwaltungService.deleteStudent("Alex",null,1L);
+          verwaltungService.deleteStudent("Alex", null, 1L);
         });
   }
 
   @Test
-  public void moveStudentThrowsExceptionOfNullTerminId(){
+  public void moveStudentThrowsExceptionOfNullTerminId() {
     VerwaltungService verwaltungService = new VerwaltungService(studentService, uebungService);
     Uebung uebung = new Uebung("TestUebung", Modus.GRUPPENANMELDUNG, 2, 3,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
@@ -70,7 +70,7 @@ public class VerwaltungServiceTests {
 
     assertThrows(HttpClientErrorException.class,
         () -> {
-          verwaltungService.moveStudent("Alex",1L,null,null);
+          verwaltungService.moveStudent("Alex", 1L, null, null);
         });
   }
 

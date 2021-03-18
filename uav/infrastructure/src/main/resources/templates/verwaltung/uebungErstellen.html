@@ -31,69 +31,71 @@
 <div th:replace="fragments/sidebar :: sidebar(konfigurationUebung)"></div>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <h1>Konfiguration</h1>
+    <h1>Konfiguration</h1>
 
-        <h2>Praktische Übung konfigurieren</h2>
+    <h2>Praktische Übung konfigurieren</h2>
 
-        <form method="post" th:object="${uebung}">
+    <form method="post" th:object="${uebung}">
 
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" th:value="*{name}" autocomplete="off" class="form-control"
-                       placeholder="PÜ1" required>
-            </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" th:value="*{name}" autocomplete="off" class="form-control"
+                   placeholder="PÜ1" required>
+        </div>
 
-            <div class="form-group">
-                <label>Anmeldungsmodus</label>
-                <select th:field="*{modus}" class="form-control" name="modus" required>
-                    <option value="">Anmeldungsmodus auswählen</option>
-                    <option th:value="GRUPPENANMELDUNG">Gruppenanmeldung</option>
-                    <option th:value="INDIVIDUALANMELDUNG">Individualanmeldung</option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label>Anmeldungsmodus</label>
+            <select th:field="*{modus}" class="form-control" name="modus" required>
+                <option value="">Anmeldungsmodus auswählen</option>
+                <option th:value="GRUPPENANMELDUNG">Gruppenanmeldung</option>
+                <option th:value="INDIVIDUALANMELDUNG">Individualanmeldung</option>
+            </select>
+        </div>
 
-            <div class="form-group">
-                <label>Anmeldebeginn</label>
-                <input class="form-control" name="anmeldebeginn" type="datetime-local"
-                       th:field="*{anmeldebeginn}" autocomplete="off" required>
-                <small class="text-danger" th:errors="*{anmeldebeginn}"> Muss größer als 0 sein! </small>
-            </div>
+        <div class="form-group">
+            <label>Anmeldebeginn</label>
+            <input class="form-control" name="anmeldebeginn" type="datetime-local"
+                   th:field="*{anmeldebeginn}" autocomplete="off" required>
+            <small class="text-danger" th:errors="*{anmeldebeginn}"> Muss größer als 0 sein! </small>
+        </div>
 
-            <div class="form-group">
-                <label>Anmeldeschluss</label>
-                <input class="form-control" name="anmeldeschluss" type="datetime-local"
-                       th:field="*{anmeldeschluss}" autocomplete="off" required>
-                <small class="text-danger" th:errors="*{anmeldeschluss}"> Muss größer als 0 sein! </small>
-            </div>
+        <div class="form-group">
+            <label>Anmeldeschluss</label>
+            <input class="form-control" name="anmeldeschluss" type="datetime-local"
+                   th:field="*{anmeldeschluss}" autocomplete="off" required>
+            <small class="text-danger" th:errors="*{anmeldeschluss}"> Muss größer als 0 sein! </small>
+        </div>
 
-            <div class="form-group">
-                <label>mindest Gruppengröße</label>
-                <input type="text" class="form-control" th:value="*{minGroesse}" name="minGroesse" value="0"
-                       placeholder="1" required>
-                <small class="text-danger" th:errors="*{minGroesse}"> Muss größer als 0 sein! </small>
-            </div>
+        <div class="form-group">
+            <label>mindest Gruppengröße</label>
+            <input type="text" class="form-control" th:value="*{minGroesse}" name="minGroesse" value="0"
+                   placeholder="1" required>
+            <small class="text-danger" th:errors="*{minGroesse}"> Muss größer als 0 sein! </small>
+        </div>
 
-            <div class="form-group">
-                <label>maximale Gruppengröße</label>
-                <input type="text" class="form-control" th:value="*{maxGroesse}" name="maxGroesse" value="0"
-                       placeholder="1" required>
-                <small class="text-danger" th:errors="*{maxGroesse}"> Muss größer als 0 sein! </small>
-            </div>
+        <div class="form-group">
+            <label>maximale Gruppengröße</label>
+            <input type="text" class="form-control" th:value="*{maxGroesse}" name="maxGroesse" value="0"
+                   placeholder="1" required>
+            <small class="text-danger" th:errors="*{maxGroesse}"> Muss größer als 0 sein! </small>
+        </div>
 
-            <div class="form-group">
-                <label>Alte Termine übernehmen</label>
-                <input type="checkbox" name="termineUebernehmen" th:checked="${termineUebernehmen}">
-            </div>
-            <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-            <button type="submit" class="btn btn-primary">Praktische Übung erstellen</button>
+        <div class="form-group">
+            <label>Alte Termine übernehmen</label>
+            <input type="checkbox" name="termineUebernehmen" th:checked="${termineUebernehmen}">
+        </div>
+        <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+        <button type="submit" class="btn btn-primary">Praktische Übung erstellen</button>
 
-        </form>
+    </form>
 
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>

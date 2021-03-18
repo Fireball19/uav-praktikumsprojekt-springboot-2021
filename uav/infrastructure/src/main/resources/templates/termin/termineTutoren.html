@@ -32,7 +32,8 @@
 <div class="container">
     <h1>Übersicht</h1>
 
-    <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine</h2>
+    <h2>[[${uebung.name}]]: <span class="badge badge-dark" th:text="${#lists.size(uebung.termine)}">0</span> Termine
+    </h2>
     <br>
 
     <div th:unless="${#lists.isEmpty(uebung.termine)}">
@@ -69,9 +70,11 @@
     <a href="/termine/uebersicht/uebungen" class="btn btn-primary">Zurück zur Übersicht</a>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>

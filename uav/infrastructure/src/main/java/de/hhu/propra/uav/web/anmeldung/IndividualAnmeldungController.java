@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class IndividualAnmeldungController {
 
@@ -22,10 +22,9 @@ public class IndividualAnmeldungController {
   @Secured("ROLE_USER")
   @PostMapping("/anmeldung/{uebungId}/{zeitpunkt}/individualanmeldung/anmelden")
   public String individualAnmeldung(@PathVariable("uebungId") final Long uebungId,
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @PathVariable("zeitpunkt")
-                                    final LocalDateTime zeitpunkt,
+                                    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") @PathVariable("zeitpunkt") final LocalDateTime zeitpunkt,
                                     final @AuthenticationPrincipal OAuth2User principal) {
-    anmeldungService.individualAnmeldung(uebungId,zeitpunkt, principal.getAttribute("login"));
+    anmeldungService.individualAnmeldung(uebungId, zeitpunkt, principal.getAttribute("login"));
     return "redirect:/anmeldung/{uebungId}";
   }
 }

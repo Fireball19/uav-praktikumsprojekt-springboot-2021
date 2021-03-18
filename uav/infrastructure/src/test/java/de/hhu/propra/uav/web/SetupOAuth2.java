@@ -15,7 +15,7 @@ public class SetupOAuth2 {
 
   public static OAuth2AuthenticationToken buildPrincipalUser() {
     Map<String, Object> attributes = new HashMap<>();
-    attributes.put("login","user");
+    attributes.put("login", "user");
 
     List<GrantedAuthority> authorities = Collections.singletonList(
         new OAuth2UserAuthority("ROLE_USER", attributes));
@@ -25,7 +25,7 @@ public class SetupOAuth2 {
 
   public static OAuth2AuthenticationToken buildPrincipalOrga() {
     Map<String, Object> attributes = new HashMap<>();
-    attributes.put("login","orga");
+    attributes.put("login", "orga");
 
     List<GrantedAuthority> authorities = Collections.singletonList(
         new OAuth2UserAuthority("ROLE_ORGA", attributes));
@@ -35,7 +35,7 @@ public class SetupOAuth2 {
 
   public static OAuth2AuthenticationToken buildPrincipalTutor() {
     Map<String, Object> attributes = new HashMap<>();
-    attributes.put("login","tutor");
+    attributes.put("login", "tutor");
 
     List<GrantedAuthority> authorities = Collections.singletonList(
         new OAuth2UserAuthority("ROLE_TUTOR", attributes));

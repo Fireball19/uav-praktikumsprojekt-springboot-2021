@@ -20,5 +20,5 @@ public class ArchUnitTests {
       //.adapter("authorization", "de.hhu.propra.uav.authorization..")
       .adapter("persistence", "de.hhu.propra.uav.repositories..")
       .adapter("web", "de.hhu.propra.uav.web..")
-      .adapter("github","de.hhu.propra.uav.github..");
+      .adapter("github", "de.hhu.propra.uav.github..");
 }

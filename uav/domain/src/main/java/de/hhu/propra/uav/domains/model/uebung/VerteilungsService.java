@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.AvoidDuplicateLiterals"})
 @DomainService
 public class VerteilungsService {
 
-  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
+  @SuppressWarnings({"PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis"})
   public void tutorenVerteilen(final Uebung uebung) {
     final List<Termin> termine = uebung.getTermine();
     final Map<LocalDateTime, List<Termin>> map = termine.stream()
@@ -22,9 +22,9 @@ public class VerteilungsService {
       zufallsverteilung(map.get(zeitpunkt));
       termine.addAll(map.get(zeitpunkt));
     }
-   }
+  }
 
-  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
+  @SuppressWarnings({"PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis"})
   private void zufallsverteilung(final List<Termin> termine) {
     final List<String> tutoren = new ArrayList<>();
 
@@ -41,7 +41,7 @@ public class VerteilungsService {
     }
   }
 
-  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis"})
+  @SuppressWarnings({"PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis"})
   public void perfekteVerteilung(final Uebung uebung) {
     final List<Termin> termine = uebung.getTermine();
     final Map<LocalDateTime, List<Termin>> map = termine.stream()
@@ -67,9 +67,9 @@ public class VerteilungsService {
     uebung.abschliessen();
   }
 
-  @SuppressWarnings({"PMD.LawOfDemeter","PMD.DataflowAnomalyAnalysis","PMD.OnlyOneReturn"})
+  @SuppressWarnings({"PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis", "PMD.OnlyOneReturn"})
   private List<Termin> verteilung(final List<Termin> terminList, final int gruppenanzahl, final int studentenanzahl) {
-    if(studentenanzahl == 0) {
+    if (studentenanzahl == 0) {
       return terminList;
     }
     final List<StudentRef> studenten = new ArrayList<>();
@@ -83,8 +83,8 @@ public class VerteilungsService {
     int index = 0;
     int offset = 0;
 
-    for(int i = 0; i < studentenanzahl % gruppenanzahl; i++) {
-      for(int j = 0; j < (studentenanzahl / gruppenanzahl) + 1; j++) {
+    for (int i = 0; i < studentenanzahl % gruppenanzahl; i++) {
+      for (int j = 0; j < (studentenanzahl / gruppenanzahl) + 1; j++) {
         termineCopy.get(i).getStudenten().add(studenten.get(j));
         offset++;
       }
@@ -92,12 +92,12 @@ public class VerteilungsService {
     }
 
 
-      for (int i = 0; i < gruppenanzahl - (studentenanzahl % gruppenanzahl); i++) {
-        for (int j = 0; j < (studentenanzahl / gruppenanzahl); j++) {
-          termineCopy.get(index + i).getStudenten().add(studenten.get(offset));
-          offset++;
-        }
+    for (int i = 0; i < gruppenanzahl - (studentenanzahl % gruppenanzahl); i++) {
+      for (int j = 0; j < (studentenanzahl / gruppenanzahl); j++) {
+        termineCopy.get(index + i).getStudenten().add(studenten.get(offset));
+        offset++;
       }
+    }
 
     return termineCopy;
   }

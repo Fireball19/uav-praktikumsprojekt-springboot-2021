@@ -19,6 +19,7 @@ public class UebungsUndAnmeldungsverwaltungApplication {
   public static void main(String[] args) throws Exception {
     SpringApplication.run(UebungsUndAnmeldungsverwaltungApplication.class, args);
   }
+
   @Profile("!test")
   @Bean
   public DatabaseStartupValidator databaseStartupValidator(DataSource dataSource) {

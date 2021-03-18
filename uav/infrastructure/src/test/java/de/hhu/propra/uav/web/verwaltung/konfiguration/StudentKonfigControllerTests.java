@@ -46,20 +46,20 @@ public class StudentKonfigControllerTests {
   @MockBean
   private VerwaltungService verwaltungService;
 
-  public List<Uebung> setUpUebungen(){
+  public List<Uebung> setUpUebungen() {
     List<Uebung> uebungen = new ArrayList<>();
-    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2,4,
+    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
-    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2,4,
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
+    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2, 4,
         LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10,ChronoUnit.MINUTES));
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
     uebungen.add(uebung1);
     uebungen.add(uebung2);
     return uebungen;
   }
 
-  public List<Student> setUpStudenten(){
+  public List<Student> setUpStudenten() {
     List<Student> studenten = new ArrayList<>();
     Student student1 = new Student("Alex");
     Student student2 = new Student("Bob");

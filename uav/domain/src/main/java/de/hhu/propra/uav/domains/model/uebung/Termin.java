@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"PMD.CommentDefaultAccessModifier","PMD.DefaultPackage"})
+@SuppressWarnings({"PMD.CommentDefaultAccessModifier", "PMD.DefaultPackage"})
 @Data
 class Termin {
   @SuppressWarnings("PMD")
@@ -25,7 +25,7 @@ class Termin {
   private String tutor;
   private List<StudentRef> studenten = new ArrayList<>();
 
-  Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor){
+  Termin(final LocalDateTime zeitpunkt, final int minGroesse, final int maxGroesse, final String tutor) {
     this.zeitpunkt = zeitpunkt;
     this.minGroesse = minGroesse;
     this.maxGroesse = maxGroesse;
@@ -55,5 +55,7 @@ class Termin {
     return studenten.contains(new StudentRef(student.getId()));
   }
 
-  int getKapazitaet(){ return maxGroesse - studenten.size();}
+  int getKapazitaet() {
+    return maxGroesse - studenten.size();
+  }
 }

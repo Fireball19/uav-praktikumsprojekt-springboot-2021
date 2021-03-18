@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class GruppenAnmeldungController {
 
@@ -28,7 +28,7 @@ public class GruppenAnmeldungController {
   @GetMapping("/anmeldung/{uebungId}/{terminId}")
   public String gruppenAnmeldung(final Model model, @PathVariable("uebungId") final Long uebungId,
                                  @PathVariable("terminId") final Long terminId) {
-    model.addAttribute("uebung",uebungService.findById(uebungId));
+    model.addAttribute("uebung", uebungService.findById(uebungId));
     return "anmeldung/gruppenAnmeldung";
   }
 
@@ -46,7 +46,7 @@ public class GruppenAnmeldungController {
   @Secured("ROLE_USER")
   @GetMapping("/anmeldung/{uebungId}/restplaetze")
   public String restplaetze(final Model model, @PathVariable("uebungId") final Long uebungId) {
-    model.addAttribute("uebung",uebungService.findById(uebungId));
+    model.addAttribute("uebung", uebungService.findById(uebungId));
     model.addAttribute("restplaetze", uebungService.findById(uebungId).getRestplaetze());
     model.addAttribute("studenten", studentService.findAllAsMap());
     return "anmeldung/gruppenAnmeldungRestplaetze";
@@ -58,7 +58,7 @@ public class GruppenAnmeldungController {
   public String restplatzAnmeldung(@PathVariable("uebungId") final Long uebungId,
                                    @PathVariable("terminId") final Long terminId,
                                    final @AuthenticationPrincipal OAuth2User principal) {
-    anmeldungService.restAnmeldung(uebungId,terminId, principal.getAttribute("login"));
+    anmeldungService.restAnmeldung(uebungId, terminId, principal.getAttribute("login"));
     return "redirect:/anmeldung/{uebungId}/restplaetze";
   }
 }

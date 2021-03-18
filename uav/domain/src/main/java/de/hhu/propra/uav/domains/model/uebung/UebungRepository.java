@@ -5,13 +5,13 @@ import java.util.Optional;
 
 public interface UebungRepository {
 
-   List<Uebung> findAll();
+  List<Uebung> findAll();
 
-   Optional<Uebung> findByName(String name);
+  Optional<Uebung> findByName(String name);
 
-   Optional<Uebung> findById(Long uebungId);
+  Optional<Uebung> findById(Long uebungId);
 
-   Uebung save(Uebung uebung);
+  Uebung save(Uebung uebung);
 
   Uebung findFirstByBearbeitetIsFalse();
 

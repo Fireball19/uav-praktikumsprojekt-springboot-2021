@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor","PMD.BeanMembersShouldSerialize","PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class AnmeldungController {
 
@@ -28,7 +28,7 @@ public class AnmeldungController {
   @GetMapping("/anmeldung/{uebungId}")
   public String anmeldungTermin(final Model model, @PathVariable("uebungId") final Long uebungId) {
     model.addAttribute("uebung", uebungService.findByIdForStudent(uebungId));
-    if(uebungService.ueberpruefeAnmeldungsModus(uebungId) == Modus.INDIVIDUALANMELDUNG) {
+    if (uebungService.ueberpruefeAnmeldungsModus(uebungId) == Modus.INDIVIDUALANMELDUNG) {
       return "anmeldung/individualAnmeldung";
     }
     return "anmeldung/anmeldungTermin";

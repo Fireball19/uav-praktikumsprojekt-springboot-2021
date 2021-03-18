@@ -30,45 +30,48 @@
 <div th:replace="fragments/navbar :: navbar(anmeldung)"></div>
 
 <div class="container">
-        <h1>Anmeldung</h1>
+    <h1>Anmeldung</h1>
 
-        <h2>Praktische Übungen</h2>
-        <br>
+    <h2>Praktische Übungen</h2>
+    <br>
 
-        <div th:if="${#lists.size(uebungen) > 0}">
-            <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 2)}">
-                <div class="card-deck">
-                    <div class="card" th:each="i: ${#numbers.sequence(index, index + 1, 1)}"
-                         th:if="${i < #lists.size(uebungen)}">
-                        <h5 class="card-header text-center text-white bg-dark" th:text="${uebungen[i].name}">Praktische
-                            Übung 1</h5>
-                        <div class="card-body">
-                            <p class="card-text" th:inline="text">Modus: [[${uebungen[i].modus}]]</p>
-                            <p class="card-text" th:inline="text">min Größe: [[${uebungen[i].minGroesse}]]</p>
-                            <p class="card-text" th:inline="text">max Größe: [[${uebungen[i].maxGroesse}]]</p>
-                            <p class="card-text" th:inline="text">Anmeldebeginn:
-                                [[${#temporals.format(uebungen[i].anmeldebeginn, 'dd-MM-yyyy HH:mm')}]]</p>
-                            <p class="card-text" th:inline="text">Anmeldeschluss:
-                                [[${#temporals.format(uebungen[i].anmeldeschluss, 'dd-MM-yyyy HH:mm')}]]</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a th:if="${uebungen[i].modus.toString() == 'INDIVIDUALANMELDUNG'}"
-                               th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Zur Übung anmelden</a>
-                            <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
-                               th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Als Gruppe anmelden</a>
-                            <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
-                               th:href="@{'/anmeldung/' + ${uebungen[i].id} + '/restplaetze'}"
-                               class="btn btn-primary">Offene Restplätze</a>
+    <div th:if="${#lists.size(uebungen) > 0}">
+        <div th:each="index: ${#numbers.sequence(0, #lists.size(uebungen), 2)}">
+            <div class="card-deck">
+                <div class="card" th:each="i: ${#numbers.sequence(index, index + 1, 1)}"
+                     th:if="${i < #lists.size(uebungen)}">
+                    <h5 class="card-header text-center text-white bg-dark" th:text="${uebungen[i].name}">Praktische
+                        Übung 1</h5>
+                    <div class="card-body">
+                        <p class="card-text" th:inline="text">Modus: [[${uebungen[i].modus}]]</p>
+                        <p class="card-text" th:inline="text">min Größe: [[${uebungen[i].minGroesse}]]</p>
+                        <p class="card-text" th:inline="text">max Größe: [[${uebungen[i].maxGroesse}]]</p>
+                        <p class="card-text" th:inline="text">Anmeldebeginn:
+                            [[${#temporals.format(uebungen[i].anmeldebeginn, 'dd-MM-yyyy HH:mm')}]]</p>
+                        <p class="card-text" th:inline="text">Anmeldeschluss:
+                            [[${#temporals.format(uebungen[i].anmeldeschluss, 'dd-MM-yyyy HH:mm')}]]</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a th:if="${uebungen[i].modus.toString() == 'INDIVIDUALANMELDUNG'}"
+                           th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Zur Übung anmelden</a>
+                        <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
+                           th:href="@{'/anmeldung/' + ${uebungen[i].id}}" class="btn btn-primary">Als Gruppe
+                            anmelden</a>
+                        <a th:if="${uebungen[i].modus.toString() == 'GRUPPENANMELDUNG'}"
+                           th:href="@{'/anmeldung/' + ${uebungen[i].id} + '/restplaetze'}"
+                           class="btn btn-primary">Offene Restplätze</a>
 
-                        </div>
                     </div>
                 </div>
-                <br>
             </div>
+            <br>
         </div>
+    </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 

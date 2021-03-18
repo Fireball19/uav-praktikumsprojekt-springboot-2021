@@ -31,32 +31,34 @@
 <div th:replace="fragments/sidebar :: sidebar(konfigurationTermin)"></div>
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <h1>Konfiguration</h1>
+    <h1>Konfiguration</h1>
 
-        <h2>Termine konfigurieren</h2>
-        <br>
+    <h2>Termine konfigurieren</h2>
+    <br>
 
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Praktische Übung</th>
-                    <th scope="col">Verwaltung</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="uebung : ${uebungen}">
-                    <td th:text="${uebung.name}">Übung</td>
-                     <td><a th:href="@{'/verwaltung/konfiguration/termin/' + ${uebung.id}}">
-                     Termine hinzufügen / importieren</a></td>
-                </tr>
-                </tbody>
-            </table>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Praktische Übung</th>
+            <th scope="col">Verwaltung</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="uebung : ${uebungen}">
+            <td th:text="${uebung.name}">Übung</td>
+            <td><a th:href="@{'/verwaltung/konfiguration/termin/' + ${uebung.id}}">
+                Termine hinzufügen / importieren</a></td>
+        </tr>
+        </tbody>
+    </table>
 
 </main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-<script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 
 </body>
 </html>

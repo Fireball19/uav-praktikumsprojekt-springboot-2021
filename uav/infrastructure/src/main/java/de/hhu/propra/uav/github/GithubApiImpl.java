@@ -24,7 +24,7 @@ import java.util.List;
 public class GithubApiImpl implements GithubApi {
   @Value("${githubOrganization}")
   private String organization;
-  
+
   @Autowired
   UebungService uebungService;
   @Autowired
@@ -81,7 +81,7 @@ public class GithubApiImpl implements GithubApi {
   @Scheduled(fixedDelayString = "${intervall}")
   public void checkAnmeldeschluss() throws Exception {
     Uebung uebung = uebungService.findFirstByBearbeitetIsFalse();
-    if(uebung == null) {
+    if (uebung == null) {
       return;
     }
     if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())
