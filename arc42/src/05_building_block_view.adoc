@@ -4,3 +4,67 @@
 === Whitebox Gesamtsystem
 
 image:../images/blackbox-gesamt.png[Blackbox-Gesamt]
+
+=== Domain
+
+image:../images/domain-package.png[Blackbox-Gesamt]
+
+==== Models
+
+===== Übung
+
+image:../images/uebung-package.png[Blackbox-Gesamt]
+
+===== Student
+
+image:../images/student-package.png[Blackbox-Gesamt]
+
+==== Application Services
+
+image:../images/applicationservices-package.png[Blackbox-Gesamt]
+
+===== Übungs Service
+
+image:../images/uebungservice.png[Blackbox-Gesamt]
+
+===== Student Service
+
+image:../images/studentservice.png[Blackbox-Gesamt]
+
+===== VerwaltungService Service
+
+image:../images/verwaltungservice.png[Blackbox-Gesamt]
+
+===== Anmeldungs Service
+
+image:../images/anmeldungservice.png[Blackbox-Gesamt]
+
+==== Github
+
+image:../images/githupapi-domain.png[Blackbox-Gesamt]
+
+==== Termin Importer
+
+image:../images/terminimporter-package.png[Blackbox-Gesamt]
+
+=== Infrastructure
+
+image:../images/infrastructure-package.png[Blackbox-Gesamt]
+
+==== Repositories
+
+===== Übungs Repository
+
+image:../images/jdbcuebungrepository.png[Blackbox-Gesamt]
+
+===== Student Repository
+
+image:../images/jdbcstudentenrepository.png[Blackbox-Gesamt]
+
+==== Github
+
+image:../images/githubapiimpl.png[Blackbox-Gesamt]
+
+==== Termin Importer
+
+image:../images/terminimporterimpl.png[Blackbox-Gesamt]
