@@ -1,12 +1,15 @@
 package de.hhu.propra.uav;
 
-import de.hhu.propra.uav.domains.annotations.ApplicationService;
-import de.hhu.propra.uav.domains.annotations.DomainService;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.DatabaseStartupValidator;
 
-import static org.springframework.context.annotation.FilterType.ANNOTATION;
+import javax.sql.DataSource;
+import java.util.stream.Stream;
+
 
 @SuppressWarnings("PMD")
 @SpringBootApplication
@@ -15,5 +18,23 @@ public class UebungsUndAnmeldungsverwaltungApplication {
   public static void main(String[] args) throws Exception {
     SpringApplication.run(UebungsUndAnmeldungsverwaltungApplication.class, args);
   }
+
+  @Bean
+  public DatabaseStartupValidator databaseStartupValidator(DataSource dataSource) {
+    DatabaseStartupValidator databaseStartupValidator = new DatabaseStartupValidator();
+    databaseStartupValidator.setDataSource(dataSource);
+    return databaseStartupValidator;
+  }
+
+  @Bean
+  public static BeanFactoryPostProcessor dependsOnPostProcessor() {
+    return bf -> {
+      String[] jdbc = bf.getBeanNamesForType(JdbcTemplate.class);
+      Stream.of(jdbc)
+          .map(bf::getBeanDefinition)
+          .forEach(it -> it.setDependsOn("databaseStartupValidator"));
+    };
+  }
+
 
 }
