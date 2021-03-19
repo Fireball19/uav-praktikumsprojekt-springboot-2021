@@ -1,22 +1,27 @@
 package de.hhu.propra.uav.github;
 
-import de.hhu.propra.uav.domains.model.student.Student;
-import de.hhu.propra.uav.domains.model.student.StudentRef;
-import de.hhu.propra.uav.domains.model.uebung.GruppeDTO;
-import de.hhu.propra.uav.domains.model.uebung.Modus;
-import de.hhu.propra.uav.domains.model.uebung.Uebung;
-import de.hhu.propra.uav.domains.github.GithubApi;
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
-import org.kohsuke.github.*;
+import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.model.student.Student;
+import de.hhu.propra.uav.domains.model.student.StudentRef;
+import de.hhu.propra.uav.domains.model.uebung.GruppeDto;
+import de.hhu.propra.uav.domains.model.uebung.Modus;
+import de.hhu.propra.uav.domains.model.uebung.Uebung;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.kohsuke.github.GHAppInstallation;
+import org.kohsuke.github.GHAppInstallationToken;
+import org.kohsuke.github.GHOrganization;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
 @SuppressWarnings("PMD")
 @Service
@@ -35,7 +40,7 @@ public class GithubApiImpl implements GithubApi {
     final String appId = "103185";
     final long installationId = 15_103_623;
 
-    final String jwt = JwtHelper.createJWT(".\\uav\\infrastructure\\key.der", appId, 60_000);
+    final String jwt = JwtHelper.createJwt(".\\uav\\infrastructure\\key.der", appId, 60_000);
 
     final GitHub preAuth = new GitHubBuilder().withJwtToken(jwt).build();
 
@@ -46,7 +51,8 @@ public class GithubApiImpl implements GithubApi {
 
   }
 
-  public void createGithubRepositoryGruppenAnmeldung(final String gruppenname, final String uebungsname,
+  public void createGithubRepositoryGruppenAnmeldung(final String gruppenname,
+                                                     final String uebungsname,
                                                      List<StudentRef> mitglieder) throws Exception {
     GitHub gitHub = setup();
     GHOrganization ghOrganization = gitHub.getOrganization(this.organization);
@@ -61,8 +67,11 @@ public class GithubApiImpl implements GithubApi {
   }
 
   @Override
-  public void createGithubRepositoryIndividualanmeldung(final List<StudentRef> studenten, final String uebungsname,
-                                                        final String tutor, final LocalDateTime zeitpunkt) throws Exception {
+  public void createGithubRepositoryIndividualanmeldung(final List<StudentRef> studenten,
+                                                        final String uebungsname,
+                                                        final String tutor,
+                                                        final LocalDateTime zeitpunkt)
+                                                        throws Exception {
     GitHub gitHub = setup();
     GHOrganization ghOrganization = gitHub.getOrganization(this.organization);
     String repositoryName = (uebungsname + "-" + tutor + "-" + zeitpunkt.toString())
@@ -87,10 +96,10 @@ public class GithubApiImpl implements GithubApi {
     if (LocalDateTime.now().isAfter(uebung.getAnmeldeschluss())
         && uebungService.ueberpruefeAnmeldungsModus(uebung.getId()) == Modus.GRUPPENANMELDUNG) {
       uebungService.shuffleTutoren(uebung.getId());
-      List<GruppeDTO> gruppen = uebung.getGruppen();
-      for (GruppeDTO gruppeDTO : gruppen) {
-        createGithubRepositoryGruppenAnmeldung(gruppeDTO.getGruppenname(),
-            uebung.getName(), gruppeDTO.getMitglieder());
+      List<GruppeDto> gruppen = uebung.getGruppen();
+      for (GruppeDto gruppeDto : gruppen) {
+        createGithubRepositoryGruppenAnmeldung(gruppeDto.getGruppenname(),
+            uebung.getName(), gruppeDto.getMitglieder());
       }
       uebungService.abschliessen(uebung.getId());
     }

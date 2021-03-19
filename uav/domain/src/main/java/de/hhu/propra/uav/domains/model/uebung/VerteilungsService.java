@@ -2,9 +2,11 @@ package de.hhu.propra.uav.domains.model.uebung;
 
 import de.hhu.propra.uav.domains.annotations.DomainService;
 import de.hhu.propra.uav.domains.model.student.StudentRef;
-
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.AvoidDuplicateLiterals"})
@@ -68,7 +70,8 @@ public class VerteilungsService {
   }
 
   @SuppressWarnings({"PMD.LawOfDemeter", "PMD.DataflowAnomalyAnalysis", "PMD.OnlyOneReturn"})
-  private List<Termin> verteilung(final List<Termin> terminList, final int gruppenanzahl, final int studentenanzahl) {
+  private List<Termin> verteilung(final List<Termin> terminList, final int gruppenanzahl,
+      final int studentenanzahl) {
     if (studentenanzahl == 0) {
       return terminList;
     }
@@ -90,7 +93,6 @@ public class VerteilungsService {
       }
       index++;
     }
-
 
     for (int i = 0; i < gruppenanzahl - (studentenanzahl % gruppenanzahl); i++) {
       for (int j = 0; j < (studentenanzahl / gruppenanzahl); j++) {

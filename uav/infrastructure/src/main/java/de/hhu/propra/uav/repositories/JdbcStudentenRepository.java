@@ -4,6 +4,7 @@ import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface JdbcStudentenRepository extends CrudRepository<Student, String>, StudentRepository {
+public interface JdbcStudentenRepository extends CrudRepository<Student, String>,
+                                                  StudentRepository {
 
 }

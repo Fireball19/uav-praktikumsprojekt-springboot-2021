@@ -1,17 +1,19 @@
 package de.hhu.propra.uav.domains.model.uebung;
 
 import de.hhu.propra.uav.domains.model.student.Student;
-import lombok.Data;
-import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Positive;
+import lombok.Data;
+import lombok.Getter;
+import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 @Data
@@ -43,10 +45,10 @@ public class Uebung {
     termine.removeIf(termin -> termin.getId().equals(uebungId));
   }
 
-  public List<GruppeDTO> getGruppen() {
-    final List<GruppeDTO> gruppen = new ArrayList<>();
+  public List<GruppeDto> getGruppen() {
+    final List<GruppeDto> gruppen = new ArrayList<>();
     for (final Termin termin : termine) {
-      gruppen.add(new GruppeDTO(termin.getGruppenname(), termin.getStudenten()));
+      gruppen.add(new GruppeDto(termin.getGruppenname(), termin.getStudenten()));
     }
     return gruppen;
   }
@@ -80,6 +82,10 @@ public class Uebung {
     termin.deleteStudent(student);
   }
 
+  private void deleteStudent(final Student student, final Termin termin) {
+    termin.deleteStudent(student);
+  }
+
   @SuppressWarnings("PMD.LawOfDemeter")
   public List<Termin> getRestplaetze() {
     return termine.stream()
@@ -87,9 +93,7 @@ public class Uebung {
         .collect(Collectors.toList());
   }
 
-  private void deleteStudent(final Student student, final Termin termin) {
-    termin.deleteStudent(student);
-  }
+
 
   public void moveStudent(final Student student, final Long terminAltId, final Long terminNeuId) {
     final Termin terminAlt = findTermin(terminAltId);
@@ -181,13 +185,14 @@ public class Uebung {
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
-  public List<TerminInfoDTO> getTerminDatenIndividualmodus() {
-    final List<TerminInfoDTO> terminInfoDTO = new ArrayList<>();
+  public List<TerminInfoDto> getTerminDatenIndividualmodus() {
+    final List<TerminInfoDto> terminInfoDto = new ArrayList<>();
     for (final Termin termin : termine) {
       if (!termin.getStudenten().isEmpty()) {
-        terminInfoDTO.add(new TerminInfoDTO(termin.getTutor(), termin.getZeitpunkt(), termin.getStudenten()));
+        terminInfoDto.add(
+            new TerminInfoDto(termin.getTutor(), termin.getZeitpunkt(), termin.getStudenten()));
       }
     }
-    return terminInfoDTO;
+    return terminInfoDto;
   }
 }

@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize",
+    "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class StudentKonfigController {
 
@@ -41,7 +42,8 @@ public class StudentKonfigController {
 
   @Secured("ROLE_ORGA")
   @GetMapping("/verwaltung/konfiguration/studenten/{uebungId}")
-  public String studentenVerwaltung(final Model model, @PathVariable("uebungId") final Long uebungId) {
+  public String studentenVerwalten(final Model model,
+                                    @PathVariable("uebungId") final Long uebungId) {
     model.addAttribute("uebung", uebungService.findById(uebungId));
     model.addAttribute("studenten", studentService.findAllAsMap());
 
@@ -50,14 +52,16 @@ public class StudentKonfigController {
 
   @Secured("ROLE_ORGA")
   @PostMapping("/verwaltung/konfiguration/studenten/{uebungId}/hinzufuegen")
-  public String studentenTerminHinzufuegen(@PathVariable("uebungId") final Long uebungId, final String github, final Long terminId) {
+  public String studentenTerminHinzufuegen(@PathVariable("uebungId") final Long uebungId,
+                                            final String github, final Long terminId) {
     verwaltungService.addStudent(github, uebungId, terminId);
     return "redirect:/verwaltung/konfiguration/studenten/{uebungId}";
   }
 
   @Secured("ROLE_ORGA")
   @PostMapping("/verwaltung/konfiguration/studenten/{uebungId}/entfernen")
-  public String studentenTerminEntfernen(@PathVariable("uebungId") final Long uebungId, final String github, final Long terminId) {
+  public String studentenTerminEntfernen(@PathVariable("uebungId") final Long uebungId,
+                                        final String github, final Long terminId) {
     verwaltungService.deleteStudent(github, uebungId, terminId);
     return "redirect:/verwaltung/konfiguration/studenten/{uebungId}";
   }
@@ -65,7 +69,8 @@ public class StudentKonfigController {
   @Secured("ROLE_ORGA")
   @PostMapping("/verwaltung/konfiguration/studenten/{uebungId}/verschieben")
   public String studentenTerminVerschieben(@PathVariable("uebungId") final Long uebungId,
-                                           final String github, final Long terminAltId, final Long terminNeuId) {
+                                           final String github,
+                                            final Long terminAltId, final Long terminNeuId) {
     verwaltungService.moveStudent(github, uebungId, terminAltId, terminNeuId);
     return "redirect:/verwaltung/konfiguration/studenten/{uebungId}";
   }

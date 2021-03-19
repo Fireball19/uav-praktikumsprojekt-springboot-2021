@@ -4,16 +4,21 @@ package de.hhu.propra.uav.domains.applicationservices;
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
-import de.hhu.propra.uav.domains.model.uebung.*;
-import de.hhu.propra.uav.domains.terminimporter.TerminFileDTO;
+import de.hhu.propra.uav.domains.model.uebung.Modus;
+import de.hhu.propra.uav.domains.model.uebung.TerminInfoDto;
+import de.hhu.propra.uav.domains.model.uebung.Uebung;
+import de.hhu.propra.uav.domains.model.uebung.UebungFactory;
+import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
+import de.hhu.propra.uav.domains.model.uebung.VerteilungsService;
+import de.hhu.propra.uav.domains.terminimporter.TerminFileDto;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
+
 
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "PMD.LongVariable"})
 @ApplicationService
@@ -29,15 +34,15 @@ public class UebungService {
   private final VerteilungsService verteilungsService;
 
   @SuppressWarnings("PMD.BeanMembersShouldSerialize")
-  private final GithubApi githubAPI;
+  private final GithubApi githubApi;
 
 
   public UebungService(final UebungRepository uebungRepository, final TerminImporter terminImporter,
-                       final VerteilungsService verteilungsService, final GithubApi githubAPI) {
+      final VerteilungsService verteilungsService, final GithubApi githubApi) {
     this.uebungRepository = uebungRepository;
     this.terminImporter = terminImporter;
     this.verteilungsService = verteilungsService;
-    this.githubAPI = githubAPI;
+    this.githubApi = githubApi;
   }
 
 
@@ -71,7 +76,8 @@ public class UebungService {
   @SuppressWarnings("PMD.LawOfDemeter")
   public Uebung findById(final Long uebungId) {
     return uebungRepository.findById(uebungId).orElseThrow(() ->
-        new HttpClientErrorException(HttpStatus.NOT_FOUND, "Keine Uebung mit " + uebungId + " vorhanden!"));
+        new HttpClientErrorException(HttpStatus.NOT_FOUND,
+            "Keine Uebung mit " + uebungId + " vorhanden!"));
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
@@ -88,7 +94,8 @@ public class UebungService {
   @SuppressWarnings("PMD.LawOfDemeter")
   public Uebung findByName(final String name) {
     return uebungRepository.findByName(name).orElseThrow(() ->
-        new HttpClientErrorException(HttpStatus.NOT_FOUND, "Keine Uebung mit " + name + " vorhanden!"));
+        new HttpClientErrorException(HttpStatus.NOT_FOUND,
+            "Keine Uebung mit " + name + " vorhanden!"));
   }
 
   public List<Uebung> findAll() {
@@ -145,8 +152,8 @@ public class UebungService {
 
   public void addTermineByTerminImporter(final long uebungId, final InputStream inputStream) {
     final Uebung uebung = findById(uebungId);
-    final List<TerminFileDTO> termine = terminImporter.convertToTerminFile(inputStream);
-    for (final TerminFileDTO termin : termine) {
+    final List<TerminFileDto> termine = terminImporter.convertToTerminFile(inputStream);
+    for (final TerminFileDto termin : termine) {
       uebung.addTermin(termin.getTutor(), termin.getZeitpunkt());
     }
     save(uebung);
@@ -190,13 +197,13 @@ public class UebungService {
   @SuppressWarnings({"PMD.SignatureDeclareThrowsException", "PMD.LawOfDemeter"})
   public void individualModusAbschliessen(final Long uebungId) throws Exception {
     final Uebung uebung = findById(uebungId);
-    final List<TerminInfoDTO> terminInfoDTOList = uebung.getTerminDatenIndividualmodus();
+    final List<TerminInfoDto> terminInfoDtoList = uebung.getTerminDatenIndividualmodus();
 
-    for (final TerminInfoDTO terminInfoDTO : terminInfoDTOList) {
-      githubAPI.createGithubRepositoryIndividualanmeldung(terminInfoDTO.getStudenten(),
+    for (final TerminInfoDto terminInfoDto : terminInfoDtoList) {
+      githubApi.createGithubRepositoryIndividualanmeldung(terminInfoDto.getStudenten(),
           uebung.getName(),
-          terminInfoDTO.getTutor(),
-          terminInfoDTO.getZeitpunkt());
+          terminInfoDto.getTutor(),
+          terminInfoDto.getZeitpunkt());
     }
 
     uebung.abschliessen();

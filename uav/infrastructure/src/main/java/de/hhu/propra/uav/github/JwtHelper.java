@@ -4,7 +4,6 @@ import com.google.common.io.Files;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import java.io.File;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -24,7 +23,8 @@ public class JwtHelper {
     return kf.generatePrivate(spec);
   }
 
-  public static String createJWT(String keyLocation, String githubAppId, long ttlMillis) throws Exception {
+  public static String createJwt(String keyLocation, String githubAppId, long ttlMillis)
+                                  throws Exception {
     //The JWT signature algorithm we will be using to sign the token
     SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.RS256;
 

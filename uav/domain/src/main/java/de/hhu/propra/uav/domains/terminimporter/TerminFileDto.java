@@ -1,11 +1,10 @@
 package de.hhu.propra.uav.domains.terminimporter;
 
+import java.time.LocalDateTime;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
-public class TerminFileDTO {
+public class TerminFileDto {
 
   private final String tutor;
 

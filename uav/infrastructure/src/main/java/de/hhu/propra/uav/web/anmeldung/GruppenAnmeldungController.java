@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize",
+    "PMD.AvoidDuplicateLiterals"})
 @Controller
 public class GruppenAnmeldungController {
 
@@ -29,15 +30,16 @@ public class GruppenAnmeldungController {
   public String gruppenAnmeldung(final Model model, @PathVariable("uebungId") final Long uebungId,
                                  @PathVariable("terminId") final Long terminId) {
     model.addAttribute("uebung", uebungService.findById(uebungId));
+    model.addAttribute("termin", terminId);
     return "anmeldung/gruppenAnmeldung";
   }
 
-  @SuppressWarnings("PMD.SignatureDeclareThrowsException")
+
   @Secured("ROLE_USER")
   @PostMapping("/anmeldung/{uebungId}/{terminId}")
-  public String gruppenAnmeldungAnmelden(final Model model, @PathVariable("uebungId") final Long uebungId,
+  public String gruppenAnmeldungAnmelden(@PathVariable("uebungId") final Long uebungId,
                                          @PathVariable("terminId") final Long terminId,
-                                         final String gruppenname, final String mitglieder) throws Exception {
+                                         final String gruppenname, final String mitglieder) {
     anmeldungService.gruppenAnmeldung(uebungId, terminId, gruppenname, mitglieder);
     return "anmeldung/gruppenAnmeldung";
   }

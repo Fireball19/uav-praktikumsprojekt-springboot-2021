@@ -62,7 +62,8 @@ public class VerwaltungService {
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
-  public void moveStudent(final String github, final Long uebungId, final Long terminAltId, final Long terminNeuId) {
+  public void moveStudent(final String github, final Long uebungId, final Long terminAltId,
+      final Long terminNeuId) {
     final Uebung uebung = uebungService.findById(uebungId);
 
     if (uebung.findTermin(terminAltId) == null) {

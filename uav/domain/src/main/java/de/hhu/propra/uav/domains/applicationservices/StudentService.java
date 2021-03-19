@@ -4,13 +4,13 @@ package de.hhu.propra.uav.domains.applicationservices;
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
+
 
 @SuppressWarnings("PMD.CommentDefaultAccessModifier")
 @ApplicationService
@@ -37,7 +37,8 @@ public class StudentService {
   @SuppressWarnings("PMD.LawOfDemeter")
   public Student findById(final Long studentId) {
     return studentRepository.findById(studentId).orElseThrow(() ->
-        new HttpClientErrorException(HttpStatus.NOT_FOUND, "Kein Student mit Id " + studentId + " vorhanden!"));
+        new HttpClientErrorException(HttpStatus.NOT_FOUND,
+            "Kein Student mit Id " + studentId + " vorhanden!"));
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
