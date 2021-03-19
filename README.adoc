@@ -47,6 +47,7 @@ arrayOfTutoren=zandatzu,ToxicBill,Fireball19
 == Anwendung starten
 Man startet die Anwendung, indem man im Ordner anmeldung-zum-praktikum-teamstrgclick\uav
 docker-compose up eingibt.
+Die Anwendung versucht sich im 10 Sekunden Interval mit der Datenbank zu verbinden, sollte diese noch nicht gestartet sein wird ein Exception-Stacktrace ausgegeben, doch diesen kann man ignorieren.
 [source]
 ----
 ...anmeldung-zum-praktikum-teamstrgclick\uav>docker-compose up
