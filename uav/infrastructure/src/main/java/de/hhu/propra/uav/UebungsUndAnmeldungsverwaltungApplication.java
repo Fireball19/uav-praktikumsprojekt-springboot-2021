@@ -23,6 +23,7 @@ public class UebungsUndAnmeldungsverwaltungApplication {
   @Bean
   public DatabaseStartupValidator databaseStartupValidator(DataSource dataSource) {
     DatabaseStartupValidator databaseStartupValidator = new DatabaseStartupValidator();
+    databaseStartupValidator.setInterval(10);
     databaseStartupValidator.setDataSource(dataSource);
     return databaseStartupValidator;
   }
