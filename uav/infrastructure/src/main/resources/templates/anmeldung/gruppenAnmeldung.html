@@ -30,7 +30,7 @@
 <div th:replace="fragments/navbar :: navbar(anmeldung)"></div>
 
 <div class="container">
-    <h1>Termin: </h1>
+    <h1 th:text="${'Termin: ' + #temporals.format(uebung.findTermin(terminId).zeitpunkt,'dd-MM-yyyy HH:mm')}">Zeitpunkt</h1>
 
     <h2>Gruppenanmeldung</h2>
 
