@@ -41,7 +41,7 @@ public class GruppenAnmeldungController {
                                          @PathVariable("terminId") final Long terminId,
                                          final String gruppenname, final String mitglieder) {
     anmeldungService.gruppenAnmeldung(uebungId, terminId, gruppenname, mitglieder);
-    return "anmeldung/gruppenAnmeldung";
+    return "redirect:/termine/uebersicht/uebungen";
   }
 
   @SuppressWarnings("PMD.LawOfDemeter")
