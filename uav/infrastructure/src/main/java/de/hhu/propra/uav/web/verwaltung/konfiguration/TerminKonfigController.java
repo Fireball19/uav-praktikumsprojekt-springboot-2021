@@ -39,7 +39,7 @@ public class TerminKonfigController {
                                   final Model model) {
     model.addAttribute("uebung", uebungService.findById(uebungId));
     model.addAttribute("studenten", studentService.findAllAsMap());
-    return "verwaltung/uebungTermin";
+    return "verwaltung/termineErstellen";
   }
 
   @Secured("ROLE_ORGA")
