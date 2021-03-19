@@ -1,12 +1,57 @@
 [[section-quality-scenarios]]
 == Qualitätsanforderungen
 
-
-
-=== Qualitätsbaum
-
-
-
 === Qualitätsszenarien
 
+* Wartbarkeit
+** JUnit / ArchUnit Tests dienen zur Erhaltung der Funktionalitäten bei Änderungen am Code
+** Nutzung von PMD / SpotBugs / CheckStyle ermöglichen einen strukturierten und übersichtlichen Code
+** Trennung in 3 Schichten (Onion-Architektur) mit, ermöglicht einen leichten Einstieg in das Projekt
+** Einteilung in Gradle-Subprojekte, entkoppelt Infrastructure und Domain
+** Dokumentation in arc42, bietet einen Überblick über die Anwendung
+** Einhaltung der Ubiquitous Language nach DDD, Klassen und Variablen Zweck wird deutlich
 
+---
+
+* Sicherheit
+** Einloggen per OAuth2 über Github Account
+** Controller sind per Rollen über Spring-Security geschützt, Organisatoren haben nur Zugriff auf Verwaltung, unterschiedliche Übersicht für Tutoren und Studenten
+
+---
+
+* Benutzerfreundlichkeit
+** Anwendung kann leicht mittels Docker gestartet werden
+** Verwendung eines CSS Frameworks (Bootstrap), ermöglicht ein übersichtliches Web Interface für die Benutzer
+** Studenten können sich einfach für eine Übung anmelden und ihre Termine direkt im Web Interface einsehen
+** Einfaches hinzufügen von Terminen, entweder per CSV-Datei oder durch laden von alten Terminen
+** Strukturierte Übersicht für das Orga Team (allgemeine Übersicht, Individualmodus Verteilung)
+
+=== Nicht umgesetzte Qualitätsszenarien
+Wartbarkeit
+
+|===
+|Qualitätsszenario |Begründung
+|Keine 100% Code-Coverage durch Tests, Änderungen am Code können also nicht überall geprüft werden| Zeitmangel
+|===
+
+
+Sicherheit
+
+|===
+|Qualitätsszenario |Begründung
+|Zum Einloggen und Eintragung des Github Namens in die Datenbank reicht ein bestehender Github Name, es wird nicht auf Mitgliedschaft in der Organization geprüft| Zeitmangel
+|===
+
+
+Benutzerfreundlichkeit
+
+|===
+|Qualitätsszenario |Begründung
+|Intuitive Verschiebung von Studenten für Organisatoren (Drag & Drop)| Fehlende JavaScript Kenntnisse, Zeitmangel für Einarbeitung
+|Studenten können sich nicht von einem Termin selbstständig abmelden | Zeitmangel
+|Änderungen an Repositories, wenn Sie bereits erstellt wurden (Student meldet sich per E-Mail) | Zeitmangel
+|===
+
+== Reflexion Zeitmangel
+* Schwierigkeiten beim Aufsetzen der Gradle-Subprojekte
+* Falsche Zeiteinschätzung der implementierung des Verteilungs-Algorithmus

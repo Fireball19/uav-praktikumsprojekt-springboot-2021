@@ -3,32 +3,18 @@
 
 
 
-=== Infrastruktur Ebene 1
+=== Produktions Infrastruktur
 
+image:../images/docker-prod.png[Fachlicher Kontext]
 
+Erläuterung:: Im Docker-Container läuft die Application mit Portfreigabe und die Datenbank ohne Portfreigabe.
 
-_**<Übersichtsdiagramm>**_
+Begründung:: In der Produktion soll die Datenbank keine Portfreigabe nach außen geben, da der Zugriff nur über die Anwendung selbst statt finden soll.
 
-Begründung:: _<Erläuternder Text>_
+=== Development / Test Infrastruktur
 
-Qualitäts- und/oder Leistungsmerkmale:: _<Erläuternder Text>_
+image:../images/docker-devtest.png[Fachlicher Kontext]
 
-Zuordnung von Bausteinen zu Infrastruktur:: _<Beschreibung der Zuordnung>_
+Erläuterung:: Im Docker-Container läuft die Datenbank mit Portfreigabe.
 
-=== Infrastruktur Ebene 2
-
-
-
-==== _<Infrastrukturelement 1>_
-
-_<Diagramm + Erläuterungen>_
-
-==== _<Infrastrukturelement 2>_
-
-_<Diagramm + Erläuterungen>_
-
-...
-
-==== _<Infrastrukturelement n>_
-
-_<Diagramm + Erläuterungen>_
+Begründung:: Für das Development / Tests kann die Datenbank alleine in einem Docker-Container mit offenem Port gestartet werden, da so nicht immer die Application im Docker-Container laufen muss

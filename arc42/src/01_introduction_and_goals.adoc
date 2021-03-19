@@ -11,6 +11,8 @@ Tool zur Gruppen- und Individualanmeldung, nutzt Github Organisationen.
 
 * Wartbarkeit
 
+* Sicherheit
+
 * Nutzerfreundlichkeit
 
 === Stakeholder

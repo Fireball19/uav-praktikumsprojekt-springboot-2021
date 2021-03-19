@@ -1,4 +1,12 @@
 [[section-design-decisions]]
 == Entwurfsentscheidungen
 
+=== _Abweichung von der Onion-Architektur_
 
+Spring Dependencies in Domain, ist im Projekt allgemein in Ordnung, da nicht mit dem Austausch des Frameworks zu rechnen ist.
+
+|===
+|Verletzung |Grund
+|Verwendung von Spring / Javax Annotationen| Funktionalität von JDBC und Validierung der Eingabedaten, Verringerung der Komplexität der Anwendung (keine zusätzlichen Data Transfer Objects)
+|Werfen von Spring Exceptions| Zeitmangel, Eigener Spring Exception Handler und Exceptions fehlen
+|===

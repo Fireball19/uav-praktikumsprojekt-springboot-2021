@@ -1,8 +1,6 @@
 [[section-concepts]]
 == Querschnittliche Konzepte
 
-
-
 === PMD
 
 Folgende RuleSets sind in diesem Projekt aktiviert:
@@ -40,7 +38,11 @@ die Main-Klasse, und die Controller_
 | _AssignmentInOperand_ | _neue Zuweisung ist notwendig, um zu überprüfen, ob es weitere Eingaben gibt_
 | _PreserveStackTrace_ | _es wird immer nur eine einzige Exception geworfen_
 | _AvoidFinalLocalVariable_ | _Methode ist static, Variable kann nicht außerhalb definiert werden_
+| _MethodArgumentCouldBeFinal_ | _das http-Objekt kann nicht final sein
+    (infrastrucuture/configuration/WebSecurityConfiguration)_
 |===
+
+Die Konfigurationsklassen werden allgemein ignoriert, da diese nur Spring-Konfigurationen enthalten.
 
 === _Spotbugs_
 

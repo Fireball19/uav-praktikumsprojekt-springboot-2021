@@ -6,7 +6,8 @@
 * Verwende Spring Frameworks
 * Github für die Authentifizierung
 * Docker zum Starten der Anwendung
-* automatisierte Tests mit Github Action und Gradle
+* automatisierte Tests mit Github Action und Gradle (PMD, SpotBugs)
+* Checkstyle für den Code verwenden
 * Persistenz in Datenbank
 * nur Komponenten mit kostenfreier Lizenz
 * dokumentiert in Arc42

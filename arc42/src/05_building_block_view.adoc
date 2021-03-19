@@ -5,9 +5,26 @@
 
 image:../images/blackbox-gesamt.png[Blackbox-Gesamt]
 
+|===
+|Subsystem |Kurzbeschreibung
+|infrastructure | Beinhaltet den technischen Code / alles außerhalb der Domain-Logik
+|application | Schnittstelle zwischen infrastructure und domain
+|domain |Beinhaltet die Domainlogik der Anwendung
+|===
+
 === Domain
 
 image:../images/domain-package.png[Blackbox-Gesamt]
+
+|===
+|Package |Kurzbeschreibung
+|annotations | Beinhaltet selbstgeschriebene Anntotations
+|applicationservices | Beinhaltet die Services, die von infrastructure genutzt werder, um Domainlogik
+auszuführen.
+|github | erlaubt den Services die Github-Api zu verwenden.
+|model | Beinhaltet die Aggregate des Domainmodels
+|terminimporter | Beinhaltet Interface für Terminimporter.
+|===
 
 ==== Models
 
@@ -15,41 +32,94 @@ image:../images/domain-package.png[Blackbox-Gesamt]
 
 image:../images/uebung-package.png[Blackbox-Gesamt]
 
+|===
+|Klasse |Kurzbeschreibung
+|Übung | Aggregate-Root, beinhaltet alle Logik, die auf einer Übung ausgeführt werden kann
+|Termin | Entity von Übung
+|VerteilungsService | verteilt Tutoren und Studenten auf Termine
+|ÜbungsRepository | verantwortlich für das Speichern und Laden von Übungen
+|ÜbungFactory | erstellt vordefinierte Übungen
+|TerminInfoDTO | gibt Informationen über Termine nach außen
+|GruppeDTO | gibt Informationen über Gruppen nach außen
+|Modus | Enum zum Unterscheiden der Modi einer Gruppe (Individual- und Gruppenanmeldung)
+|===
+
 ===== Student
 
 image:../images/student-package.png[Blackbox-Gesamt]
+
+|===
+|Klasse |Kurzbeschreibung
+|Student | Data-Object, dass Informationen zu den Studenten hält
+|StudentRef | Identifier von Studenten für die Datenbank und externe Referenzierung
+|StudentRepository | verantwortlich für das Speichern und Laden von Studenten
+|===
 
 ==== Application Services
 
 image:../images/applicationservices-package.png[Blackbox-Gesamt]
 
+|===
+|Klasse |Kurzbeschreibung
+|AnmeldungService | verwaltet die Anmeldung der Studenten für alle Anmeldevarianten
+|ÜbungService | bearbeitet die Erstellung und Speicherung von Übungen
+|StudentService | bearbeitet die Erstellung und Speicherung von Studenten
+|VerwaltungService | ermöglicht administrative Operationen
+|===
+
 ===== Übungs Service
 
 image:../images/uebungservice.png[Blackbox-Gesamt]
+
+|===
+|Klasse |Kurzbeschreibung
+|ÜbungService | Schnittstelle zur Interaktion mit Übungen.
+Benutzt dafür TerminImporter, GithubApi, VerteilungsService und das ÜbungRepository
+
+|===
 
 ===== Student Service
 
 image:../images/studentservice.png[Blackbox-Gesamt]
 
-===== VerwaltungService Service
+kümmert sich um das Speichern und Laden von Studenten.
+
+===== VerwaltungService
 
 image:../images/verwaltungservice.png[Blackbox-Gesamt]
 
-===== Anmeldungs Service
+ermöglicht die Administration von Studenten durch die Organisation
+
+===== AnmeldungsService
 
 image:../images/anmeldungservice.png[Blackbox-Gesamt]
+
+kümmert sich um die Verteilung von Anmeldungen für praktische Übungen
 
 ==== Github
 
 image:../images/githupapi-domain.png[Blackbox-Gesamt]
 
+ermöglicht der Domain das Erstellen von Github-Repositories
+
 ==== Termin Importer
 
 image:../images/terminimporter-package.png[Blackbox-Gesamt]
 
+bearbeitet das mitgegebene CSV-File
+
 === Infrastructure
 
 image:../images/infrastructure-package.png[Blackbox-Gesamt]
+
+|===
+|Package |Kurzbeschreibung
+|configuration | Beinhaltet Konfigurationsklassen für das Spring-Framework
+|github | Kommuniziert mit der Github-API und ermöglicht das Erstellen von Repositories
+|repositories | Beinhaltet Interfaces zum Nutzen der Repositories aus der domain-Schicht
+|terminimporter | Enthält die Implementierung des TerminImporter-Interfaces aus der domain-Schicht
+|web | enthält die Web-Controller
+|===
 
 ==== Repositories
 
@@ -57,14 +127,22 @@ image:../images/infrastructure-package.png[Blackbox-Gesamt]
 
 image:../images/jdbcuebungrepository.png[Blackbox-Gesamt]
 
+erlaubt Einhaltung der Onion-Architecture
+
 ===== Student Repository
 
 image:../images/jdbcstudentenrepository.png[Blackbox-Gesamt]
+
+erlaubt Einhaltung der Onion-Architecture
 
 ==== Github
 
 image:../images/githubapiimpl.png[Blackbox-Gesamt]
 
+Implementierung des GithubApi-Interfaces zur Nutzung in infrastructure
+
 ==== Termin Importer
 
 image:../images/terminimporterimpl.png[Blackbox-Gesamt]
+
+Implementierung des TerminImporter-Interfaces zur Nutzung in infrastructure
