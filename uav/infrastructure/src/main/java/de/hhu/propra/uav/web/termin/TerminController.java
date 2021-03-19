@@ -52,7 +52,7 @@ public class TerminController {
                           @PathVariable("terminId") final Long terminId) {
 
     final String studentGithub = principal.getAttribute("login");
-    verwaltungService.deleteStudent(studentGithub,uebungId,terminId);
+    verwaltungService.deleteStudent(studentGithub, uebungId, terminId);
     return "redirect:/termine/uebersicht/uebungen";
   }
 }
