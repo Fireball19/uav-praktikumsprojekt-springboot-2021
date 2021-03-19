@@ -10,3 +10,12 @@ Spring Dependencies in Domain, ist im Projekt allgemein in Ordnung, da nicht mit
 |Verwendung von Spring / Javax Annotationen| Funktionalität von JDBC und Validierung der Eingabedaten, Verringerung der Komplexität der Anwendung (keine zusätzlichen Data Transfer Objects)
 |Werfen von Spring Exceptions| Zeitmangel, Eigener Spring Exception Handler und Exceptions fehlen
 |===
+
+=== Verteilungsalgorithmus
+==== Individualanmeldung
+N = Anzahl der Studenten,
+M = Anzahl der Gruppen
+
+* ⌊N/M⌋+1 Studenten sind in N(mod M) Gruppen
+* Falls eine Gruppe nicht voll wird, sind ⌊N/M⌋ Studenten in der Gruppe
+* Falls keine Verteilung möglich ist, die die Mindestgröße einhält, wird diese in höchstens einer Gruppe unterschritten
