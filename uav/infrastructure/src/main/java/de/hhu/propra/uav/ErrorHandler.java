@@ -1,0 +1,19 @@
+package de.hhu.propra.uav;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+
+@Profile("!test")
+@SuppressWarnings("PMD.AtLeastOneConstructor")
+@ControllerAdvice
+public class ErrorHandler {
+
+  @ExceptionHandler(Exception.class)
+  public ModelAndView handleCustomRuntimeException(final Exception exception) {
+    final ModelAndView mav = new ModelAndView("error");
+    mav.addObject("message", exception.getMessage());
+    return mav;
+  }
+}
