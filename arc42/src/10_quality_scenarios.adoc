@@ -48,7 +48,6 @@ Benutzerfreundlichkeit
 |===
 |Qualitätsszenario |Begründung
 |Intuitive Verschiebung von Studenten für Organisatoren (Drag & Drop)| Fehlende JavaScript Kenntnisse, Zeitmangel für Einarbeitung
-|Studenten können sich nicht von einem Termin selbstständig abmelden | Zeitmangel
 |Änderungen an Repositories, wenn Sie bereits erstellt wurden (Student meldet sich per E-Mail) | Zeitmangel
 |===
 

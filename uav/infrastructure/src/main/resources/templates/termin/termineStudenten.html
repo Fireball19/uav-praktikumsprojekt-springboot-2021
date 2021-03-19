@@ -45,12 +45,24 @@
                     <tr>
                         <th scope="col">Wochentag</th>
                         <th scope="col">Zeitpunkt</th>
+                        <th scope="col" th:if="${uebung.modus.toString() == 'GRUPPENANMELDUNG'}">Gruppenmitglieder</th>
+                        <th scope="col">Abmelden</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td th:text="${#temporals.dayOfWeekName(termin.zeitpunkt)}">Tag</td>
                         <td th:text="${#temporals.format(termin.zeitpunkt, 'dd-MM-yyyy HH:mm')}">01-01-2000 01:01</td>
+                        <td th:if="${uebung.modus.toString() == 'GRUPPENANMELDUNG'}" >
+                            <span th:each="studentRef, iterStat : ${termin.studenten}"
+                                  th:text="${!iterStat.last} ? ${studenten.get(studentRef.id).github} +
+                          ', ': ${studenten.get(studentRef.id).github}"></span></td>
+                        <td>
+                            <form method="POST" th:action="@{'/termine/uebersicht/uebungen/' + ${uebung.id} + '/' + ${termin.id} +
+                            '/abmelden'}">
+                            <button class="btn btn-danger" type="submit" name="submit" value="value">Abmelden</button>
+                        </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

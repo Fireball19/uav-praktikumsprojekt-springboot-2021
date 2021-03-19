@@ -50,6 +50,9 @@ class Termin {
 
   void deleteStudent(final Student student) {
     studenten.remove(new StudentRef(student.getId()));
+    if(studenten.isEmpty()) {
+      reserviert = false;
+    }
   }
 
   boolean containsStudent(final Student student) {
