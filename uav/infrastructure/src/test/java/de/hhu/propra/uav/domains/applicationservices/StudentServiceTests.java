@@ -2,6 +2,7 @@ package de.hhu.propra.uav.domains.applicationservices;
 
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRepository;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -104,5 +105,15 @@ public class StudentServiceTests {
     assertThat(studentService.findAllAsMap().containsValue(new Student("David"))).isEqualTo(false);
 
 
+  }
+
+  @Test
+  public void findAllTest(){
+    when(studentRepository.findAll()).thenReturn(List.of(new Student("Alex"),
+        new Student("Bob"),new Student("Charlie"),new Student("David")));
+
+    StudentService studentService = new StudentService(studentRepository);
+
+    assertThat(studentService.findAll().size()).isEqualTo(4);
   }
 }
