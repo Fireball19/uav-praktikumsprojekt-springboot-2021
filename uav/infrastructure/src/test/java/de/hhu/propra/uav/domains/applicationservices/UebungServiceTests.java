@@ -1,11 +1,16 @@
 package de.hhu.propra.uav.domains.applicationservices;
 
 import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
 import de.hhu.propra.uav.domains.model.uebung.VerteilungsService;
+import de.hhu.propra.uav.domains.terminimporter.TerminFileDto;
 import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -36,6 +41,65 @@ public class UebungServiceTests {
   VerteilungsService verteilungsService;
   @Mock
   GithubApi githubApi;
+
+  public Uebung getUebung()
+      throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    Uebung uebung = new Uebung("TestUebung", Modus.INDIVIDUALANMELDUNG, 2, 3,
+        LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
+        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
+    uebung.setId(1L);
+    uebung.addTermin("Alex",LocalDateTime.now());
+    uebung.addTermin("Bob",LocalDateTime.now());
+
+    Class clazz = Class.forName("de.hhu.propra.uav.domains.model.uebung.Termin");
+    Method method = clazz.getDeclaredMethod("setId", Long.class);
+    method.setAccessible(true);
+
+    method.invoke(uebung.getTermine().get(0),1L);
+    method.invoke(uebung.getTermine().get(1),2L);
+
+    return uebung;
+  }
+
+  public UebungService getUebungService(){
+    return new UebungService(uebungRepository,terminImporter,verteilungsService,githubApi);
+  }
+
+  @Test
+  public void createDefaultTest(){
+    UebungService uebungService = getUebungService();
+    Uebung uebung = uebungService.createDefault();
+
+    assertThat(uebung.getName()).isEqualTo("DEFAULT");
+  }
+
+  @Test
+  public void saveWithAlteTermineTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung alteUebung = getUebung();
+
+    when(uebungRepository.findTopByOrderByIdDesc()).thenReturn(alteUebung);
+    uebungService.saveWithAlteTermine(alteUebung);
+
+    verify(uebungRepository,times(1)).save(any());
+  }
+
+  @Test
+  public void findFirstByBearbeitetIsFalseTest(){
+    UebungService uebungService = getUebungService();
+    uebungService.findFirstByBearbeitetIsFalse();
+
+    verify(uebungRepository,times(1)).findFirstByBearbeitetIsFalse();
+  }
+
+  @Test
+  public void findAllTest(){
+    UebungService uebungService = getUebungService();
+    List<Uebung> all = uebungService.findAll();
+
+    verify(uebungRepository,times(1)).findAll();
+  }
 
   @Test
   public void findByGithubThrowsException() {
@@ -147,4 +211,166 @@ public class UebungServiceTests {
     assertThat(results.contains(testUebung1)).isFalse();
     assertThat(results.contains(testUebung2)).isTrue();
   }
+
+  @Test
+  public void ueberpruefeMaxGroesseTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    assertThat(uebungService.ueberpruefeMaxGroesse(1L)).isEqualTo(3);
+  }
+
+  @Test
+  public void ueberpruefeMinGroesseTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    assertThat(uebungService.ueberpruefeMinGroesse(1L)).isEqualTo(2);
+  }
+
+
+  @Test
+  public void addGruppeTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.addGruppe(1L,1L,"Gruppenname");
+
+    verify(uebungRepository,times(1)).save(uebung);
+  }
+
+  @Test
+  public void deleteGruppeTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.deleteGruppe(1L,1L);
+
+    verify(uebungRepository,times(1)).save(uebung);
+  }
+
+  @Test
+  public void addTerminTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.addTermin(1L,"Alex",LocalDateTime.now());
+
+    verify(uebungRepository,times(1)).save(uebung);
+  }
+
+  @Test
+  public void ueberpruefeAnmeldungsModusTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    assertThat(uebungService.ueberpruefeAnmeldungsModus(1L)).isEqualTo(Modus.INDIVIDUALANMELDUNG);
+  }
+
+  @Test
+  public void addTermineByTerminImporterTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+    LocalDateTime jetzt = LocalDateTime.now();
+    when(terminImporter.convertToTerminFile(any())).thenReturn(List.of(new TerminFileDto("Alex",jetzt),
+        new TerminFileDto("Bob",jetzt)));
+
+    uebungService.addTermineByTerminImporter(1L, InputStream.nullInputStream());
+    assertThat(uebung.getTermine().size()).isEqualTo(4);
+  }
+
+  @Test
+  public void findTermineByStudentIdTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung1 = getUebung();
+    Uebung uebung2 = getUebung();
+    uebung2.setId(2L);
+
+    uebung2.addStudent(new Student("student"),1L);
+
+    when(uebungRepository.findAll()).thenReturn(List.of(uebung1,uebung2));
+
+    List<Uebung> uebungen = uebungService.findTermineByStudentId(new Student("student"));
+
+    assertThat(uebungen.size()).isEqualTo(2);
+    assertThat(uebungen.get(0).getId()).isEqualTo(1L);
+  }
+
+  @Test
+  public void deleteTerminTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.deleteTermin(1L,1L);
+
+    assertThat(uebung.getTermine().size()).isEqualTo(1);
+  }
+
+  @Test
+  public void shuffleTutorenTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.shuffleTutoren(1L);
+
+    verify(verteilungsService,times(1)).tutorenVerteilen(uebung);
+    verify(uebungRepository,times(1)).save(uebung);
+  }
+
+  @Test
+  public void findAllIndividualAnmeldungTest(){
+    UebungService uebungService = getUebungService();
+    uebungService.findAllIndividualAnmeldung();
+
+    verify(uebungRepository,times(1)).findAllByModusEquals(Modus.INDIVIDUALANMELDUNG);
+  }
+
+  @Test
+  public void shuffleStudentenTest()
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.shuffleStudenten(1L);
+
+    verify(verteilungsService,times(1)).perfekteVerteilung(uebung);
+    verify(uebungRepository,times(1)).save(uebung);
+  }
+
+  @Test
+  public void individualModusAbschliessenTest()
+      throws Exception {
+    UebungService uebungService = getUebungService();
+    Uebung uebung = getUebung();
+    uebung.addStudent(new Student("Alex"),1L);
+    uebung.addStudent(new Student("Bob"),2L);
+    when(uebungRepository.findById(1L)).thenReturn(Optional.ofNullable(uebung));
+
+    uebungService.individualModusAbschliessen(1L);
+
+    verify(githubApi,times(2)).createGithubRepositoryIndividualanmeldung(any(),any(),any(),any());
+  }
+
 }
