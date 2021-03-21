@@ -84,6 +84,7 @@ public class UebungTests {
     uebung.addTermin("Charlie",LocalDateTime.now());
 
     assertThat(uebung.getGruppen().size()).isEqualTo(3);
+    assertThat(uebung.getGruppen().get(0).getMitglieder().size()).isEqualTo(0);
   }
 
   @Test
