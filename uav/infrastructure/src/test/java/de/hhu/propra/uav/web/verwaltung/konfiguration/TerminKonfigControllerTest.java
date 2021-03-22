@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.web.anmeldung;
+package de.hhu.propra.uav.web.verwaltung.konfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,9 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import de.hhu.propra.uav.configuration.MethodSecurityConfiguration;
-import de.hhu.propra.uav.domains.applicationservices.AnmeldungService;
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
+import de.hhu.propra.uav.domains.applicationservices.VerwaltungService;
+import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.web.SetupOAuth2;
@@ -20,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +38,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@WebMvcTest(GruppenAnmeldungController.class)
+@WebMvcTest(TerminKonfigController.class)
 @AutoConfigureMockMvc
 @Import({MethodSecurityConfiguration.class})
 @ActiveProfiles("test")
-public class GruppenAnmeldungControllerTest {
+public class TerminKonfigControllerTest {
   @Autowired
   private MockMvc mockMvc;
   @MockBean
   private UebungService uebungService;
   @MockBean
-  private AnmeldungService anmeldungService;
-  @MockBean
   private StudentService studentService;
+  @MockBean
+  private VerwaltungService verwaltungService;
 
   public Uebung getUebung()
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -69,91 +70,90 @@ public class GruppenAnmeldungControllerTest {
 
     return uebung;
   }
-
-  public List<Uebung> setUpUebungen() {
-    List<Uebung> uebungen = new ArrayList<>();
-    Uebung uebung1 = new Uebung("TestUebung1", Modus.GRUPPENANMELDUNG, 2, 4,
-        LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
-    Uebung uebung2 = new Uebung("TestUebung2", Modus.INDIVIDUALANMELDUNG, 2, 4,
-        LocalDateTime.now().minus(10, ChronoUnit.MINUTES),
-        LocalDateTime.now().plus(10, ChronoUnit.MINUTES));
-    uebungen.add(uebung1);
-    uebungen.add(uebung2);
-    return uebungen;
-  }
-
   @Test
-  public void restplaetzeTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
+  public void terminKonfigurationTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(
         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
         new SecurityContextImpl(principal));
+    HashMap<Long, Student> studentMap = new HashMap<>();
+    studentMap.put(1L,new Student("github301"));
+    Uebung testUebung = getUebung();
+    when(uebungService.findAll()).thenReturn(List.of(testUebung));
 
-    when(uebungService.findById(any())).thenReturn(setUpUebungen().get(0));
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung/1/restplaetze")
-        .session(session))
-        .andExpect(status().isOk())
-        .andReturn();
-
-    Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
-    assertThat(uebung.getName()).isEqualTo("TestUebung1");
-  }
-
-  @Test
-  public void gruppenAnmeldungTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
-    MockHttpSession session = new MockHttpSession();
-    session.setAttribute(
-        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-        new SecurityContextImpl(principal));
-    when(uebungService.findById(any())).thenReturn(getUebung());
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung/1/1")
-        .session(session))
-        .andExpect(status().isOk())
-        .andReturn();
-
-    Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
-    assertThat(uebung.getName()).isEqualTo("TestUebung");
-  }
-
-  @Test
-  public void gruppenAnmeldungAnmeldenTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
-    MockHttpSession session = new MockHttpSession();
-    session.setAttribute(
-        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-        new SecurityContextImpl(principal));
-
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/anmeldung/1/1")
-        .with(csrf())
-        .param("gruppenname","Testgruppe")
-        .param("mitglieder", "Alex,Fritz,Jonathan")
-        .session(session))
-        .andExpect(status().isFound())
-        .andExpect(redirectedUrl("/termine/uebersicht/uebungen"))
-        .andReturn();
-
-  }
-
-  @Test
-  public void restplatzAnmeldungTest() throws Exception {
-    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
-    MockHttpSession session = new MockHttpSession();
-    session.setAttribute(
-        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
-        new SecurityContextImpl(principal));
-
-    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/anmeldung/1/1/restplaetze/anmelden")
-        .with(csrf())
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/verwaltung/konfiguration/termin")
         .principal(principal)
         .session(session))
-        .andExpect(status().isFound())
-        .andExpect(redirectedUrl("/anmeldung/1/restplaetze"))
+        .andExpect(status().isOk())
         .andReturn();
 
-    verify(anmeldungService, times(1)).restAnmeldung(any(), any(), any());
+    List<Uebung> uebung = (List<Uebung>) mvcResult.getModelAndView().getModel().get("uebungen");
+    assertThat(uebung.get(0)).isEqualTo(testUebung);
+  }
 
+  @Test
+  public void terminHinzufügenTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+        new SecurityContextImpl(principal));
+    Uebung testUebung = getUebung();
+    when(uebungService.findById(any())).thenReturn(testUebung);
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/verwaltung/konfiguration/termin/1")
+        .principal(principal)
+        .session(session))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
+    assertThat(uebung).isEqualTo(testUebung);
+  }
+
+  @Test
+  public void terminHinzufügenPostTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+        new SecurityContextImpl(principal));
+    Uebung testUebung = getUebung();
+    when(uebungService.findById(any())).thenReturn(testUebung);
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/verwaltung/konfiguration/termin/1/hinzufuegen")
+        .principal(principal)
+        .with(csrf())
+        .param("tutor", "Alex")
+        .param("zeitpunkt", LocalDateTime.of(2021,05,05,05,05).toString())
+        .session(session))
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/verwaltung/konfiguration/termin/1"))
+        .andReturn();
+
+    verify(uebungService, times(1)).addTermin(1,"Alex",LocalDateTime.of(2021,05,05,05,05));
+  }
+
+
+  @Test
+  public void terminEntfernenTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+        new SecurityContextImpl(principal));
+    Uebung testUebung = getUebung();
+    when(uebungService.findById(any())).thenReturn(testUebung);
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/verwaltung/konfiguration/termin/1/1/entfernen")
+        .principal(principal)
+        .with(csrf())
+        .session(session))
+        .andExpect(status().isFound())
+        .andExpect(redirectedUrl("/verwaltung/konfiguration/termin/1"))
+        .andReturn();
+
+    verify(uebungService, times(1)).deleteTermin(1L,1L);
   }
 }

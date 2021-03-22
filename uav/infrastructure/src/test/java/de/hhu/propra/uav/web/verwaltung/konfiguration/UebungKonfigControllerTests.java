@@ -99,4 +99,31 @@ public class UebungKonfigControllerTests {
 
     verify(uebungService, never()).save(any());
   }
+
+  @Test
+  public void uebungHinzufuegenErrorTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalOrga();
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+        new SecurityContextImpl(principal));
+
+    when(uebungService.createDefault()).thenReturn(setUpUebungen().get(0));
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/verwaltung/konfiguration/uebung")
+        .session(session)
+        .param("name", "TestUebung")
+        .param("modus", "GRUPPENANMELDUNG")
+        .param("maxGroesse", "0")
+        .param("minGroesse", "1")
+        .param("anmeldebeginn", LocalDateTime.now().minus(10, ChronoUnit.MINUTES).toString())
+        .param("anmeldebeginn", LocalDateTime.now().minus(20, ChronoUnit.MINUTES).toString()))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    String html = mvcResult.getModelAndView().getViewName();
+    assertThat(html).contains("<h2>Praktische Übung konfigurieren</h2>");
+
+    verify(uebungService, never()).save(any());
+  }
 }
