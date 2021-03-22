@@ -19,3 +19,8 @@ M = Anzahl der Gruppen
 * ⌊N/M⌋+1 Studenten sind in N(mod M) Gruppen
 * Falls eine Gruppe nicht voll wird, sind ⌊N/M⌋ Studenten in der Gruppe
 * Falls keine Verteilung möglich ist, die die Mindestgröße einhält, wird diese in höchstens einer Gruppe unterschritten
+
+== Laden alter Termine
+* Die alten Uhrzeiten und Wochentage der Termine werden übernommen
+* Die neuen Termine liegen eine Woche nach den alten Terminen
+* Man beachte hierbei, dass Ferien oder Feiertage nicht berücksichtigt werden
