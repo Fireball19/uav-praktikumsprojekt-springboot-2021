@@ -95,4 +95,24 @@ public class AnmeldungControllerTests {
     assertThat(uebung.getName()).isEqualTo("TestUebung1");
   }
 
+  @Test
+  public void individualAnmeldungTerminTest() throws Exception {
+    OAuth2AuthenticationToken principal = SetupOAuth2.buildPrincipalUser();
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(
+        HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+        new SecurityContextImpl(principal));
+
+    when(uebungService.findByIdForStudent(any())).thenReturn(setUpUebungen().get(1));
+    when(uebungService.ueberpruefeAnmeldungsModus(any())).thenReturn(Modus.INDIVIDUALANMELDUNG);
+
+    MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/anmeldung/2")
+        .session(session))
+        .andExpect(status().isOk())
+        .andReturn();
+
+    Uebung uebung = (Uebung) mvcResult.getModelAndView().getModel().get("uebung");
+    assertThat(uebung.getName()).isEqualTo("TestUebung2");
+  }
+
 }
