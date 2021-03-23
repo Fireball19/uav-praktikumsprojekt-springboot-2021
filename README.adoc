@@ -37,6 +37,14 @@ openssl pkcs8 -topk8 -inform PEM -outform DER -in key.pem -out key.der -nocrypt
 
 Der ins DER Format konvertierte Schlüssel muss dann in den Ordner anmeldung-zum-praktikum-teamstrgclick\uav\infrastructure hinzugefügt werden.
 
+Außerdem wird die Github App Id und die Github App Installation Id in application.properties gesetzt.
+
+[source]
+----
+githubAppId=103185
+githubAppInstallationId=15103623
+----
+
 === Github Organization
 
 Die Github Organization wird in application.properties gesetzt.
