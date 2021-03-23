@@ -1,6 +1,12 @@
 package de.hhu.propra.uav.web.verwaltung.uebersicht;
 
-import de.hhu.propra.uav.ComponentScanConfiguration;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import de.hhu.propra.uav.configuration.MethodSecurityConfiguration;
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
@@ -25,13 +31,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UebersichtController.class)
 @AutoConfigureMockMvc
