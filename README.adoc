@@ -46,7 +46,7 @@ arrayOfTutoren=zandatzu,ToxicBill,Fireball19
 ----
 == Anwendung starten
 Man startet die Anwendung, indem man im Ordner anmeldung-zum-praktikum-teamstrgclick\uav
-docker-compose up eingibt.
+``docker-compose up`` in der Konsole eingibt.
 [source]
 ----
 ...anmeldung-zum-praktikum-teamstrgclick\uav>docker-compose up
