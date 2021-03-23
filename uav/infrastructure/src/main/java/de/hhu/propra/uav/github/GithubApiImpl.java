@@ -41,8 +41,11 @@ public class GithubApiImpl implements GithubApi {
   @Value("${githubAppInstallationId}")
   private long installationId;
 
+  @Value("${githubAppKeyLocation}")
+  private String keyLocation;
+
   private GitHub setup() throws Exception {
-    final String jwt = JwtHelper.createJwt(".\\uav\\infrastructure\\key.der", appId, 60_000);
+    final String jwt = JwtHelper.createJwt(keyLocation, appId, 60_000);
 
     final GitHub preAuth = new GitHubBuilder().withJwtToken(jwt).build();
 

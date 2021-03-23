@@ -8,4 +8,7 @@ WORKDIR /uav
 COPY --from=BUILD /uav_build/infrastructure/build/libs/infrastructure-*.jar \
                   /uav/infrastructure.jar
 EXPOSE 8080
+
+COPY --from=BUILD /uav_build/infrastructure/key.der /uav/infrastructure/key.der
+
 CMD java -jar infrastructure.jar
