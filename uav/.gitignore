@@ -41,3 +41,6 @@ out/
 
 ### Database ###
 /db/data/
+
+### Github ###
+key.der

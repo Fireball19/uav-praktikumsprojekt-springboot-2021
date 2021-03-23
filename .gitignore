@@ -38,3 +38,6 @@ out/
 
 ### Docker ###
 .env
+
+### Github ###
+key.der
