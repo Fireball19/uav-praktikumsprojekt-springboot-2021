@@ -35,11 +35,13 @@ public class GithubApiImpl implements GithubApi {
   @Autowired
   StudentService studentService;
 
+  @Value("${githubAppId}")
+  private String appId;
+
+  @Value("${githubAppInstallationId}")
+  private long installationId;
+
   private GitHub setup() throws Exception {
-
-    final String appId = "103185";
-    final long installationId = 15_103_623;
-
     final String jwt = JwtHelper.createJwt(".\\uav\\infrastructure\\key.der", appId, 60_000);
 
     final GitHub preAuth = new GitHubBuilder().withJwtToken(jwt).build();
