@@ -26,6 +26,16 @@ CLIENT_ID=12345678
 CLIENT_SECRET=21328785fbngbjbv3834ngrvr
 ----
 
+=== Github API
+
+Der private Github App Schlüssel im PEM Format muss in ein JVM unterstütztes Format formatiert werden.
+
+[source]
+----
+openssl pkcs8 -topk8 -inform PEM -outform DER -in key.pem -out key.der -nocrypt
+----
+
+Der ins DER Format konvertierte Schlüssel muss dann in den Ordner anmeldung-zum-praktikum-teamstrgclick\uav\infrastructure hinzugefügt werden.
 
 === Github Organization
 
