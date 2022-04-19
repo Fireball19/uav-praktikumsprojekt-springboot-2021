@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   database:
-    image: mariadb:10.5.9
+    image: mariadb:10.7.3
     ports:
       - "3308:3306"
     volumes:
