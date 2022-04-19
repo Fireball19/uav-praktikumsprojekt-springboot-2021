@@ -18,11 +18,11 @@ configurations {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
-    testCompileOnly 'org.projectlombok:lombok:1.18.18'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
-    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.2.1'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.6.0'
     implementation group: 'org.springframework', name: 'spring-context'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -60,4 +60,8 @@ pmd {
 spotbugs {
     effort = "max"
     reportLevel = "high"
+}
+
+repositories {
+    mavenCentral()
 }

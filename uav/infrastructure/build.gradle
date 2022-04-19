@@ -18,36 +18,36 @@ configurations {
 
 dependencies {
 
-	implementation group: 'org.kohsuke', name: 'github-api', version: '1.123'
-	implementation 'io.jsonwebtoken:jjwt-api:0.10.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.10.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.10.5'
+	implementation group: 'org.kohsuke', name: 'github-api', version: '1.301'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
-	implementation 'com.google.guava:guava:30.1-jre'
+	implementation 'com.google.guava:guava:31.1-jre'
 
 	implementation project(':domain')
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
-    testCompileOnly 'org.projectlombok:lombok:1.18.18'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.3'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.6'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	compileOnly 'com.github.spotbugs:spotbugs-annotations:4.2.1'
-	testImplementation 'org.assertj:assertj-core:3.19.0'
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.0-M1'
-	testImplementation 'com.tngtech.archunit:archunit-junit5:0.17.0'
-	testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.8.0'
+	compileOnly 'com.github.spotbugs:spotbugs-annotations:4.6.0'
+	testImplementation 'org.assertj:assertj-core:3.22.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+	testImplementation 'com.tngtech.archunit:archunit-junit5:0.23.1'
+	testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.4.0'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	implementation group: 'com.opencsv', name: 'opencsv', version: '5.3'
+	implementation group: 'com.opencsv', name: 'opencsv', version: '5.6'
 	runtimeOnly('com.h2database:h2')
 	runtimeOnly 'mysql:mysql-connector-java'
 }
@@ -76,6 +76,10 @@ pmd {
 spotbugs {
 	effort = "max"
 	reportLevel = "high"
+}
+
+repositories {
+	mavenCentral()
 }
 
 tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
