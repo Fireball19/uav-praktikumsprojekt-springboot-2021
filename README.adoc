@@ -12,6 +12,8 @@ ifdef::env-github[]
 :stem: latexmath
 endif::[]
 
+image::https://github.com/Fireball19/uav-praktikumsprojekt-springboot-2021/actions/workflows/main.yml/badge.svg[Static,150]
+
 == Konfiguration
 
 === Docker
