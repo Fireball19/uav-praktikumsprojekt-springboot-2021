@@ -1,7 +1,6 @@
 package de.hhu.propra.uav.web.verwaltung.konfiguration;
 
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
-import de.hhu.propra.uav.terminimporter.TerminImporterImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

@@ -19,7 +19,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.multipart.MultipartFile;
 
 @SuppressWarnings("PMD.AtLeastOneConstructor")
 @Component
