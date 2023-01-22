@@ -2,7 +2,7 @@ package de.hhu.propra.uav.domains.applicationservices;
 
 
 import de.hhu.propra.uav.domains.annotations.ApplicationService;
-import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.applicationservices.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.TerminInfoDto;
@@ -10,8 +10,8 @@ import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.model.uebung.UebungFactory;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
 import de.hhu.propra.uav.domains.model.uebung.VerteilungsService;
-import de.hhu.propra.uav.domains.terminimporter.TerminFileDto;
-import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminFileDto;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminImporter;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;

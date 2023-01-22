@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.github;
+package de.hhu.propra.uav.domains.applicationservices.github;
 
 import de.hhu.propra.uav.domains.model.student.StudentRef;
 import java.time.LocalDateTime;

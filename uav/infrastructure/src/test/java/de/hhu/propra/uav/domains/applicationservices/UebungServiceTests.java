@@ -1,13 +1,13 @@
 package de.hhu.propra.uav.domains.applicationservices;
 
-import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.applicationservices.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.uebung.Modus;
 import de.hhu.propra.uav.domains.model.uebung.Uebung;
 import de.hhu.propra.uav.domains.model.uebung.UebungRepository;
 import de.hhu.propra.uav.domains.model.uebung.VerteilungsService;
-import de.hhu.propra.uav.domains.terminimporter.TerminFileDto;
-import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminFileDto;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminImporter;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

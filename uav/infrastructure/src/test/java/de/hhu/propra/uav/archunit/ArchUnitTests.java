@@ -17,8 +17,8 @@ public class ArchUnitTests {
       .domainModels("de.hhu.propra.uav.domains.model..")
       .domainServices("de.hhu.propra.uav.domains.model..")
       .applicationServices("de.hhu.propra.uav.domains.applicationservices..")
-      //.adapter("authorization", "de.hhu.propra.uav.authorization..")
       .adapter("persistence", "de.hhu.propra.uav.repositories..")
       .adapter("web", "de.hhu.propra.uav.web..")
-      .adapter("github", "de.hhu.propra.uav.github..");
+      .adapter("github", "de.hhu.propra.uav.github..")
+      .adapter("terminimporter", "de.hhu.propra.uav.terminimporter..");
 }

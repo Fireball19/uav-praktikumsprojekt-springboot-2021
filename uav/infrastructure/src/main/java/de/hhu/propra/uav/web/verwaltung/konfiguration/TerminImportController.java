@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 @SuppressWarnings({"PMD.AtLeastOneConstructor", "PMD.BeanMembersShouldSerialize",
     "PMD.AvoidDuplicateLiterals"})
 @Controller
@@ -27,9 +30,23 @@ public class TerminImportController {
       throw new HttpClientErrorException(HttpStatus.EXPECTATION_FAILED, "Die Datei ist leer!");
     } else {
       uebungService.addTermineByTerminImporter(uebungId,
-          TerminImporterImpl.convertMultipartFileToInputStream(file));
+          convertMultipartFileToInputStream(file));
     }
 
     return "redirect:/verwaltung/konfiguration/termin/{uebungId}";
+  }
+
+  @SuppressWarnings({"PMD.AvoidFinalLocalVariable", "PMD.DataflowAnomalyAnalysis",
+      "PMD.DataflowAnomalyAnalysis", "PMD.PreserveStackTrace"})
+  private InputStream convertMultipartFileToInputStream(final MultipartFile file) {
+    final InputStream inputStream;
+    try {
+      inputStream = file.getInputStream();
+    } catch (IOException e) {
+      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+          "Fehler beim einlesen der Datei!");
+    }
+
+    return inputStream;
   }
 }

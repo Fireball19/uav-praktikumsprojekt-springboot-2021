@@ -1,4 +1,4 @@
-package de.hhu.propra.uav.domains.terminimporter;
+package de.hhu.propra.uav.domains.applicationservices.terminimporter;
 
 import java.io.InputStream;
 import java.util.List;

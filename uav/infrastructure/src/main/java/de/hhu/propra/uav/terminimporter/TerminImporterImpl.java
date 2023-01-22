@@ -3,8 +3,8 @@ package de.hhu.propra.uav.terminimporter;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
-import de.hhu.propra.uav.domains.terminimporter.TerminFileDto;
-import de.hhu.propra.uav.domains.terminimporter.TerminImporter;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminFileDto;
+import de.hhu.propra.uav.domains.applicationservices.terminimporter.TerminImporter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,19 +56,5 @@ public class TerminImporterImpl implements TerminImporter {
           "Ein Zeitpunkt ist nicht richtig formatiert");
     }
     return termine;
-  }
-
-  @SuppressWarnings({"PMD.AvoidFinalLocalVariable", "PMD.DataflowAnomalyAnalysis",
-      "PMD.DataflowAnomalyAnalysis", "PMD.PreserveStackTrace"})
-  public static InputStream convertMultipartFileToInputStream(final MultipartFile file) {
-    final InputStream inputStream;
-    try {
-      inputStream = file.getInputStream();
-    } catch (IOException e) {
-      throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
-          "Fehler beim einlesen der Datei!");
-    }
-
-    return inputStream;
   }
 }

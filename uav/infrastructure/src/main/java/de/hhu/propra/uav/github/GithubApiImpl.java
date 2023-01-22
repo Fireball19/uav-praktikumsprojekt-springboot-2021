@@ -2,7 +2,7 @@ package de.hhu.propra.uav.github;
 
 import de.hhu.propra.uav.domains.applicationservices.StudentService;
 import de.hhu.propra.uav.domains.applicationservices.UebungService;
-import de.hhu.propra.uav.domains.github.GithubApi;
+import de.hhu.propra.uav.domains.applicationservices.github.GithubApi;
 import de.hhu.propra.uav.domains.model.student.Student;
 import de.hhu.propra.uav.domains.model.student.StudentRef;
 import de.hhu.propra.uav.domains.model.uebung.GruppeDto;
